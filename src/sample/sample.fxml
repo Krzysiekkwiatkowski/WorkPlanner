@@ -1,8 +1,30 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
-
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<GridPane fx:controller="sample.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<BorderPane fx:controller="sample.Controller" xmlns:fx="http://javafx.com/fxml"
+            stylesheets="@styles.css">
+    <top>
+        <VBox>
+            <MenuBar>
+                <Menu id="fx" text="Program">
+                    <MenuItem text="Wyjście" onAction="#exitAction"/>
+                </Menu>
+                <Menu text="Kierowca">
+                    <MenuItem text="Dodaj"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Edytuj"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Usuń"/>
+                </Menu>
+                <Menu text="Żądania">
+                    <MenuItem text="Dodaj"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Wyczyść"/>
+                </Menu>
+            </MenuBar>
+        </VBox>
+    </top>
+</BorderPane>
