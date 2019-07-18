@@ -20,9 +20,7 @@
                 <Menu text="Kierowca">
                     <MenuItem text="Dodaj"/>
                     <SeparatorMenuItem/>
-                    <MenuItem text="Edytuj"/>
-                    <SeparatorMenuItem/>
-                    <MenuItem text="Usuń"/>
+                    <MenuItem text="Pokaż wszystkich" onAction="#showDrivers"/>
                 </Menu>
                 <Menu text="Żądania">
                     <MenuItem text="Dodaj"/>
@@ -33,9 +31,6 @@
         </VBox>
     </top>
     <center>
-        <VBox>
-            <Button text="Show All Drivers" onAction="#show" BorderPane.alignment="BASELINE_CENTER"/>
-            <Label fx:id="label" text="Fdsfdsfds"/>
-        </VBox>
+        <Label fx:id="label"/>
     </center>
 </BorderPane>

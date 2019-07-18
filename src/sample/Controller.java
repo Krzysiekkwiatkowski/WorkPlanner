@@ -19,17 +19,12 @@ public class Controller {
     }
 
     @FXML
-    public void show(){
+    public void showDrivers(){
         StringBuilder sb = new StringBuilder();
         List<Driver> dr = DriverData.getDrivers();
         for (Driver driver : dr) {
             sb.append(driver.getNumber() + " " + driver.getFirstName() + " " + driver.getLastName() + " " + driver.getPhone() + "\n");
         }
         this.label.setText(sb.toString());
-        dr.add(new Driver(5, "Kris", "Sris", 452145214));
-        DriverData.saveDrivers(dr);
-        for (Driver driver : dr) {
-            System.out.println((driver.getNumber() + " " + driver.getFirstName() + " " + driver.getLastName() + " " + driver.getPhone()));
-        }
     }
 }
