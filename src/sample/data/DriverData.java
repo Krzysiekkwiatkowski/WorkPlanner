@@ -53,4 +53,12 @@ public class DriverData {
             e.printStackTrace();
         }
     }
+
+    public static void deleteDriver(Driver driver){
+        if(drivers.contains(driver)){
+            drivers.remove(driver);
+        } else {
+            System.out.println("Driver doesn't exist");
+        }
+    }
 }

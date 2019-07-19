@@ -23,7 +23,7 @@ public class Controller {
         StringBuilder sb = new StringBuilder();
         List<Driver> dr = DriverData.getDrivers();
         for (Driver driver : dr) {
-            sb.append(driver.getNumber() + " " + driver.getFirstName() + " " + driver.getLastName() + " " + driver.getPhone() + "\n");
+                        sb.append(driver.getNumber() + " " + driver.getFirstName() + " " + driver.getLastName() + " " + driver.getPhone() + "\n");
         }
         this.label.setText(sb.toString());
     }

@@ -15,7 +15,9 @@
         <VBox>
             <MenuBar>
                 <Menu id="fx" text="Program">
-                    <MenuItem onAction="#exitAction" text="Wyjście"/>
+                    <MenuItem text="Generuj grafik"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Wyjście" onAction="#exitAction"/>
                 </Menu>
                 <Menu text="Kierowca">
                     <MenuItem text="Dodaj"/>
