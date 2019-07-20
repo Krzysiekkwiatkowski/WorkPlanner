@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import sample.data.Driver;
 import sample.data.DriverData;
@@ -8,7 +9,7 @@ import sample.data.DriverData;
 public class DriverController {
 
     @FXML
-    private TextField number;
+    private Spinner<Integer> number;
 
     @FXML
     private TextField firstName;
@@ -17,13 +18,13 @@ public class DriverController {
     private TextField lastName;
 
     @FXML
-    private TextField phone;
+    private Spinner<Integer> phone;
 
     public Driver processResult(){
-        int driverNumber = Integer.parseInt(number.getText().trim());
+        int driverNumber = number.getValue();
         String driverFirtName = firstName.getText().trim();
         String driverLastName = lastName.getText().trim();
-        int driverPhone = Integer.parseInt(phone.getText().trim());
+        int driverPhone = phone.getValue();
         Driver driver = new Driver(driverNumber, driverFirtName, driverLastName, driverPhone);
         DriverData.addDriver(driver);
         return driver;
