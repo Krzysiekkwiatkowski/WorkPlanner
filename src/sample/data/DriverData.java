@@ -1,17 +1,18 @@
 package sample.data;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class DriverData {
-    private static List<Driver> drivers = new ArrayList<>();
+    private static ObservableList<Driver> drivers = FXCollections.observableArrayList();
     private static File data = new File("drivers.txt");
 
-    public static List<Driver> getDrivers(){
+    public static ObservableList<Driver> getDrivers(){
         try {
             Scanner scanner = new Scanner(data);
             String firstName;
@@ -40,25 +41,32 @@ public class DriverData {
         return drivers;
     }
 
-    public static void saveDrivers(List<Driver> driversToSave){
+    public static void saveDrivers(){
         try{
             PrintWriter printWriter = new PrintWriter(data);
-            for (Driver driver : driversToSave) {
+            for (Driver driver : drivers) {
                 printWriter.println(driver.getNumber() + " " + driver.getFirstName() + " " + driver.getLastName() + " " + driver.getPhone());
             }
             printWriter.close();
-            drivers = driversToSave;
         } catch (FileNotFoundException e){
             System.out.println("File not found");
             e.printStackTrace();
         }
     }
 
+    public static void addDriver(Driver driver){
+        if(driver != null){
+            drivers.add(driver);
+        }
+    }
+
     public static void deleteDriver(Driver driver){
-        if(drivers.contains(driver)){
-            drivers.remove(driver);
-        } else {
-            System.out.println("Driver doesn't exist");
+        if(driver != null) {
+            if (drivers.contains(driver)) {
+                drivers.remove(driver);
+            } else {
+                System.out.println("Driver doesn't exist");
+            }
         }
     }
 }

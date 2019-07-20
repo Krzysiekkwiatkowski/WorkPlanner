@@ -1,0 +1,18 @@
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<DialogPane fx:controller="sample.DriverController" xmlns:fx="http://javafx.com/fxml">
+    <content>
+        <GridPane vgap="10" hgap="10">
+            <Label text="Numer:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="number" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="Imię:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="firstName" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label text="Nazwisko:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="lastName" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <Label text="Telefon:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="phone" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        </GridPane>
+    </content>
+</DialogPane>

@@ -28,4 +28,9 @@ public class Driver {
     public int getPhone() {
         return phone;
     }
+
+    @Override
+    public String toString() {
+        return this.number + " " + this.firstName + " " + this.lastName + " " + this.phone;
+    }
 }
