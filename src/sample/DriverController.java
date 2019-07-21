@@ -29,4 +29,16 @@ public class DriverController {
         DriverData.addDriver(driver);
         return driver;
     }
+
+    public Driver editDriver(Driver driver){
+
+        return driver;
+    }
+
+    public void loadValues(Driver driver){
+        number.getValueFactory().setValue(driver.getNumber());
+        firstName.textProperty().setValue(driver.getFirstName());
+        lastName.textProperty().setValue(driver.getLastName());
+        phone.getValueFactory().setValue(driver.getPhone());
+    }
 }

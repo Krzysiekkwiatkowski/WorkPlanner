@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import sample.data.Driver;
@@ -28,6 +27,7 @@ public class Controller {
 
     public void initialize() {
         listContextMenu = new ContextMenu();
+        MenuItem editMenuItem = new MenuItem("Edytuj");
         MenuItem deleteMenuItem = new MenuItem("Usuń");
         deleteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -37,6 +37,15 @@ public class Controller {
             }
         });
 
+        editMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Driver driver = driversList.getSelectionModel().getSelectedItem();
+                showEditDialog(driver);
+            }
+        });
+
+        listContextMenu.getItems().addAll(editMenuItem);
         listContextMenu.getItems().addAll(deleteMenuItem);
         driversList.getItems().setAll(DriverData.getDrivers());
         driversList.setCellFactory(new Callback<ListView<Driver>, ListCell<Driver>>() {
@@ -68,11 +77,6 @@ public class Controller {
         });
     }
 
-    @FXML
-    public void exitAction() {
-        DriverData.saveDrivers();
-        Platform.exit();
-    }
 
     @FXML
     public void showNewDriverDialog() {
@@ -97,6 +101,28 @@ public class Controller {
     }
 
     @FXML
+    private void showEditDialog(Driver driver){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainBorderPane.getScene().getWindow());
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("driverDialog.fxml"));
+        try{
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        } catch (IOException e){
+            System.out.println("Couldn't load the dialog");
+            e.printStackTrace();
+        }
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        DriverController controller = fxmlLoader.getController();
+        controller.loadValues(driver);
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && (result.get() == ButtonType.OK)){
+            controller.editDriver(driver);
+        }
+    }
+
+    @FXML
     private void confirmDeletion(Driver driver) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Usunąć kierowcę?");
@@ -107,5 +133,11 @@ public class Controller {
             DriverData.deleteDriver(driver);
             driversList.getItems().removeAll(driver);
         }
+    }
+
+    @FXML
+    public void exitAction() {
+        DriverData.saveDrivers();
+        Platform.exit();
     }
 }
