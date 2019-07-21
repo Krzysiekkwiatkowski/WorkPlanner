@@ -31,6 +31,6 @@
         </VBox>
     </top>
     <left>
-        <ListView fx:id="driversList" onMouseClicked="#onRightClick"/>
+        <ListView fx:id="driversList"/>
     </left>
 </BorderPane>
