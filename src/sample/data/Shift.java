@@ -1,19 +1,38 @@
 package sample.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class Shift {
+
     private int number;
-    private String description;
+    private String hours;
+    private static List<Shift> shifts = new ArrayList<>();
 
-    public Shift(int number, String description) {
+    static {
+        shifts.add(new Shift(1, "6-14"));
+        shifts.add(new Shift(2, "14-22"));
+        shifts.add(new Shift(3, "22-6"));
+        shifts.add(new Shift(4, "6-22"));
+        shifts.add(new Shift(5, "7:30-15:30"));
+        shifts.add(new Shift(6, "15:30-22:30"));
+        shifts.add(new Shift(7, "17-1"));
+        shifts.add(new Shift(8, "18-2"));
+        shifts.add(new Shift(9, "10-14"));
+        shifts.add(new Shift(10, "14-18"));
+    }
+
+    private Shift(int number, String hours) {
         this.number = number;
-        this.description = description;
+        this.hours = hours;
     }
 
-    public int getNumber() {
-        return number;
+    public static Shift getShift(int number) {
+        return shifts.get(number);
     }
 
-    public String getDescription() {
-        return description;
+    @Override
+    public String toString() {
+        return this.hours;
     }
 }
