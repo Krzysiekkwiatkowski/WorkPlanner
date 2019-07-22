@@ -30,9 +30,11 @@ public class DriverController {
         return driver;
     }
 
-    public Driver editDriver(Driver driver){
-
-        return driver;
+    public void editDriver(Driver driver){
+        driver.setNumber(number.getValue());
+        driver.setFirstName(firstName.getText().trim());
+        driver.setLastName(lastName.getText().trim());
+        driver.setPhone(phone.getValue());
     }
 
     public void loadValues(Driver driver){

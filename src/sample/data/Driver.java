@@ -29,6 +29,22 @@ public class Driver {
         return phone;
     }
 
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return this.number + " " + this.firstName + " " + this.lastName + " " + this.phone;

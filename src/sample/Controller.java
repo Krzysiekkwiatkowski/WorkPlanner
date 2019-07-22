@@ -119,6 +119,8 @@ public class Controller {
         Optional<ButtonType> result = dialog.showAndWait();
         if(result.isPresent() && (result.get() == ButtonType.OK)){
             controller.editDriver(driver);
+            DriverData.addDriver(driver);
+            driversList.refresh();
         }
     }
 
