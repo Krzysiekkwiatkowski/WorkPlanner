@@ -1,0 +1,26 @@
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.RadioButton?>
+<DialogPane fx:controller="sample.ConditionController" xmlns:fx="http://javafx.com/fxml">
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggle"/>
+    </fx:define>
+    <content>
+        <GridPane vgap="10" hgap="10">
+            <Label text="Numer zmiany:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Spinner fx:id="shiftNumber" GridPane.rowIndex="0" GridPane.columnIndex="1" min="1" max="10" editable="true"/>
+            <Label text="Numer kierowcy:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Spinner fx:id="driverNumber" GridPane.rowIndex="1" GridPane.columnIndex="1" min="1" max="30" editable="true"/>
+            <Label text="Data:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <DatePicker fx:id="conditionDate" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <Label text="Chcę przyjść" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <RadioButton fx:id="wantedShift" GridPane.rowIndex="3" GridPane.columnIndex="1" toggleGroup="$shiftToggle"/>
+            <Label text="Nie mogę przyjść:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <RadioButton fx:id="unwantedShift" GridPane.rowIndex="4" GridPane.columnIndex="1" toggleGroup="$shiftToggle" selected="true"/>
+        </GridPane>
+    </content>
+</DialogPane>

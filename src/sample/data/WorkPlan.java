@@ -2,11 +2,14 @@ package sample.data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WorkPlan {
     private String mounth;
     private List<Day> days;
+    private Map<Driver, List<Condition>> conditions;
 
     public WorkPlan() {
         days = new ArrayList<>();
@@ -53,6 +56,7 @@ public class WorkPlan {
             Day day = new Day(LocalDate.now().plusMonths(1).withDayOfMonth(i + 1));
             days.add(day);
         }
+        conditions = new HashMap<>();
     }
 
     public String getMounth() {

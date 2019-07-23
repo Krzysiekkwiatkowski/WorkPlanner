@@ -9,8 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
+import sample.data.Condition;
 import sample.data.Driver;
 import sample.data.DriverData;
+import sample.data.WorkPlan;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -125,6 +127,28 @@ public class Controller {
             DriverData.addDriver(driver);
             driversList.refresh();
             sortList(driversList.getItems());
+        }
+    }
+
+    @FXML
+    private void showNewConditionDialog(){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainBorderPane.getScene().getWindow());
+        dialog.setTitle("Dodaj żądanie");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("conditionDialog.fxml"));
+        try {
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        } catch (IOException e){
+            System.out.println("Couldn't load the dialog");
+            e.printStackTrace();
+        }
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            ConditionController controller = fxmlLoader.getController();
+            controller.processResult();
         }
     }
 
