@@ -1,6 +1,7 @@
 package sample.data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkPlan {
@@ -8,6 +9,7 @@ public class WorkPlan {
     private List<Day> days;
 
     public WorkPlan() {
+        days = new ArrayList<>();
         String month = LocalDate.now().getMonth().plus(1).toString();
         switch (month){
             case "JANUARY":
@@ -47,9 +49,17 @@ public class WorkPlan {
                 this.mounth = "Grudzień";
                 break;
         }
+        for (int i = 0; i < LocalDate.now().getMonth().length(false); i++) {
+            Day day = new Day(LocalDate.now().plusMonths(1).withDayOfMonth(i + 1));
+            days.add(day);
+        }
     }
 
     public String getMounth() {
         return mounth;
+    }
+
+    public List<Day> getDays(){
+        return days;
     }
 }

@@ -30,6 +30,6 @@
         </VBox>
     </top>
     <left>
-        <ListView fx:id="driversList"/>
+        <ListView fx:id="driversList" prefWidth="275"/>
     </left>
 </BorderPane>

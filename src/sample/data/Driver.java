@@ -1,6 +1,6 @@
 package sample.data;
 
-public class Driver {
+public class Driver implements Comparable<Driver> {
     private int number;
     private String firstName;
     private String lastName;
@@ -48,5 +48,15 @@ public class Driver {
     @Override
     public String toString() {
         return this.number + " " + this.firstName + " " + this.lastName + " " + this.phone;
+    }
+
+    @Override
+    public int compareTo(Driver o) {
+        if (this.getNumber() < o.getNumber()) {
+            return -1;
+        } else if (this.getNumber() > o.getNumber()) {
+            return 1;
+        }
+        return 0;
     }
 }

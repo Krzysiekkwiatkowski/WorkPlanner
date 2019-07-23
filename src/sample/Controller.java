@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import sample.data.Driver;
 import sample.data.DriverData;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Optional;
 
 public class Controller {
@@ -47,7 +49,7 @@ public class Controller {
 
         listContextMenu.getItems().addAll(editMenuItem);
         listContextMenu.getItems().addAll(deleteMenuItem);
-        driversList.getItems().setAll(DriverData.getDrivers());
+        driversList.getItems().setAll(sortList(DriverData.getDrivers()));
         driversList.setCellFactory(new Callback<ListView<Driver>, ListCell<Driver>>() {
             @Override
             public ListCell<Driver> call(ListView<Driver> param) {
@@ -97,6 +99,7 @@ public class Controller {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             DriverController controller = fxmlLoader.getController();
             driversList.getItems().add(controller.processResult());
+            sortList(driversList.getItems());
         }
     }
 
@@ -121,6 +124,7 @@ public class Controller {
             controller.editDriver(driver);
             DriverData.addDriver(driver);
             driversList.refresh();
+            sortList(driversList.getItems());
         }
     }
 
@@ -134,6 +138,7 @@ public class Controller {
         if (result.isPresent() && (result.get() == ButtonType.OK)) {
             DriverData.deleteDriver(driver);
             driversList.getItems().removeAll(driver);
+            sortList(driversList.getItems());
         }
     }
 
@@ -141,5 +146,10 @@ public class Controller {
     public void exitAction() {
         DriverData.saveDrivers();
         Platform.exit();
+    }
+
+    private ObservableList<Driver> sortList(ObservableList<Driver> drivers){
+        Collections.sort(drivers);
+        return drivers;
     }
 }

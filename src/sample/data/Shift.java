@@ -31,6 +31,10 @@ public final class Shift {
         return shifts.get(number);
     }
 
+    public static List<Shift> getShifts(){
+        return shifts;
+    }
+
     @Override
     public String toString() {
         return this.hours;
