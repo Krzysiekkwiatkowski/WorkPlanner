@@ -24,7 +24,7 @@
                 <Menu text="Żądania">
                     <MenuItem text="Dodaj" onAction="#showNewConditionDialog"/>
                     <SeparatorMenuItem/>
-                    <MenuItem text="Wyczyść"/>
+                    <MenuItem text="Wyczyść" onAction="#clearConditions"/>
                 </Menu>
             </MenuBar>
         </VBox>

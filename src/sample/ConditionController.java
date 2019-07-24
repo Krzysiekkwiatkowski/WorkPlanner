@@ -1,12 +1,10 @@
 package sample;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import sample.data.Condition;
-
 import java.time.LocalDate;
 
 public class ConditionController {

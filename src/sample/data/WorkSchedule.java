@@ -6,15 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WorkPlan {
+public class WorkSchedule {
     private String mounth;
     private List<Day> days;
     private Map<Driver, List<Condition>> conditions;
 
-    public WorkPlan() {
+    public WorkSchedule() {
         days = new ArrayList<>();
         String month = LocalDate.now().getMonth().plus(1).toString();
-        switch (month){
+        switch (month) {
             case "JANUARY":
                 this.mounth = "Styczeń";
                 break;
@@ -63,7 +63,22 @@ public class WorkPlan {
         return mounth;
     }
 
-    public List<Day> getDays(){
+    public List<Day> getDays() {
         return days;
+    }
+
+    public void clearConditions() {
+        this.conditions.clear();
+    }
+
+    public void addCondition(Driver driver, Condition condition) {
+        if(driver != null && condition != null) {
+            if (conditions.containsKey(driver)) {
+                conditions.get(driver).add(condition);
+            } else {
+                conditions.put(driver, new ArrayList<>());
+                conditions.get(driver).add(condition);
+            }
+        }
     }
 }

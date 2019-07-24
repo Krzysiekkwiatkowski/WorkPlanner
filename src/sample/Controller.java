@@ -12,13 +12,14 @@ import javafx.util.Callback;
 import sample.data.Condition;
 import sample.data.Driver;
 import sample.data.DriverData;
-import sample.data.WorkPlan;
-
+import sample.data.WorkSchedule;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
 
 public class Controller {
+
+    private WorkSchedule schedule;
 
     @FXML
     private BorderPane mainBorderPane;
@@ -30,6 +31,7 @@ public class Controller {
     private ContextMenu listContextMenu;
 
     public void initialize() {
+        schedule = new WorkSchedule();
         listContextMenu = new ContextMenu();
         MenuItem editMenuItem = new MenuItem("Edytuj");
         MenuItem deleteMenuItem = new MenuItem("Usuń");
@@ -148,7 +150,8 @@ public class Controller {
         Optional<ButtonType> result = dialog.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK){
             ConditionController controller = fxmlLoader.getController();
-            controller.processResult();
+            Condition condition = controller.processResult();
+            schedule.addCondition(DriverData.getDriver(condition.getDriverNumber()), condition);
         }
     }
 
@@ -164,6 +167,12 @@ public class Controller {
             driversList.getItems().removeAll(driver);
             sortList(driversList.getItems());
         }
+    }
+
+    @FXML
+    public void clearConditions(){
+        System.out.println();
+        schedule.clearConditions();
     }
 
     @FXML

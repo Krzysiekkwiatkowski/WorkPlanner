@@ -72,4 +72,13 @@ public class DriverData {
             }
         }
     }
+
+    public static Driver getDriver(int driverNumber){
+        for (Driver driver : drivers) {
+            if(driver.getNumber() == driverNumber){
+                return driver;
+            }
+        }
+        return null;
+    }
 }
