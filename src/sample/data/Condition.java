@@ -9,17 +9,19 @@ public class Condition {
     private boolean possibleShift;
 
     public Condition(int shiftNumber, int driverNumber, LocalDate date, boolean possibleShift) {
-        this.shiftNumber = shiftNumber;
-        this.driverNumber = driverNumber;
-        this.date = date;
-        this.possibleShift = possibleShift;
+        if(date != null) {
+            this.shiftNumber = shiftNumber;
+            this.driverNumber = driverNumber;
+            this.date = date;
+            this.possibleShift = possibleShift;
+        }
     }
 
     public int getDriverNumber() {
         return driverNumber;
     }
 
-    public LocalDate getDate(){
+    public LocalDate getDate() {
         return date;
     }
 
@@ -29,5 +31,10 @@ public class Condition {
 
     public boolean isPossibleShift() {
         return possibleShift;
+    }
+
+    @Override
+    public String toString() {
+        return driverNumber + " " + date.toString();
     }
 }

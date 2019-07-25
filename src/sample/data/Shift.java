@@ -35,6 +35,14 @@ public final class Shift {
         return shifts;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public String getHours() {
+        return hours;
+    }
+
     @Override
     public String toString() {
         return this.hours;

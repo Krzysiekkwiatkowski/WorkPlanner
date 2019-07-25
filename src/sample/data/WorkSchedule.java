@@ -81,4 +81,8 @@ public class WorkSchedule {
             }
         }
     }
+
+    public Map<Driver, List<Condition>> getConditions(){
+        return conditions;
+    }
 }
