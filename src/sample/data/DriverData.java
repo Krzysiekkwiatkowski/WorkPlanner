@@ -20,19 +20,22 @@ public class DriverData {
             int number;
             int phone;
             while (scanner.hasNextLine()) {
-                String[] values = scanner.nextLine().split(" ");
-                firstName = values[1];
-                lastName = values[2];
-                try {
-                    number = Integer.parseInt(values[0]);
-                    phone = Integer.parseInt(values[3]);
-                } catch (IllegalArgumentException e) {
-                    number = 0;
-                    phone = 0;
-                    continue;
+                String line = scanner.nextLine();
+                if(!line.trim().isEmpty()) {
+                    String[] values = line.split(" ");
+                    firstName = values[1];
+                    lastName = values[2];
+                    try {
+                        number = Integer.parseInt(values[0]);
+                        phone = Integer.parseInt(values[3]);
+                    } catch (IllegalArgumentException e) {
+                        number = 0;
+                        phone = 0;
+                        continue;
+                    }
+                    Driver driver = new Driver(number, firstName, lastName, phone);
+                    drivers.add(driver);
                 }
-                Driver driver = new Driver(number, firstName, lastName, phone);
-                drivers.add(driver);
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -80,5 +83,14 @@ public class DriverData {
             }
         }
         return null;
+    }
+
+    public static boolean contains(int number){
+        for (Driver driver : drivers) {
+            if(driver.getNumber() == number){
+                return true;
+            }
+        }
+        return false;
     }
 }

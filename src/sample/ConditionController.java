@@ -5,6 +5,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import sample.data.Condition;
+import sample.data.DriverData;
+
 import java.time.LocalDate;
 
 public class ConditionController {
@@ -24,16 +26,18 @@ public class ConditionController {
     @FXML
     private RadioButton unwantedShift;
 
-    public Condition processResult(){
+    public Condition processResult() {
         int shift = shiftNumber.getValue();
         int driver = driverNumber.getValue();
         LocalDate date = conditionDate.getValue();
         boolean wanted = wantedShift.isSelected();
         boolean unwanted = unwantedShift.isSelected();
-        if(wanted){
-            return new Condition(shift, driver, date, true);
-        } else if(unwanted){
-            return new Condition(shift, driver, date, false);
+        if (DriverData.contains(driver) && date != null) {
+            if (wanted) {
+                return new Condition(shift, driver, date, true);
+            } else if (unwanted) {
+                return new Condition(shift, driver, date, false);
+            }
         }
         return null;
     }

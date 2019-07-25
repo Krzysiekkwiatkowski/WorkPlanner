@@ -198,10 +198,12 @@ public class Controller {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             ConditionController controller = fxmlLoader.getController();
             Condition condition = controller.processResult();
-            if (condition.getDate() != null) {
+            if (condition != null) {
                 schedule.addCondition(DriverData.getDriver(condition.getDriverNumber()), condition);
                 conditions.add(condition);
                 conditionList.getItems().add(condition);
+            } else {
+                System.out.println("Necessary data was not present");
             }
         }
     }
