@@ -9,12 +9,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
-import sample.data.Condition;
-import sample.data.Driver;
-import sample.data.DriverData;
-import sample.data.WorkSchedule;
-
+import sample.data.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -112,6 +109,11 @@ public class Controller {
                             setText(null);
                         } else {
                             setText(condition.toString());
+                            if(condition.isPossibleShift() == true){
+                                setTextFill(Color.GREEN);
+                            } else {
+                                setTextFill(Color.RED);
+                            }
                         }
                     }
                 };

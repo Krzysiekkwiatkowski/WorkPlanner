@@ -15,7 +15,7 @@ public final class Shift {
         shifts.add(new Shift(3, "22-6"));
         shifts.add(new Shift(4, "6-22"));
         shifts.add(new Shift(5, "7:30-15:30"));
-        shifts.add(new Shift(6, "15:30-22:30"));
+        shifts.add(new Shift(6, "15:30-23:30"));
         shifts.add(new Shift(7, "17-1"));
         shifts.add(new Shift(8, "18-2"));
         shifts.add(new Shift(9, "10-14"));

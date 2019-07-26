@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -7,25 +8,23 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.ListView?>
-<BorderPane fx:id="mainBorderPane" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/8.0.121"
-            fx:controller="sample.Controller">
+<BorderPane fx:id="mainBorderPane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <top>
         <VBox>
             <MenuBar>
                 <Menu id="fx" text="Program">
                     <MenuItem text="Generuj grafik"/>
                     <SeparatorMenuItem/>
-                    <MenuItem text="Wyjście" onAction="#exitAction"/>
+                    <MenuItem onAction="#exitAction" text="Wyjście"/>
                 </Menu>
                 <Menu text="Kierowca">
-                    <MenuItem text="Dodaj" onAction="#showNewDriverDialog"/>
+                    <MenuItem onAction="#showNewDriverDialog" text="Dodaj"/>
                 </Menu>
                 <Menu text="Żądania">
-                    <MenuItem text="Dodaj" onAction="#showNewConditionDialog"/>
+                    <MenuItem onAction="#showNewConditionDialog" text="Dodaj"/>
                     <SeparatorMenuItem/>
-                    <MenuItem text="Wyczyść" onAction="#clearConditions"/>
+                    <MenuItem onAction="#clearConditions" text="Wyczyść"/>
                 </Menu>
             </MenuBar>
         </VBox>

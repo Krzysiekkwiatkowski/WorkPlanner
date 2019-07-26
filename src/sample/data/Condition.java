@@ -35,6 +35,6 @@ public class Condition {
 
     @Override
     public String toString() {
-        return driverNumber + " " + date.toString();
+        return driverNumber + ", " + date.toString() + " godziny " + Shift.getShift(shiftNumber).getHours();
     }
 }

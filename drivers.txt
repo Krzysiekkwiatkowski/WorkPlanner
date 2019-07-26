@@ -1,3 +1,5 @@
-1 Kazimierz Kazimierskowy 504457844
+1 Kazik Kazimierski 504457855
+2 Marek Marecki 608153457
+3 Czesław Czechu 507212144
 4 Darek Darecki 606202145
-14 Mareko Marecki 608153457
+5 Michał Milek 512654784
