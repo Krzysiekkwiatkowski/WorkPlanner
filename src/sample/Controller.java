@@ -132,7 +132,6 @@ public class Controller {
         });
     }
 
-
     @FXML
     public void showNewDriverDialog() {
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -249,6 +248,11 @@ public class Controller {
     public void exitAction() {
         DriverData.saveDrivers();
         Platform.exit();
+    }
+
+    @FXML
+    public void startGenerating(){
+        schedule.generateWorkSchedule();
     }
 
     private ObservableList<Driver> sortList(ObservableList<Driver> drivers) {

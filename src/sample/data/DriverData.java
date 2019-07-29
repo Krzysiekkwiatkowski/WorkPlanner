@@ -2,7 +2,6 @@ package sample.data;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -13,35 +12,39 @@ public class DriverData {
     private static File data = new File("drivers.txt");
 
     public static ObservableList<Driver> getDrivers() {
-        try {
-            Scanner scanner = new Scanner(data);
-            String firstName;
-            String lastName;
-            int number;
-            int phone;
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if(!line.trim().isEmpty()) {
-                    String[] values = line.split(" ");
-                    firstName = values[1];
-                    lastName = values[2];
-                    try {
-                        number = Integer.parseInt(values[0]);
-                        phone = Integer.parseInt(values[3]);
-                    } catch (IllegalArgumentException e) {
-                        number = 0;
-                        phone = 0;
-                        continue;
+        if(drivers.isEmpty()) {
+            try {
+                Scanner scanner = new Scanner(data);
+                String firstName;
+                String lastName;
+                int number;
+                int phone;
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    if (!line.trim().isEmpty()) {
+                        String[] values = line.split(" ");
+                        firstName = values[1];
+                        lastName = values[2];
+                        try {
+                            number = Integer.parseInt(values[0]);
+                            phone = Integer.parseInt(values[3]);
+                        } catch (IllegalArgumentException e) {
+                            number = 0;
+                            phone = 0;
+                            continue;
+                        }
+                        Driver driver = new Driver(number, firstName, lastName, phone);
+                        drivers.add(driver);
                     }
-                    Driver driver = new Driver(number, firstName, lastName, phone);
-                    drivers.add(driver);
                 }
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found");
+                e.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-            e.printStackTrace();
+            return drivers;
+        } else {
+            return drivers;
         }
-        return drivers;
     }
 
     public static void saveDrivers() {

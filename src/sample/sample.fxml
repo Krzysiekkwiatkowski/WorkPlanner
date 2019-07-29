@@ -14,17 +14,17 @@
         <VBox>
             <MenuBar>
                 <Menu id="fx" text="Program">
-                    <MenuItem text="Generuj grafik"/>
+                    <MenuItem text="Generuj grafik" onAction="#startGenerating"/>
                     <SeparatorMenuItem/>
-                    <MenuItem onAction="#exitAction" text="Wyjście"/>
+                    <MenuItem text="Wyjście" onAction="#exitAction"/>
                 </Menu>
                 <Menu text="Kierowca">
-                    <MenuItem onAction="#showNewDriverDialog" text="Dodaj"/>
+                    <MenuItem text="Dodaj" onAction="#showNewDriverDialog"/>
                 </Menu>
                 <Menu text="Żądania">
-                    <MenuItem onAction="#showNewConditionDialog" text="Dodaj"/>
+                    <MenuItem text="Dodaj" onAction="#showNewConditionDialog"/>
                     <SeparatorMenuItem/>
-                    <MenuItem onAction="#clearConditions" text="Wyczyść"/>
+                    <MenuItem text="Wyczyść" onAction="#clearConditions"/>
                 </Menu>
             </MenuBar>
         </VBox>

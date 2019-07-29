@@ -57,6 +57,9 @@ public class WorkSchedule {
             days.add(day);
         }
         conditions = new HashMap<>();
+        for (Driver driver : DriverData.getDrivers()) {
+            conditions.put(driver, new ArrayList<>());
+        }
     }
 
     public String getMounth() {
@@ -76,7 +79,6 @@ public class WorkSchedule {
             if (conditions.containsKey(driver)) {
                 conditions.get(driver).add(condition);
             } else {
-                conditions.put(driver, new ArrayList<>());
                 conditions.get(driver).add(condition);
             }
         }
@@ -84,5 +86,10 @@ public class WorkSchedule {
 
     public Map<Driver, List<Condition>> getConditions(){
         return conditions;
+    }
+
+    public void generateWorkSchedule(){
+        System.out.println("Generuję grafik");
+        System.out.println(conditions.get(DriverData.getDriver(1)).size());
     }
 }
