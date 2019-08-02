@@ -35,8 +35,11 @@ public class Controller {
     @FXML
     private ContextMenu conditionsContextMenu;
 
+    @FXML
+    private Label displaySchedule;
+
     public void initialize() {
-        schedule = new WorkSchedule();
+        schedule = new WorkSchedule(this);
         driversContextMenu = new ContextMenu();
         MenuItem editMenuItem = new MenuItem("Edytuj");
         MenuItem deleteDriverItem = new MenuItem("Usuń");
@@ -232,6 +235,7 @@ public class Controller {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             schedule.getConditions().get(DriverData.getDriver(condition.getDriverNumber())).remove(condition);
+            schedule.getDay(condition.getDate()).removeCondition(condition);
             conditions.remove(condition);
             conditionList.getItems().remove(condition);
         }
@@ -258,5 +262,9 @@ public class Controller {
     private ObservableList<Driver> sortList(ObservableList<Driver> drivers) {
         Collections.sort(drivers);
         return drivers;
+    }
+
+    public Label getDisplaySchedule() {
+        return displaySchedule;
     }
 }

@@ -1,5 +1,7 @@
 package sample.data;
 
+import sample.Controller;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,52 +9,54 @@ import java.util.List;
 import java.util.Map;
 
 public class WorkSchedule {
-    private String mounth;
+    private String month;
+    private Controller controller;
     private List<Day> days;
     private Map<Driver, List<Condition>> conditions;
 
-    public WorkSchedule() {
+    public WorkSchedule(Controller controller) {
         days = new ArrayList<>();
+        this.controller = controller;
         String month = LocalDate.now().getMonth().plus(1).toString();
         switch (month) {
             case "JANUARY":
-                this.mounth = "Styczeń";
+                this.month = "Styczeń";
                 break;
             case "FEBRUARY":
-                this.mounth = "Luty";
+                this.month = "Luty";
                 break;
             case "MARCH":
-                this.mounth = "Marzec";
+                this.month = "Marzec";
                 break;
             case "APRIL":
-                this.mounth = "Kwiecień";
+                this.month = "Kwiecień";
                 break;
             case "MAY":
-                this.mounth = "Maj";
+                this.month = "Maj";
                 break;
             case "JUNE":
-                this.mounth = "Czerwiec";
+                this.month = "Czerwiec";
                 break;
             case "JULY":
-                this.mounth = "Lipiec";
+                this.month = "Lipiec";
                 break;
             case "AUGUST":
-                this.mounth = "Sierpień";
+                this.month = "Sierpień";
                 break;
             case "SEPTEMBER":
-                this.mounth = "Wrzesień";
+                this.month = "Wrzesień";
                 break;
             case "OCTOBER":
-                this.mounth = "Październik";
+                this.month = "Październik";
                 break;
             case "NOVEMBER":
-                this.mounth = "Listopad";
+                this.month = "Listopad";
                 break;
             case "DECEMBER":
-                this.mounth = "Grudzień";
+                this.month = "Grudzień";
                 break;
         }
-        for (int i = 0; i < LocalDate.now().getMonth().length(false); i++) {
+        for (int i = 0; i < LocalDate.now().getMonth().plus(1).length(false); i++) {
             Day day = new Day(LocalDate.now().plusMonths(1).withDayOfMonth(i + 1));
             days.add(day);
         }
@@ -63,7 +67,7 @@ public class WorkSchedule {
     }
 
     public String getMounth() {
-        return mounth;
+        return month;
     }
 
     public List<Day> getDays() {
@@ -71,11 +75,13 @@ public class WorkSchedule {
     }
 
     public void clearConditions() {
-        this.conditions.clear();
+        for (Driver driver : conditions.keySet()) {
+            conditions.get(driver).clear();
+        }
     }
 
     public void addCondition(Driver driver, Condition condition) {
-        if(driver != null && condition != null) {
+        if (driver != null && condition != null) {
             if (conditions.containsKey(driver)) {
                 conditions.get(driver).add(condition);
             } else {
@@ -84,12 +90,39 @@ public class WorkSchedule {
         }
     }
 
-    public Map<Driver, List<Condition>> getConditions(){
+    public Map<Driver, List<Condition>> getConditions() {
         return conditions;
     }
 
-    public void generateWorkSchedule(){
-        System.out.println("Generuję grafik");
-        System.out.println(conditions.get(DriverData.getDriver(1)).size());
+    public void generateWorkSchedule() {
+        setConditions();
+        showWorkSchedule();
+    }
+
+    public void setConditions(){
+        for (Driver driver : conditions.keySet()) {
+            for (Condition condition : conditions.get(driver)) {
+                days.get(condition.getDate().getDayOfMonth() -1).setCondition(driver, condition);
+            }
+        }
+    }
+
+    public void showWorkSchedule() {
+        StringBuilder sb = new StringBuilder();
+        for (Driver driver : conditions.keySet()) {
+            for (Condition condition : conditions.get(driver)) {
+                sb.append(condition.toString() + "\n");
+            }
+        }
+        this.controller.getDisplaySchedule().setText(sb.toString());
+    }
+
+    public Day getDay(LocalDate date){
+        for (Day day : days) {
+            if(day.getDate().toString().equals(date.toString())){
+                return day;
+            }
+        }
+        return null;
     }
 }

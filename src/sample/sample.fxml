@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Label?>
 <BorderPane fx:id="mainBorderPane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.121"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <top>
@@ -32,6 +33,9 @@
     <left>
         <ListView fx:id="driversList" prefWidth="275"/>
     </left>
+    <center>
+        <Label fx:id="displaySchedule"/>
+    </center>
     <right>
         <ListView fx:id="conditionList"/>
     </right>
