@@ -109,10 +109,8 @@ public class WorkSchedule {
 
     public void showWorkSchedule() {
         StringBuilder sb = new StringBuilder();
-        for (Driver driver : conditions.keySet()) {
-            for (Condition condition : conditions.get(driver)) {
-                sb.append(condition.toString() + "\n");
-            }
+        for (int i = 0; i < days.size(); i++) {
+            sb.append(days.get(i).getDate().toString() + " | " + days.get(i).dailyWorkSchedule() + "\n");
         }
         this.controller.getDisplaySchedule().setText(sb.toString());
     }

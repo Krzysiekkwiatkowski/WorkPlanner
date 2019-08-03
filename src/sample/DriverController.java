@@ -22,10 +22,10 @@ public class DriverController {
 
     public Driver processResult(){
         int driverNumber = number.getValue();
-        String driverFirtName = firstName.getText().trim();
+        String driverFirstName = firstName.getText().trim();
         String driverLastName = lastName.getText().trim();
         int driverPhone = phone.getValue();
-        Driver driver = new Driver(driverNumber, driverFirtName, driverLastName, driverPhone);
+        Driver driver = new Driver(driverNumber, driverFirstName, driverLastName, driverPhone);
         DriverData.addDriver(driver);
         return driver;
     }

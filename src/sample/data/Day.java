@@ -27,6 +27,7 @@ public class Day {
             }
             availability.put(driver, availabilityMap);
         }
+        test();
     }
 
     public void setCondition(Driver driver, Condition condition) {
@@ -54,7 +55,6 @@ public class Day {
                 if(driverCondition == condition){
                     conditions.get(driver).remove(driverCondition);
                     availability.get(driver).replace(Shift.getShift(condition.getShiftNumber()), true);
-                    System.out.println(driverCondition.toString() + " was removed");
                 }
             }
         }
@@ -62,5 +62,37 @@ public class Day {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public String dailyWorkSchedule(){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= shifts.size(); i++) {
+            sb.append("[" + Shift.getShift(i).getNumber() + "]  ");
+            List<Driver> drivers = shifts.get(Shift.getShift(i));
+            for (int j = 0; j < drivers.size(); j++) {
+                if(j < drivers.size() - 1) {
+                    sb.append(drivers.get(j).getNumber() + ",");
+                } else {
+                    sb.append(drivers.get(j).getNumber() + "  ");
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    public void addShift(int shiftNumber, Driver driver){
+        shifts.get(Shift.getShift(shiftNumber)).add(driver);
+    }
+
+    public void test(){
+        for (Shift shift : Shift.getShifts()) {
+            for(int i = 0; i < 3; i++) {
+                addShift(shift.getNumber(), DriverData.getDriver(generate()));
+            }
+        }
+    }
+
+    private int generate(){
+        return (int) (Math.random() * DriverData.getDrivers().size()) + 1;
     }
 }

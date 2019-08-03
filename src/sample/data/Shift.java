@@ -28,7 +28,7 @@ public final class Shift {
     }
 
     public static Shift getShift(int number) {
-        return shifts.get(number);
+        return shifts.get(number - 1);
     }
 
     public static List<Shift> getShifts(){
