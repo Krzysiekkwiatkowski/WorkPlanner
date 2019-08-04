@@ -67,13 +67,13 @@ public class Day {
     public String dailyWorkSchedule(){
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i <= shifts.size(); i++) {
-            sb.append("[" + Shift.getShift(i).getNumber() + "]  ");
+            sb.append("[" + Shift.getShift(i).getNumber() + "]   ");
             List<Driver> drivers = shifts.get(Shift.getShift(i));
             for (int j = 0; j < drivers.size(); j++) {
                 if(j < drivers.size() - 1) {
                     sb.append(drivers.get(j).getNumber() + ",");
                 } else {
-                    sb.append(drivers.get(j).getNumber() + "  ");
+                    sb.append(drivers.get(j).getNumber() + "   ");
                 }
             }
         }
