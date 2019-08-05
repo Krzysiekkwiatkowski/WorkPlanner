@@ -17,6 +17,8 @@
                 <Menu id="fx" text="Program">
                     <MenuItem text="Generuj grafik" onAction="#startGenerating"/>
                     <SeparatorMenuItem/>
+                    <MenuItem text="Dodaj czerwoną kartkę" onAction="#showHolidayDialog"/>
+                    <SeparatorMenuItem/>
                     <MenuItem text="Wyjście" onAction="#exitAction"/>
                 </Menu>
                 <Menu text="Kierowca">

@@ -8,12 +8,14 @@ import java.util.Map;
 
 public class Day {
     private LocalDate date;
+    private boolean holiday;
     private Map<Shift, List<Driver>> shifts;
     private Map<Driver, List<Condition>> conditions;
     private Map<Driver, Map<Shift, Boolean>> availability;
 
     public Day(LocalDate date) {
         this.date = date;
+        this.holiday = false;
         shifts = new HashMap<>();
         for (Shift shift : Shift.getShifts()) {
             shifts.put(shift, new ArrayList<>());
@@ -27,7 +29,6 @@ public class Day {
             }
             availability.put(driver, availabilityMap);
         }
-        test();
     }
 
     public void setCondition(Driver driver, Condition condition) {
@@ -43,6 +44,9 @@ public class Day {
             for (Shift shift : Shift.getShifts()) {
                 if(shift.getNumber() != condition.getShiftNumber()){
                     availability.get(driver).put(shift, false);
+                } else {
+                    availability.get(driver).put(shift, true);
+                    shifts.get(shift).add(driver);
                 }
             }
         }
@@ -84,15 +88,11 @@ public class Day {
         shifts.get(Shift.getShift(shiftNumber)).add(driver);
     }
 
-    public void test(){
-        for (Shift shift : Shift.getShifts()) {
-            for(int i = 0; i < 3; i++) {
-                addShift(shift.getNumber(), DriverData.getDriver(generate()));
-            }
-        }
+    private int generateShiftNumber(){
+        return (int) (Math.random() * 10 + 1);
     }
 
-    private int generate(){
-        return (int) (Math.random() * DriverData.getDrivers().size()) + 1;
+    public void setHoliday(boolean holiday) {
+        this.holiday = holiday;
     }
 }

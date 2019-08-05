@@ -1,7 +1,6 @@
 package sample.data;
 
 import sample.Controller;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;

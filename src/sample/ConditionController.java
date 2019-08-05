@@ -6,7 +6,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import sample.data.Condition;
 import sample.data.DriverData;
-
 import java.time.LocalDate;
 
 public class ConditionController {
