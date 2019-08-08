@@ -39,7 +39,6 @@ public class Controller {
     private Label displaySchedule;
 
     public void initialize() {
-        schedule = new WorkSchedule(this);
         driversContextMenu = new ContextMenu();
         MenuItem editMenuItem = new MenuItem("Edytuj");
         MenuItem deleteDriverItem = new MenuItem("Usuń");
@@ -230,7 +229,7 @@ public class Controller {
         Optional<ButtonType> result = dialog.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK){
             HolidayController holidayController = fxmlLoader.getController();
-            holidayController.processResult(schedule.getDays());
+            holidayController.processResult();
         }
     }
 
@@ -278,6 +277,7 @@ public class Controller {
 
     @FXML
     public void startGenerating(){
+        schedule = new WorkSchedule(this);
         schedule.generateWorkSchedule();
     }
 

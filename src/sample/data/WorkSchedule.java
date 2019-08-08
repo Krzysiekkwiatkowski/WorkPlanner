@@ -1,6 +1,8 @@
 package sample.data;
 
 import sample.Controller;
+import sample.HolidayController;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +18,7 @@ public class WorkSchedule {
     public WorkSchedule(Controller controller) {
         days = new ArrayList<>();
         this.controller = controller;
+        List<LocalDate> holidays = HolidayController.getHolidays();
         String month = LocalDate.now().getMonth().plus(1).toString();
         switch (month) {
             case "JANUARY":
@@ -56,7 +59,8 @@ public class WorkSchedule {
                 break;
         }
         for (int i = 0; i < LocalDate.now().getMonth().plus(1).length(false); i++) {
-            Day day = new Day(LocalDate.now().plusMonths(1).withDayOfMonth(i + 1));
+            LocalDate actualDate = LocalDate.now().plusMonths(1).withDayOfMonth(i + 1);
+            Day day = new Day(actualDate, holidays.contains(actualDate));
             days.add(day);
         }
         conditions = new HashMap<>();
