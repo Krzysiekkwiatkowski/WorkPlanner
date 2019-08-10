@@ -39,6 +39,7 @@ public class Controller {
     private Label displaySchedule;
 
     public void initialize() {
+        schedule = new WorkSchedule(this);
         driversContextMenu = new ContextMenu();
         MenuItem editMenuItem = new MenuItem("Edytuj");
         MenuItem deleteDriverItem = new MenuItem("Usuń");
@@ -277,7 +278,6 @@ public class Controller {
 
     @FXML
     public void startGenerating(){
-        schedule = new WorkSchedule(this);
         schedule.generateWorkSchedule();
     }
 

@@ -47,4 +47,9 @@ public final class Shift {
     public String toString() {
         return this.hours;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.getNumber() == ((Shift) obj).getNumber();
+    }
 }

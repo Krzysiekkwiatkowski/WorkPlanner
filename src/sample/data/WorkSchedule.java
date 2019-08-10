@@ -4,21 +4,18 @@ import sample.Controller;
 import sample.HolidayController;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class WorkSchedule {
     private String month;
     private Controller controller;
     private List<Day> days;
     private Map<Driver, List<Condition>> conditions;
+    private ExcelSaving excel = new ExcelSaving(this);
 
     public WorkSchedule(Controller controller) {
         days = new ArrayList<>();
         this.controller = controller;
-        List<LocalDate> holidays = HolidayController.getHolidays();
         String month = LocalDate.now().getMonth().plus(1).toString();
         switch (month) {
             case "JANUARY":
@@ -58,23 +55,65 @@ public class WorkSchedule {
                 this.month = "Grudzień";
                 break;
         }
-        for (int i = 0; i < LocalDate.now().getMonth().plus(1).length(false); i++) {
-            LocalDate actualDate = LocalDate.now().plusMonths(1).withDayOfMonth(i + 1);
-            Day day = new Day(actualDate, holidays.contains(actualDate));
-            days.add(day);
-        }
         conditions = new HashMap<>();
         for (Driver driver : DriverData.getDrivers()) {
             conditions.put(driver, new ArrayList<>());
         }
     }
 
-    public String getMounth() {
-        return month;
+    private void initializeDays() {
+        List<LocalDate> holidays = HolidayController.getHolidays();
+        for (int i = 0; i < LocalDate.now().getMonth().plus(1).length(false); i++) {
+            LocalDate actualDate = LocalDate.now().plusMonths(1).withDayOfMonth(i + 1);
+            Day day = new Day(actualDate, holidays.contains(actualDate));
+            days.add(day);
+        }
     }
 
-    public List<Day> getDays() {
-        return days;
+    public void generate() {
+        for (Day day : days) {
+            manageDay(day);
+        }
+    }
+
+    private void manageDay(Day day) {
+        boolean finish = false;
+        int actualShiftNumber = 1;
+        while (!finish) {
+            if(actualShiftNumber == 0){
+               finish = true;
+            }
+            if(day.getShifts().containsKey(actualShiftNumber)) {
+                prepareShift(day, actualShiftNumber);
+                actualShiftNumber = generateNext(actualShiftNumber);
+            } else {
+                actualShiftNumber = generateNext(actualShiftNumber);
+                if (actualShiftNumber > Shift.getShifts().size()) {
+                    finish = true;
+                }
+            }
+        }
+    }
+
+    private boolean prepareShift(Day day, int actualShiftNumber) {
+        while (day.getShifts().get(actualShiftNumber).size() < 4) {
+            int driverNumber = generateDriverNumber();
+            if (day.checkAvailability(driverNumber, actualShiftNumber)) {
+//                day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
+            }
+        }
+        return true;
+    }
+
+    private int generateNext(int previous) {
+        if (++previous <= 10) {
+            return previous;
+        }
+        return 0;
+    }
+
+    private int generateDriverNumber() {
+        return (int) (Math.random() * DriverData.getDrivers().size() + 1);
     }
 
     public void clearConditions() {
@@ -93,21 +132,12 @@ public class WorkSchedule {
         }
     }
 
-    public Map<Driver, List<Condition>> getConditions() {
-        return conditions;
-    }
-
     public void generateWorkSchedule() {
+        initializeDays();
         setConditions();
+        generate();
         showWorkSchedule();
-    }
-
-    public void setConditions(){
-        for (Driver driver : conditions.keySet()) {
-            for (Condition condition : conditions.get(driver)) {
-                days.get(condition.getDate().getDayOfMonth() -1).setCondition(driver, condition);
-            }
-        }
+        saveWorkSchedule();
     }
 
     public void showWorkSchedule() {
@@ -118,12 +148,36 @@ public class WorkSchedule {
         this.controller.getDisplaySchedule().setText(sb.toString());
     }
 
-    public Day getDay(LocalDate date){
+    public Day getDay(LocalDate date) {
         for (Day day : days) {
-            if(day.getDate().toString().equals(date.toString())){
+            if (day.getDate().toString().equals(date.toString())) {
                 return day;
             }
         }
         return null;
+    }
+
+    private void saveWorkSchedule(){
+        excel.saveData();
+    }
+
+    public Map<Driver, List<Condition>> getConditions() {
+        return conditions;
+    }
+
+    public String getMounth() {
+        return month;
+    }
+
+    public List<Day> getDays() {
+        return days;
+    }
+
+    public void setConditions() {
+        for (Driver driver : conditions.keySet()) {
+            for (Condition condition : conditions.get(driver)) {
+                days.get(condition.getDate().getDayOfMonth() - 1).setCondition(driver, condition);
+            }
+        }
     }
 }

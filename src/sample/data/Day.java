@@ -9,9 +9,9 @@ import java.util.Map;
 public class Day {
     private LocalDate date;
     private boolean nextDayHoliday;
-    private Map<Shift, List<Driver>> shifts;
+    private Map<Integer, List<Driver>> shifts;
     private Map<Driver, List<Condition>> conditions;
-    private Map<Driver, Map<Shift, Boolean>> availability;
+    private Map<Driver, Map<Integer, Boolean>> availability;
 
     public Day(LocalDate date, boolean holiday) {
         this.date = date;
@@ -21,12 +21,10 @@ public class Day {
         List<Integer> tempConditions = new ArrayList<>();
         switch (dayOfWeek) {
             case "FRIDAY":
-                tempConditions.add(8);
-                manageShifts(tempConditions);
+                manageShifts(null);
                 break;
             case "SATURDAY":
                 tempConditions.add(4);
-                tempConditions.add(8);
                 tempConditions.add(10);
                 manageShifts(tempConditions);
                 break;
@@ -37,37 +35,44 @@ public class Day {
                 manageShifts(tempConditions);
                 break;
             default:
-                manageShifts(null);
+                tempConditions.add(8);
+                manageShifts(tempConditions);
                 break;
         }
         conditions = new HashMap<>();
         availability = new HashMap<>();
         for (Driver driver : DriverData.getDrivers()) {
-            Map<Shift, Boolean> availabilityMap = new HashMap<>();
+            Map<Integer, Boolean> availabilityMap = new HashMap<>();
             for (Shift shift : Shift.getShifts()) {
-                availabilityMap.put(shift, true);
+                availabilityMap.put(shift.getNumber(), true);
             }
             availability.put(driver, availabilityMap);
         }
     }
 
-    public void manageShifts(List<Integer> conditions) {
-        if(nextDayHoliday == true){
-            if(!conditions.contains(8)){
-                conditions.add(8);
-            }
+    private void manageShifts(List<Integer> conditions) {
+        if (!nextDayHoliday) {
+            conditions = redCardCondition(conditions);
         }
-        if(conditions != null){
+        if (conditions != null) {
             for (Shift shift : Shift.getShifts()) {
-                if(!conditions.contains(shift.getNumber())){
-                    shifts.put(shift, new ArrayList<>());
+                if (!conditions.contains(shift.getNumber())) {
+                    shifts.put(shift.getNumber(), new ArrayList<>());
                 }
             }
         } else {
             for (Shift shift : Shift.getShifts()) {
-                shifts.put(shift, new ArrayList<>());
+                shifts.put(shift.getNumber(), new ArrayList<>());
             }
         }
+    }
+
+    private List<Integer> redCardCondition(List<Integer> conditions) {
+        if (conditions == null) {
+            conditions = new ArrayList<>();
+        }
+        conditions.add(8);
+        return conditions;
     }
 
     public void setCondition(Driver driver, Condition condition) {
@@ -78,14 +83,14 @@ public class Day {
             this.conditions.get(driver).add(condition);
         }
         if (!condition.isPossibleShift()) {
-            availability.get(driver).put(Shift.getShift(condition.getShiftNumber()), false);
+            availability.get(driver).put(condition.getShiftNumber(), false);
         } else {
             for (Shift shift : Shift.getShifts()) {
                 if (shift.getNumber() != condition.getShiftNumber()) {
-                    availability.get(driver).put(shift, false);
+                    availability.get(driver).put(shift.getNumber(), false);
                 } else {
-                    availability.get(driver).put(shift, true);
-                    shifts.get(shift).add(driver);
+                    availability.get(driver).put(shift.getNumber(), true);
+                    shifts.get(shift.getNumber()).add(driver);
                 }
             }
         }
@@ -97,7 +102,7 @@ public class Day {
             for (Condition driverCondition : conditions.get(driver)) {
                 if (driverCondition == condition) {
                     conditions.get(driver).remove(driverCondition);
-                    availability.get(driver).replace(Shift.getShift(condition.getShiftNumber()), true);
+                    availability.get(driver).replace(condition.getShiftNumber(), true);
                 }
             }
         }
@@ -109,29 +114,39 @@ public class Day {
 
     public String dailyWorkSchedule() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 1; i <= shifts.size(); i++) {
+        for (int i = 1; i <= Shift.getShifts().size(); i++) {
             sb.append("[" + Shift.getShift(i).getNumber() + "]   ");
-            List<Driver> drivers = shifts.get(Shift.getShift(i));
-            for (int j = 0; j < drivers.size(); j++) {
-                if (j < drivers.size() - 1) {
-                    sb.append(drivers.get(j).getNumber() + ",");
-                } else {
-                    sb.append(drivers.get(j).getNumber() + "   ");
+            List<Driver> drivers = shifts.get(i);
+            if (drivers != null) {
+                for (int j = 0; j < drivers.size(); j++) {
+                    if (j < drivers.size() - 1) {
+                        sb.append(drivers.get(j).getNumber() + ",");
+                    } else {
+                        sb.append(drivers.get(j).getNumber() + "   ");
+                    }
+
                 }
+            } else {
+                sb.append("Brak");
             }
         }
         return sb.toString();
     }
 
+    public boolean checkAvailability(int driverNumber, int shiftNumber) {
+        Driver driver = DriverData.getDriver(driverNumber);
+        if (availability.get(driver).get(shiftNumber)) {
+            addShift(shiftNumber, driver);
+            return true;
+        }
+        return false;
+    }
+
     public void addShift(int shiftNumber, Driver driver) {
-        shifts.get(Shift.getShift(shiftNumber)).add(driver);
+        shifts.get(shiftNumber).add(driver);
     }
 
-    private int generateShiftNumber() {
-        return (int) (Math.random() * 10 + 1);
-    }
-
-    public int shifts() {
-        return this.shifts.size();
+    public Map<Integer, List<Driver>> getShifts() {
+        return shifts;
     }
 }
