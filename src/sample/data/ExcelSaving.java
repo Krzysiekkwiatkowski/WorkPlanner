@@ -1,5 +1,7 @@
 package sample.data;
 
+import jxl.Cell;
+import jxl.CellView;
 import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
@@ -37,15 +39,15 @@ public class ExcelSaving {
             column++;
         }
         for (Day day : schedule.getDays()) {
-            addToSheet(generateLabel(1, row, day.getDate().toString()));
+            addToSheet(generateLabel(1, row, day.toString()));
             int shiftNumber = 1;
             for (Shift shift : Shift.getShifts()) {
                 List<Driver> drivers = day.getShifts().get(shiftNumber);
                 StringBuilder sb = new StringBuilder();
-                if(drivers != null){
-                    if(drivers.size() > 0){
+                if (drivers != null) {
+                    if (drivers.size() > 0) {
                         for (int i = 0; i < drivers.size(); i++) {
-                            if(i < drivers.size() - 1){
+                            if (i < drivers.size() - 1) {
                                 sb.append(drivers.get(i).getNumber() + ", ");
                             } else {
                                 sb.append(drivers.get(i).getNumber());
@@ -53,7 +55,7 @@ public class ExcelSaving {
                         }
                     }
                 } else {
-                    sb.append("Brak zmiany!");
+                    sb.append("-");
                 }
                 addToSheet(generateLabel(actualColumn, actualRow, sb.toString()));
                 actualColumn++;
@@ -81,11 +83,35 @@ public class ExcelSaving {
 
     private void saveFile() {
         try {
+            for (int i = 0; i < sheet.getColumns(); i++) {
+                setWidth(i, sheet.getColumnView(i), maxWidth(sheet.getColumn(i)));
+            }
             excelData.write();
             excelData.close();
         } catch (WriteException | IOException e) {
             System.out.println("Couldn't save the file");
             e.printStackTrace();
         }
+    }
+
+    private void setWidth(int number, CellView column, int preferedWidth) {
+        if(preferedWidth == 0){
+            column.setSize(4 * 256);
+        } else if(preferedWidth < 6) {
+            column.setSize(preferedWidth * 256 + 200);
+        } else {
+            column.setSize(preferedWidth * 256 - 300);
+        }
+        sheet.setColumnView(number, column);
+    }
+
+    private int maxWidth(Cell[] cells) {
+        int max = 0;
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i].getContents().length() > max) {
+                max = cells[i].getContents().trim().length();
+            }
+        }
+        return max;
     }
 }

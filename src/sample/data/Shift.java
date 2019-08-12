@@ -11,15 +11,15 @@ public final class Shift {
 
     static {
         shifts.add(new Shift(1, "6-14"));
-        shifts.add(new Shift(2, "14-22"));
-        shifts.add(new Shift(3, "22-6"));
+        shifts.add(new Shift(2, "7:30-15:30"));
+        shifts.add(new Shift(3, "10-14"));
         shifts.add(new Shift(4, "6-22"));
-        shifts.add(new Shift(5, "7:30-15:30"));
-        shifts.add(new Shift(6, "15:30-23:30"));
-        shifts.add(new Shift(7, "17-1"));
-        shifts.add(new Shift(8, "18-2"));
-        shifts.add(new Shift(9, "10-14"));
-        shifts.add(new Shift(10, "14-18"));
+        shifts.add(new Shift(5, "14-22"));
+        shifts.add(new Shift(6, "14-18"));
+        shifts.add(new Shift(7, "15:30-23:30"));
+        shifts.add(new Shift(8, "17-1"));
+        shifts.add(new Shift(9, "18-2"));
+        shifts.add(new Shift(10, "22-6"));
     }
 
     private Shift(int number, String hours) {

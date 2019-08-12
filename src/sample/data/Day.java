@@ -21,21 +21,22 @@ public class Day {
         List<Integer> tempConditions = new ArrayList<>();
         switch (dayOfWeek) {
             case "FRIDAY":
-                manageShifts(null);
+                manageShifts(tempConditions);
                 break;
             case "SATURDAY":
                 tempConditions.add(4);
-                tempConditions.add(10);
+                tempConditions.add(6);
                 manageShifts(tempConditions);
                 break;
             case "SUNDAY":
-                tempConditions.add(5);
-                tempConditions.add(8);
-                tempConditions.add(10);
+                tempConditions.add(2);
+                tempConditions.add(4);
+                tempConditions.add(6);
+                tempConditions.add(9);
                 manageShifts(tempConditions);
                 break;
             default:
-                tempConditions.add(8);
+                tempConditions.add(9);
                 manageShifts(tempConditions);
                 break;
         }
@@ -51,10 +52,10 @@ public class Day {
     }
 
     private void manageShifts(List<Integer> conditions) {
-        if (!nextDayHoliday) {
+        if (nextDayHoliday) {
             conditions = redCardCondition(conditions);
         }
-        if (conditions != null) {
+        if (conditions.size() > 0) {
             for (Shift shift : Shift.getShifts()) {
                 if (!conditions.contains(shift.getNumber())) {
                     shifts.put(shift.getNumber(), new ArrayList<>());
@@ -68,10 +69,9 @@ public class Day {
     }
 
     private List<Integer> redCardCondition(List<Integer> conditions) {
-        if (conditions == null) {
-            conditions = new ArrayList<>();
+        if (!conditions.contains(9)) {
+            conditions.add(9);
         }
-        conditions.add(8);
         return conditions;
     }
 
@@ -127,7 +127,7 @@ public class Day {
 
                 }
             } else {
-                sb.append("Brak");
+                sb.append("-");
             }
         }
         return sb.toString();
@@ -135,8 +135,7 @@ public class Day {
 
     public boolean checkAvailability(int driverNumber, int shiftNumber) {
         Driver driver = DriverData.getDriver(driverNumber);
-        if (availability.get(driver).get(shiftNumber)) {
-            addShift(shiftNumber, driver);
+        if (availability.get(driver).get(shiftNumber) && shifts.containsKey(shiftNumber)) {
             return true;
         }
         return false;
@@ -147,6 +146,31 @@ public class Day {
     }
 
     public Map<Integer, List<Driver>> getShifts() {
-        return shifts;
+        return this.shifts;
+    }
+
+    private String generateShortCut() {
+        switch (date.getDayOfWeek().toString()) {
+            case "MONDAY":
+                return "pn";
+            case "TUESDAY":
+                return "wt";
+            case "WEDNESDAY":
+                return "śr";
+            case "THURSDAY":
+                return "cz";
+            case "FRIDAY":
+                return "pt";
+            case "SATURDAY":
+                return "sb";
+            case "SUNDAY":
+                return "nd";
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return date.getDayOfMonth() + " " + generateShortCut();
     }
 }

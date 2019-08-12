@@ -96,13 +96,38 @@ public class WorkSchedule {
     }
 
     private boolean prepareShift(Day day, int actualShiftNumber) {
-        while (day.getShifts().get(actualShiftNumber).size() < 4) {
+        int numberOfDrivers = checkNumberOfDrivers(day, actualShiftNumber);
+        while (day.getShifts().get(actualShiftNumber).size() < numberOfDrivers) {
             int driverNumber = generateDriverNumber();
-            if (day.checkAvailability(driverNumber, actualShiftNumber)) {
-//                day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
+            if (day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().containsKey(actualShiftNumber)) {
+                day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
+                if(day.getShifts().get(actualShiftNumber).size() == numberOfDrivers){
+                    return true;
+                }
             }
         }
-        return true;
+        return false;
+    }
+
+    private int checkNumberOfDrivers(Day day, int shiftNumber){
+        String dayCondition = day.getDate().getDayOfWeek().toString();
+        switch (dayCondition){
+            case "MONDAY":
+                break;
+            case "TUESDAY":
+                break;
+            case "WEDNESDAY":
+                break;
+            case "THURSDAY":
+                break;
+            case "FRIDAY":
+                break;
+            case "SATURDAY":
+                break;
+            case "SUNDAY":
+                break;
+        }
+        return 0;
     }
 
     private int generateNext(int previous) {
@@ -143,7 +168,7 @@ public class WorkSchedule {
     public void showWorkSchedule() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < days.size(); i++) {
-            sb.append(days.get(i).getDate().toString() + "  |  " + days.get(i).dailyWorkSchedule() + "\n");
+            sb.append(days.get(i).toString() + "  |  " + days.get(i).dailyWorkSchedule() + "\n");
         }
         this.controller.getDisplaySchedule().setText(sb.toString());
     }
