@@ -113,19 +113,54 @@ public class WorkSchedule {
         String dayCondition = day.getDate().getDayOfWeek().toString();
         switch (dayCondition){
             case "MONDAY":
-                break;
+                return typicalDay(shiftNumber);
             case "TUESDAY":
-                break;
+                return typicalDay(shiftNumber);
             case "WEDNESDAY":
-                break;
+                return typicalDay(shiftNumber);
             case "THURSDAY":
-                break;
+                return typicalDay(shiftNumber);
             case "FRIDAY":
-                break;
+                if(shiftNumber == 1){
+                    return 4;
+                } else if(shiftNumber == 2 || shiftNumber == 10){
+                    return 2;
+                } else if(shiftNumber == 3 || shiftNumber == 4 || shiftNumber == 6 || shiftNumber == 7 || shiftNumber == 8){
+                    return 1;
+                } else if(shiftNumber == 5){
+                    return 3;
+                } else {
+                    return 0;
+                }
             case "SATURDAY":
+                if(shiftNumber == 1 || shiftNumber == 5 || shiftNumber == 10){
+                    return 3;
+                } else if(shiftNumber == 2 || shiftNumber == 3 || shiftNumber == 7 || shiftNumber == 8){
+                    return 1;
+                }
                 break;
             case "SUNDAY":
+                if(shiftNumber == 1 || shiftNumber == 5){
+                    return 3;
+                } else if(shiftNumber == 2 || shiftNumber == 3 || shiftNumber == 7 || shiftNumber == 8){
+                    return 1;
+                } else if(shiftNumber == 10){
+                    return 2;
+                }
                 break;
+        }
+        return 0;
+    }
+
+    private int typicalDay(int shiftNumber){
+        if(shiftNumber == 1){
+            return 4;
+        } else if(shiftNumber == 2 || shiftNumber == 10){
+            return 2;
+        } else if(shiftNumber == 3 || shiftNumber == 4 || shiftNumber == 6 ||shiftNumber == 7 || shiftNumber == 8){
+            return 1;
+        } else if(shiftNumber == 5){
+            return 3;
         }
         return 0;
     }
