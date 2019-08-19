@@ -69,9 +69,11 @@ public class Day {
     }
 
     private List<Integer> redCardCondition(List<Integer> conditions) {
-        if (!conditions.contains(9)) {
-            conditions.add(9);
+        int index = -1;
+        if (conditions.contains(9)) {
+            index = conditions.indexOf(9);
         }
+        conditions.remove(index);
         return conditions;
     }
 
@@ -106,6 +108,10 @@ public class Day {
                 }
             }
         }
+    }
+
+    public List<Driver> getDriversByShift(int shiftNumber) {
+        return shifts.get(shiftNumber);
     }
 
     public LocalDate getDate() {
@@ -165,8 +171,13 @@ public class Day {
                 return "sb";
             case "SUNDAY":
                 return "nd";
+            default:
+                return null;
         }
-        return null;
+    }
+
+    public boolean isNextDayHoliday() {
+        return nextDayHoliday;
     }
 
     @Override

@@ -80,10 +80,10 @@ public class WorkSchedule {
         boolean finish = false;
         int actualShiftNumber = 1;
         while (!finish) {
-            if(actualShiftNumber == 0){
-               finish = true;
+            if (actualShiftNumber == 0) {
+                finish = true;
             }
-            if(day.getShifts().containsKey(actualShiftNumber)) {
+            if (day.getShifts().containsKey(actualShiftNumber)) {
                 prepareShift(day, actualShiftNumber);
                 actualShiftNumber = generateNext(actualShiftNumber);
             } else {
@@ -95,13 +95,38 @@ public class WorkSchedule {
         }
     }
 
+    private void setAvailability(Driver driver, int shiftNumber) {
+        switch (shiftNumber) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+        }
+    }
+
     private boolean prepareShift(Day day, int actualShiftNumber) {
         int numberOfDrivers = checkNumberOfDrivers(day, actualShiftNumber);
         while (day.getShifts().get(actualShiftNumber).size() < numberOfDrivers) {
             int driverNumber = generateDriverNumber();
             if (day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().containsKey(actualShiftNumber)) {
                 day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
-                if(day.getShifts().get(actualShiftNumber).size() == numberOfDrivers){
+                if (day.getShifts().get(actualShiftNumber).size() == numberOfDrivers) {
                     return true;
                 }
             }
@@ -109,9 +134,9 @@ public class WorkSchedule {
         return false;
     }
 
-    private int checkNumberOfDrivers(Day day, int shiftNumber){
+    private int checkNumberOfDrivers(Day day, int shiftNumber) {
         String dayCondition = day.getDate().getDayOfWeek().toString();
-        switch (dayCondition){
+        switch (dayCondition) {
             case "MONDAY":
                 return typicalDay(shiftNumber);
             case "TUESDAY":
@@ -121,30 +146,30 @@ public class WorkSchedule {
             case "THURSDAY":
                 return typicalDay(shiftNumber);
             case "FRIDAY":
-                if(shiftNumber == 1){
+                if (shiftNumber == 1) {
                     return 4;
-                } else if(shiftNumber == 2 || shiftNumber == 10){
+                } else if (shiftNumber == 2 || shiftNumber == 10) {
                     return 2;
-                } else if(shiftNumber == 3 || shiftNumber == 4 || shiftNumber == 6 || shiftNumber == 7 || shiftNumber == 8){
+                } else if (shiftNumber == 3 || shiftNumber == 4 || shiftNumber == 6 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9) {
                     return 1;
-                } else if(shiftNumber == 5){
+                } else if (shiftNumber == 5) {
                     return 3;
                 } else {
                     return 0;
                 }
             case "SATURDAY":
-                if(shiftNumber == 1 || shiftNumber == 5 || shiftNumber == 10){
+                if (shiftNumber == 1 || shiftNumber == 5 || shiftNumber == 10) {
                     return 3;
-                } else if(shiftNumber == 2 || shiftNumber == 3 || shiftNumber == 7 || shiftNumber == 8){
+                } else if (shiftNumber == 2 || shiftNumber == 3 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9) {
                     return 1;
                 }
                 break;
             case "SUNDAY":
-                if(shiftNumber == 1 || shiftNumber == 5){
+                if (shiftNumber == 1 || shiftNumber == 5) {
                     return 3;
-                } else if(shiftNumber == 2 || shiftNumber == 3 || shiftNumber == 7 || shiftNumber == 8){
+                } else if (shiftNumber == 2 || shiftNumber == 3 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9) {
                     return 1;
-                } else if(shiftNumber == 10){
+                } else if (shiftNumber == 10) {
                     return 2;
                 }
                 break;
@@ -152,14 +177,14 @@ public class WorkSchedule {
         return 0;
     }
 
-    private int typicalDay(int shiftNumber){
-        if(shiftNumber == 1){
+    private int typicalDay(int shiftNumber) {
+        if (shiftNumber == 1) {
             return 4;
-        } else if(shiftNumber == 2 || shiftNumber == 10){
+        } else if (shiftNumber == 2 || shiftNumber == 10) {
             return 2;
-        } else if(shiftNumber == 3 || shiftNumber == 4 || shiftNumber == 6 ||shiftNumber == 7 || shiftNumber == 8){
+        } else if (shiftNumber == 3 || shiftNumber == 4 || shiftNumber == 6 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9) {
             return 1;
-        } else if(shiftNumber == 5){
+        } else if (shiftNumber == 5) {
             return 3;
         }
         return 0;
@@ -217,7 +242,15 @@ public class WorkSchedule {
         return null;
     }
 
-    private void saveWorkSchedule(){
+    private List<Driver> checkDrivers(int shiftNumber) {
+        List<Driver> driverList = new ArrayList<>();
+        for (Day day : days) {
+            driverList.addAll(day.getDriversByShift(shiftNumber));
+        }
+        return driverList;
+    }
+
+    private void saveWorkSchedule() {
         excel.saveData();
     }
 

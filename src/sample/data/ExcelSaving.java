@@ -3,11 +3,10 @@ package sample.data;
 import jxl.Cell;
 import jxl.CellView;
 import jxl.Workbook;
-import jxl.write.Label;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
-
+import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
+import jxl.write.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -18,6 +17,7 @@ public class ExcelSaving {
     private final WorkSchedule schedule;
     private WritableWorkbook excelData;
     private WritableSheet sheet;
+    private WritableCellFormat cellFormat = null;
 
     public ExcelSaving(WorkSchedule workSchedule) {
         this.schedule = workSchedule;
@@ -34,6 +34,20 @@ public class ExcelSaving {
         int column = 2;
         int actualRow = 2;
         int actualColumn = 2;
+        Label month = new Label(1,0, schedule.getMounth());
+        Label date = generateLabel(1,1,"Data");
+        addToSheet(date);
+        try {
+            cellFormat = new WritableCellFormat();
+            cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+            cellFormat.setAlignment(Alignment.CENTRE);
+            month.setCellFormat(cellFormat);
+            sheet.addCell(month);
+            sheet.mergeCells(1, 0, 11, 0);
+        } catch (WriteException e){
+            System.out.println("Couldn't save to file");
+            e.printStackTrace();
+        }
         for (Shift shift : Shift.getShifts()) {
             addToSheet(generateLabel(column, 1, shift.getHours()));
             column++;
@@ -69,7 +83,16 @@ public class ExcelSaving {
     }
 
     private Label generateLabel(int column, int row, String text) {
-        return new Label(column, row, text);
+        Label label = new Label(column, row, text);
+        cellFormat = new WritableCellFormat();
+        try {
+            cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+        } catch (WriteException e){
+            System.out.println("Couldn't set border");
+            e.printStackTrace();
+        }
+        label.setCellFormat(cellFormat);
+        return label;
     }
 
     private void addToSheet(Label label) {
@@ -100,7 +123,7 @@ public class ExcelSaving {
         } else if(preferedWidth < 6) {
             column.setSize(preferedWidth * 256 + 200);
         } else {
-            column.setSize(preferedWidth * 256 - 300);
+            column.setSize(preferedWidth * 256);
         }
         sheet.setColumnView(number, column);
     }
