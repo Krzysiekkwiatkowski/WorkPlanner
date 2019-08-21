@@ -51,6 +51,15 @@ public class Day {
         }
     }
 
+    public void setDriverAvailability(Driver driver, List<Integer> conditions){
+        Map<Integer, Boolean> map = availability.get(driver);
+        for (Integer shiftNumber : map.keySet()) {
+            if(conditions.contains(shiftNumber)){
+                map.replace(shiftNumber, false);
+            }
+        }
+    }
+
     private void manageShifts(List<Integer> conditions) {
         if (nextDayHoliday) {
             conditions = redCardCondition(conditions);
@@ -108,10 +117,6 @@ public class Day {
                 }
             }
         }
-    }
-
-    public List<Driver> getDriversByShift(int shiftNumber) {
-        return shifts.get(shiftNumber);
     }
 
     public LocalDate getDate() {
@@ -174,10 +179,6 @@ public class Day {
             default:
                 return null;
         }
-    }
-
-    public boolean isNextDayHoliday() {
-        return nextDayHoliday;
     }
 
     @Override

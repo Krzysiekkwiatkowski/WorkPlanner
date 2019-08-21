@@ -61,13 +61,108 @@ public class WorkSchedule {
         }
     }
 
-    private void initializeDays() {
-        List<LocalDate> holidays = HolidayController.getHolidays();
-        for (int i = 0; i < LocalDate.now().getMonth().plus(1).length(false); i++) {
-            LocalDate actualDate = LocalDate.now().plusMonths(1).withDayOfMonth(i + 1);
-            Day day = new Day(actualDate, holidays.contains(actualDate));
-            days.add(day);
+    private void setAvailability(Driver driver, int shiftNumber, Day day) {
+        List<Integer> availability;
+        List<Integer> availabilityNextDay;
+        switch (shiftNumber) {
+            case 1:
+                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+                day.setDriverAvailability(driver, availability);
+                break;
+            case 2:
+                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                day.setDriverAvailability(driver, availability);
+                break;
+            case 3:
+                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                day.setDriverAvailability(driver, availability);
+                break;
+            case 4:
+                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                day.setDriverAvailability(driver, availability);
+                break;
+            case 5:
+                availability = Arrays.asList(1, 2, 3, 4, 5,  6, 7, 8, 9, 10);
+                day.setDriverAvailability(driver, availability);
+                break;
+            case 6:
+                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                day.setDriverAvailability(driver, availability);
+                break;
+            case 7:
+                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                day.setDriverAvailability(driver, availability);
+                availabilityNextDay = Arrays.asList(1);
+                Day nextDay = getNextDay(day, 1);
+                if (nextDay != null) {
+                    nextDay.setDriverAvailability(driver, availabilityNextDay);
+                }
+                break;
+            case 8:
+                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                day.setDriverAvailability(driver, availability);
+                availabilityNextDay = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                nextDay = getNextDay(day, 1);
+                if (nextDay != null) {
+                    nextDay.setDriverAvailability(driver, availabilityNextDay);
+                }
+                break;
+            case 9:
+                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                day.setDriverAvailability(driver, availability);
+                availabilityNextDay = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                nextDay = getNextDay(day, 1);
+                if (nextDay != null) {
+                    nextDay.setDriverAvailability(driver, availabilityNextDay);
+                }
+                break;
+            case 10:
+                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                day.setDriverAvailability(driver, availability);
+                availabilityNextDay = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                nextDay = getNextDay(day, 1);
+                if (nextDay != null) {
+                    nextDay.setDriverAvailability(driver, availabilityNextDay);
+                }
+                List<Integer> availabilitySecondNextDay = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                if (nextDay != null) {
+                    nextDay = getNextDay(nextDay, 1);
+                }
+                if (nextDay != null) {
+                    getNextDay(day, 2).setDriverAvailability(driver, availabilitySecondNextDay);
+                }
+                List<Integer> availabilityThirdNextDay = Arrays.asList(1, 2, 3, 4);
+                if (nextDay != null) {
+                    nextDay = getNextDay(nextDay, 1);
+                }
+                if (nextDay != null) {
+                    getNextDay(day, 3).setDriverAvailability(driver, availabilityThirdNextDay);
+                }
+                break;
         }
+    }
+
+    private Day getNextDay(Day day, int plusDay) {
+        int index = days.indexOf(day);
+        if (index + plusDay <= days.size() - 1) {
+            return days.get(index + plusDay);
+        }
+        return null;
+    }
+
+    private boolean prepareShift(Day day, int actualShiftNumber) {
+        int numberOfDrivers = checkNumberOfDrivers(day, actualShiftNumber);
+        while (day.getShifts().get(actualShiftNumber).size() < numberOfDrivers) {
+            int driverNumber = generateDriverNumber();
+            if (day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().containsKey(actualShiftNumber)) {
+                day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
+                setAvailability(DriverData.getDriver(driverNumber), actualShiftNumber, day);
+                if (day.getShifts().get(actualShiftNumber).size() == numberOfDrivers) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void generate() {
@@ -95,43 +190,13 @@ public class WorkSchedule {
         }
     }
 
-    private void setAvailability(Driver driver, int shiftNumber) {
-        switch (shiftNumber) {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
+    private void initializeDays() {
+        List<LocalDate> holidays = HolidayController.getHolidays();
+        for (int i = 0; i < LocalDate.now().getMonth().plus(1).length(false); i++) {
+            LocalDate actualDate = LocalDate.now().plusMonths(1).withDayOfMonth(i + 1);
+            Day day = new Day(actualDate, holidays.contains(actualDate));
+            days.add(day);
         }
-    }
-
-    private boolean prepareShift(Day day, int actualShiftNumber) {
-        int numberOfDrivers = checkNumberOfDrivers(day, actualShiftNumber);
-        while (day.getShifts().get(actualShiftNumber).size() < numberOfDrivers) {
-            int driverNumber = generateDriverNumber();
-            if (day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().containsKey(actualShiftNumber)) {
-                day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
-                if (day.getShifts().get(actualShiftNumber).size() == numberOfDrivers) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     private int checkNumberOfDrivers(Day day, int shiftNumber) {
@@ -242,14 +307,6 @@ public class WorkSchedule {
         return null;
     }
 
-    private List<Driver> checkDrivers(int shiftNumber) {
-        List<Driver> driverList = new ArrayList<>();
-        for (Day day : days) {
-            driverList.addAll(day.getDriversByShift(shiftNumber));
-        }
-        return driverList;
-    }
-
     private void saveWorkSchedule() {
         excel.saveData();
     }
@@ -258,7 +315,7 @@ public class WorkSchedule {
         return conditions;
     }
 
-    public String getMounth() {
+    public String getMonth() {
         return month;
     }
 

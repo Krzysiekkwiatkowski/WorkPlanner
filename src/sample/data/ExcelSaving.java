@@ -34,7 +34,7 @@ public class ExcelSaving {
         int column = 2;
         int actualRow = 2;
         int actualColumn = 2;
-        Label month = new Label(1,0, schedule.getMounth());
+        Label month = new Label(1,0, schedule.getMonth());
         Label date = generateLabel(1,1,"Data");
         addToSheet(date);
         try {
