@@ -7,10 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.data.DriverData;
 
+import java.io.IOException;
+
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Planer Grafiku");
         primaryStage.setScene(new Scene(root, 1200, 600));
@@ -22,7 +24,9 @@ public class Main extends Application {
     }
 
     @Override
-    public void stop() throws Exception {
-        DriverData.saveDrivers();
+    public void stop() {
+        if(DriverData.getDrivers().size() != 0) {
+            DriverData.saveDrivers();
+        }
     }
 }

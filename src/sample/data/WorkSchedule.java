@@ -12,9 +12,11 @@ public class WorkSchedule {
     private List<Day> days;
     private Map<Driver, List<Condition>> conditions;
     private ExcelSaving excel = new ExcelSaving(this);
+    private Map<Driver, Integer> driverHours;
 
     public WorkSchedule(Controller controller) {
         days = new ArrayList<>();
+        driverHours = new HashMap<>();
         this.controller = controller;
         String month = LocalDate.now().getMonth().plus(1).toString();
         switch (month) {
@@ -82,7 +84,7 @@ public class WorkSchedule {
                 day.setDriverAvailability(driver, availability);
                 break;
             case 5:
-                availability = Arrays.asList(1, 2, 3, 4, 5,  6, 7, 8, 9, 10);
+                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
                 day.setDriverAvailability(driver, availability);
                 break;
             case 6:
@@ -142,6 +144,29 @@ public class WorkSchedule {
         }
     }
 
+    private void addHours(int driverNumber, int shiftNumber) {
+        Driver driver = DriverData.getDriver(driverNumber);
+        if (shiftNumber == 1 || shiftNumber == 2 || shiftNumber == 5 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9 || shiftNumber == 10) {
+            if (driverHours.containsKey(driver)) {
+                driverHours.put(driver, driverHours.get(driver) + 8);
+            } else {
+                driverHours.put(driver, 8);
+            }
+        } else if (shiftNumber == 3 || shiftNumber == 6) {
+            if (driverHours.containsKey(driver)) {
+                driverHours.put(driver, driverHours.get(driver) + 4);
+            } else {
+                driverHours.put(driver, 4);
+            }
+        } else {
+            if (driverHours.containsKey(driver)) {
+                driverHours.put(driver, driverHours.get(driver) + 16);
+            } else {
+                driverHours.put(driver, 16);
+            }
+        }
+    }
+
     private Day getNextDay(Day day, int plusDay) {
         int index = days.indexOf(day);
         if (index + plusDay <= days.size() - 1) {
@@ -157,6 +182,7 @@ public class WorkSchedule {
             if (day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().containsKey(actualShiftNumber)) {
                 day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
                 setAvailability(DriverData.getDriver(driverNumber), actualShiftNumber, day);
+                addHours(driverNumber, actualShiftNumber);
                 if (day.getShifts().get(actualShiftNumber).size() == numberOfDrivers) {
                     return true;
                 }
@@ -288,6 +314,15 @@ public class WorkSchedule {
         generate();
         showWorkSchedule();
         saveWorkSchedule();
+        printHours();
+    }
+
+    //For testing purposes
+    private void printHours() {
+        for (int i = 0; i < DriverData.getDrivers().size(); i++) {
+            Driver driver = DriverData.getDriver(i + 1);
+            System.out.println("Driver " + driver.getNumber() + " has got " + driverHours.get(driver) + " hours");
+        }
     }
 
     public void showWorkSchedule() {
