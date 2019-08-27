@@ -96,4 +96,14 @@ public class DriverData {
         }
         return false;
     }
+
+    public static int getMaxNumber(){
+        int max = 0;
+        for (Driver driver : drivers) {
+            if(driver.getNumber() > max){
+                max = driver.getNumber();
+            }
+        }
+        return max;
+    }
 }

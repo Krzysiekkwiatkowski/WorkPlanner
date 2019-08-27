@@ -12,11 +12,11 @@ public class WorkSchedule {
     private List<Day> days;
     private Map<Driver, List<Condition>> conditions;
     private ExcelSaving excel = new ExcelSaving(this);
-    private Map<Driver, Integer> driverHours;
+    private Hour hour;
 
     public WorkSchedule(Controller controller) {
         days = new ArrayList<>();
-        driverHours = new HashMap<>();
+        hour = new Hour();
         this.controller = controller;
         String month = LocalDate.now().getMonth().plus(1).toString();
         switch (month) {
@@ -144,29 +144,6 @@ public class WorkSchedule {
         }
     }
 
-    private void addHours(int driverNumber, int shiftNumber) {
-        Driver driver = DriverData.getDriver(driverNumber);
-        if (shiftNumber == 1 || shiftNumber == 2 || shiftNumber == 5 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9 || shiftNumber == 10) {
-            if (driverHours.containsKey(driver)) {
-                driverHours.put(driver, driverHours.get(driver) + 8);
-            } else {
-                driverHours.put(driver, 8);
-            }
-        } else if (shiftNumber == 3 || shiftNumber == 6) {
-            if (driverHours.containsKey(driver)) {
-                driverHours.put(driver, driverHours.get(driver) + 4);
-            } else {
-                driverHours.put(driver, 4);
-            }
-        } else {
-            if (driverHours.containsKey(driver)) {
-                driverHours.put(driver, driverHours.get(driver) + 16);
-            } else {
-                driverHours.put(driver, 16);
-            }
-        }
-    }
-
     private Day getNextDay(Day day, int plusDay) {
         int index = days.indexOf(day);
         if (index + plusDay <= days.size() - 1) {
@@ -177,13 +154,15 @@ public class WorkSchedule {
 
     private boolean prepareShift(Day day, int actualShiftNumber) {
         int numberOfDrivers = checkNumberOfDrivers(day, actualShiftNumber);
+        int driverNumber = 0;
         while (day.getShifts().get(actualShiftNumber).size() < numberOfDrivers) {
-            int driverNumber = generateDriverNumber();
+            driverNumber = generateDriverNumber(driverNumber);
             if (day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().containsKey(actualShiftNumber)) {
                 day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
                 setAvailability(DriverData.getDriver(driverNumber), actualShiftNumber, day);
-                addHours(driverNumber, actualShiftNumber);
+                hour.addHours(driverNumber, actualShiftNumber);
                 if (day.getShifts().get(actualShiftNumber).size() == numberOfDrivers) {
+                    hour.sortByHours();
                     return true;
                 }
             }
@@ -288,8 +267,14 @@ public class WorkSchedule {
         return 0;
     }
 
-    private int generateDriverNumber() {
-        return (int) (Math.random() * DriverData.getDrivers().size() + 1);
+    private int generateDriverNumber(int driverNumber) {
+        if (driverNumber != 0) {
+            int index = hour.getDrivers().indexOf(DriverData.getDriver(driverNumber));
+            if(index + 1 < hour.getDrivers().size()){
+                return hour.getDrivers().get(index + 1).getNumber();
+            }
+        }
+        return hour.getDrivers().get(0).getNumber();
     }
 
     public void clearConditions() {
@@ -309,20 +294,12 @@ public class WorkSchedule {
     }
 
     public void generateWorkSchedule() {
+        long milis = System.currentTimeMillis();
         initializeDays();
         setConditions();
         generate();
         showWorkSchedule();
         saveWorkSchedule();
-        printHours();
-    }
-
-    //For testing purposes
-    private void printHours() {
-        for (int i = 0; i < DriverData.getDrivers().size(); i++) {
-            Driver driver = DriverData.getDriver(i + 1);
-            System.out.println("Driver " + driver.getNumber() + " has got " + driverHours.get(driver) + " hours");
-        }
     }
 
     public void showWorkSchedule() {

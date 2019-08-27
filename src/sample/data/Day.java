@@ -145,9 +145,11 @@ public class Day {
     }
 
     public boolean checkAvailability(int driverNumber, int shiftNumber) {
-        Driver driver = DriverData.getDriver(driverNumber);
-        if (availability.get(driver).get(shiftNumber) && shifts.containsKey(shiftNumber)) {
-            return true;
+        if(driverNumber != 0) {
+            Driver driver = DriverData.getDriver(driverNumber);
+            if (availability.get(driver).get(shiftNumber) && shifts.containsKey(shiftNumber)) {
+                return true;
+            }
         }
         return false;
     }
