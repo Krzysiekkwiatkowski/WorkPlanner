@@ -158,9 +158,18 @@ public class WorkSchedule {
         while (day.getShifts().get(actualShiftNumber).size() < numberOfDrivers) {
             driverNumber = generateDriverNumber(driverNumber);
             if (day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().containsKey(actualShiftNumber)) {
-                day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
-                setAvailability(DriverData.getDriver(driverNumber), actualShiftNumber, day);
-                hour.addHours(driverNumber, actualShiftNumber);
+                if(actualShiftNumber != 10){
+                    day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
+                    setAvailability(DriverData.getDriver(driverNumber), actualShiftNumber, day);
+                    hour.addHours(driverNumber, actualShiftNumber);
+                } else {
+                    for (int i = 0; i < checkNumberOfDrivers(day, 10); i++) {
+                        Driver driver = day.getShifts().get(1).get(i);
+                        day.addShift(10, driver);
+                        setAvailability(driver, actualShiftNumber, day);
+                        hour.addHours(driverNumber, actualShiftNumber);
+                    }
+                }
                 if (day.getShifts().get(actualShiftNumber).size() == numberOfDrivers) {
                     hour.sortByHours();
                     return true;
@@ -294,12 +303,21 @@ public class WorkSchedule {
     }
 
     public void generateWorkSchedule() {
-        long milis = System.currentTimeMillis();
+        long millis = System.currentTimeMillis();
         initializeDays();
         setConditions();
         generate();
         showWorkSchedule();
         saveWorkSchedule();
+        printHours();
+        System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
+    }
+
+    // For testing purposes
+    private void printHours(){
+        for (Driver driver : DriverData.getDrivers()) {
+            System.out.println("Driver " + driver.getNumber() + " has got " + hour.getHours().get(driver) + " hours");
+        }
     }
 
     public void showWorkSchedule() {
