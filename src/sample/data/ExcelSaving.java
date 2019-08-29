@@ -9,18 +9,19 @@ import jxl.format.BorderLineStyle;
 import jxl.write.*;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ExcelSaving {
-
-    private final File file = new File("workschedule.xls");
     private final WorkSchedule schedule;
+    private final File file;
     private WritableWorkbook excelData;
     private WritableSheet sheet;
     private WritableCellFormat cellFormat = null;
 
     public ExcelSaving(WorkSchedule workSchedule) {
         this.schedule = workSchedule;
+        file = new File("Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls");
         try {
             excelData = Workbook.createWorkbook(file);
         } catch (IOException e) {

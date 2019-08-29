@@ -135,7 +135,6 @@ public class Day {
                     } else {
                         sb.append(drivers.get(j).getNumber() + "   ");
                     }
-
                 }
             } else {
                 sb.append("-");

@@ -18,49 +18,41 @@ public class WorkSchedule {
         days = new ArrayList<>();
         hour = new Hour();
         this.controller = controller;
-        String month = LocalDate.now().getMonth().plus(1).toString();
-        switch (month) {
-            case "JANUARY":
-                this.month = "Styczeń";
-                break;
-            case "FEBRUARY":
-                this.month = "Luty";
-                break;
-            case "MARCH":
-                this.month = "Marzec";
-                break;
-            case "APRIL":
-                this.month = "Kwiecień";
-                break;
-            case "MAY":
-                this.month = "Maj";
-                break;
-            case "JUNE":
-                this.month = "Czerwiec";
-                break;
-            case "JULY":
-                this.month = "Lipiec";
-                break;
-            case "AUGUST":
-                this.month = "Sierpień";
-                break;
-            case "SEPTEMBER":
-                this.month = "Wrzesień";
-                break;
-            case "OCTOBER":
-                this.month = "Październik";
-                break;
-            case "NOVEMBER":
-                this.month = "Listopad";
-                break;
-            case "DECEMBER":
-                this.month = "Grudzień";
-                break;
-        }
+        this.month = getMonth(LocalDate.now().getMonth().plus(1).toString());
         conditions = new HashMap<>();
         for (Driver driver : DriverData.getDrivers()) {
             conditions.put(driver, new ArrayList<>());
         }
+    }
+
+    public String getMonth(String month){
+        switch (month) {
+            case "JANUARY":
+                return "Styczeń";
+            case "FEBRUARY":
+                return "Luty";
+            case "MARCH":
+                return "Marzec";
+            case "APRIL":
+                return "Kwiecień";
+            case "MAY":
+                return "Maj";
+            case "JUNE":
+                return "Czerwiec";
+            case "JULY":
+                return  "Lipiec";
+            case "AUGUST":
+                return "Sierpień";
+            case "SEPTEMBER":
+                return "Wrzesień";
+            case "OCTOBER":
+                return "Październik";
+            case "NOVEMBER":
+                return  "Listopad";
+            case "DECEMBER":
+                return "Grudzień";
+        }
+        return null;
     }
 
     private void setAvailability(Driver driver, int shiftNumber, Day day) {
@@ -126,20 +118,27 @@ public class WorkSchedule {
                 if (nextDay != null) {
                     nextDay.setDriverAvailability(driver, availabilityNextDay);
                 }
-                List<Integer> availabilitySecondNextDay = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                List<Integer> availabilitySecondNextDay = Arrays.asList(1, 2, 3, 4);
                 if (nextDay != null) {
                     nextDay = getNextDay(nextDay, 1);
                 }
                 if (nextDay != null) {
                     getNextDay(day, 2).setDriverAvailability(driver, availabilitySecondNextDay);
                 }
-                List<Integer> availabilityThirdNextDay = Arrays.asList(1, 2, 3, 4);
-                if (nextDay != null) {
-                    nextDay = getNextDay(nextDay, 1);
-                }
-                if (nextDay != null) {
-                    getNextDay(day, 3).setDriverAvailability(driver, availabilityThirdNextDay);
-                }
+//                List<Integer> availabilitySecondNextDay = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+//                if (nextDay != null) {
+//                    nextDay = getNextDay(nextDay, 1);
+//                }
+//                if (nextDay != null) {
+//                    getNextDay(day, 2).setDriverAvailability(driver, availabilitySecondNextDay);
+//                }
+//                List<Integer> availabilityThirdNextDay = Arrays.asList(1, 2, 3, 4);
+//                if (nextDay != null) {
+//                    nextDay = getNextDay(nextDay, 1);
+//                }
+//                if (nextDay != null) {
+//                    getNextDay(day, 3).setDriverAvailability(driver, availabilityThirdNextDay);
+//                }
                 break;
         }
     }
@@ -152,22 +151,44 @@ public class WorkSchedule {
         return null;
     }
 
+    private Day getPreviousDay(Day day, int minusDay) {
+        int index = days.indexOf(day);
+        if (index - minusDay > -1) {
+            return days.get(index - minusDay);
+        }
+        return null;
+    }
+
     private boolean prepareShift(Day day, int actualShiftNumber) {
         int numberOfDrivers = checkNumberOfDrivers(day, actualShiftNumber);
         int driverNumber = 0;
+        boolean checkDriver = true;
         while (day.getShifts().get(actualShiftNumber).size() < numberOfDrivers) {
             driverNumber = generateDriverNumber(driverNumber);
             if (day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().containsKey(actualShiftNumber)) {
-                if(actualShiftNumber != 10){
+                if (actualShiftNumber != 10 && actualShiftNumber != 8) {
                     day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
                     setAvailability(DriverData.getDriver(driverNumber), actualShiftNumber, day);
                     hour.addHours(driverNumber, actualShiftNumber);
                 } else {
-                    for (int i = 0; i < checkNumberOfDrivers(day, 10); i++) {
-                        Driver driver = day.getShifts().get(1).get(i);
-                        day.addShift(10, driver);
-                        setAvailability(driver, actualShiftNumber, day);
-                        hour.addHours(driverNumber, actualShiftNumber);
+                    if (actualShiftNumber != 8) {
+                        for (int i = 0; i < checkNumberOfDrivers(day, 10); i++) {
+                            Driver driver = day.getShifts().get(1).get(i);
+                            day.addShift(10, driver);
+                            setAvailability(driver, actualShiftNumber, day);
+                            hour.addHours(driverNumber, actualShiftNumber);
+                            if (i == checkNumberOfDrivers(day, 10) - 1) {
+                                Day second = getNextDay(day, 2);
+                                if (second != null) {
+                                    int random = (int) (Math.random() * (i + 1));
+                                    System.out.println(random);
+                                    driver = day.getShifts().get(10).get(random);
+                                    second.addShift(8, driver);
+                                    setAvailability(driver, 8, second);
+                                    hour.addHours(driver.getNumber(), 8);
+                                }
+                            }
+                        }
                     }
                 }
                 if (day.getShifts().get(actualShiftNumber).size() == numberOfDrivers) {
@@ -270,6 +291,9 @@ public class WorkSchedule {
     }
 
     private int generateNext(int previous) {
+        if (previous == 7) {
+            previous++;
+        }
         if (++previous <= 10) {
             return previous;
         }
@@ -279,7 +303,7 @@ public class WorkSchedule {
     private int generateDriverNumber(int driverNumber) {
         if (driverNumber != 0) {
             int index = hour.getDrivers().indexOf(DriverData.getDriver(driverNumber));
-            if(index + 1 < hour.getDrivers().size()){
+            if (index + 1 < hour.getDrivers().size()) {
                 return hour.getDrivers().get(index + 1).getNumber();
             }
         }
@@ -303,18 +327,18 @@ public class WorkSchedule {
     }
 
     public void generateWorkSchedule() {
-        long millis = System.currentTimeMillis();
+//        long millis = System.currentTimeMillis();
         initializeDays();
         setConditions();
         generate();
         showWorkSchedule();
         saveWorkSchedule();
-        printHours();
-        System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
+//        printHours();
+//        System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
     }
 
     // For testing purposes
-    private void printHours(){
+    private void printHours() {
         for (Driver driver : DriverData.getDrivers()) {
             System.out.println("Driver " + driver.getNumber() + " has got " + hour.getHours().get(driver) + " hours");
         }
