@@ -12,11 +12,13 @@ public class WorkSchedule {
     private List<Day> days;
     private Map<Driver, List<Condition>> conditions;
     private ExcelSaving excel = new ExcelSaving(this);
+    private List<Integer> shiftFour;
     private Hour hour;
 
     public WorkSchedule(Controller controller) {
         days = new ArrayList<>();
         hour = new Hour();
+        shiftFour = new ArrayList<>();
         this.controller = controller;
         this.month = getMonth(LocalDate.now().getMonth().plus(1).toString());
         conditions = new HashMap<>();
@@ -25,7 +27,7 @@ public class WorkSchedule {
         }
     }
 
-    public String getMonth(String month){
+    public String getMonth(String month) {
         switch (month) {
             case "JANUARY":
                 return "Styczeń";
@@ -40,7 +42,7 @@ public class WorkSchedule {
             case "JUNE":
                 return "Czerwiec";
             case "JULY":
-                return  "Lipiec";
+                return "Lipiec";
             case "AUGUST":
                 return "Sierpień";
             case "SEPTEMBER":
@@ -48,7 +50,7 @@ public class WorkSchedule {
             case "OCTOBER":
                 return "Październik";
             case "NOVEMBER":
-                return  "Listopad";
+                return "Listopad";
             case "DECEMBER":
                 return "Grudzień";
         }
@@ -125,20 +127,6 @@ public class WorkSchedule {
                 if (nextDay != null) {
                     getNextDay(day, 2).setDriverAvailability(driver, availabilitySecondNextDay);
                 }
-//                List<Integer> availabilitySecondNextDay = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-//                if (nextDay != null) {
-//                    nextDay = getNextDay(nextDay, 1);
-//                }
-//                if (nextDay != null) {
-//                    getNextDay(day, 2).setDriverAvailability(driver, availabilitySecondNextDay);
-//                }
-//                List<Integer> availabilityThirdNextDay = Arrays.asList(1, 2, 3, 4);
-//                if (nextDay != null) {
-//                    nextDay = getNextDay(nextDay, 1);
-//                }
-//                if (nextDay != null) {
-//                    getNextDay(day, 3).setDriverAvailability(driver, availabilityThirdNextDay);
-//                }
                 break;
         }
     }
@@ -162,30 +150,36 @@ public class WorkSchedule {
     private boolean prepareShift(Day day, int actualShiftNumber) {
         int numberOfDrivers = checkNumberOfDrivers(day, actualShiftNumber);
         int driverNumber = 0;
-        boolean checkDriver = true;
         while (day.getShifts().get(actualShiftNumber).size() < numberOfDrivers) {
             driverNumber = generateDriverNumber(driverNumber);
             if (day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().containsKey(actualShiftNumber)) {
-                if (actualShiftNumber != 10 && actualShiftNumber != 8) {
-                    day.addShift(actualShiftNumber, DriverData.getDriver(driverNumber));
-                    setAvailability(DriverData.getDriver(driverNumber), actualShiftNumber, day);
-                    hour.addHours(driverNumber, actualShiftNumber);
+                if (actualShiftNumber != 10 && actualShiftNumber != 8 && actualShiftNumber != 4) {
+                    addShift(actualShiftNumber, DriverData.getDriver(driverNumber), day);
+                } else if (actualShiftNumber == 4) {
+                    for (int i = 0; i < hour.getDrivers().size(); i++) {
+                        Driver driver = hour.getDrivers().get(i);
+                        if ((!shiftFour.contains(driver.getNumber())) && day.checkAvailability(driver.getNumber(), 4) && day.getShifts().get(4).size() < checkNumberOfDrivers(day, 4)) {
+                            addShift(4, driver, day);
+                            shiftFour.add(driver.getNumber());
+                            if(shiftFour.size() == DriverData.getDrivers().size()){
+                                shiftFour.clear();
+                            }
+                        }
+                        if (day.getShifts().get(4).size() == checkNumberOfDrivers(day, 4)) {
+                            break;
+                        }
+                    }
                 } else {
                     if (actualShiftNumber != 8) {
                         for (int i = 0; i < checkNumberOfDrivers(day, 10); i++) {
                             Driver driver = day.getShifts().get(1).get(i);
-                            day.addShift(10, driver);
-                            setAvailability(driver, actualShiftNumber, day);
-                            hour.addHours(driverNumber, actualShiftNumber);
+                            addShift(actualShiftNumber, driver, day);
                             if (i == checkNumberOfDrivers(day, 10) - 1) {
                                 Day second = getNextDay(day, 2);
                                 if (second != null) {
                                     int random = (int) (Math.random() * (i + 1));
-                                    System.out.println(random);
                                     driver = day.getShifts().get(10).get(random);
-                                    second.addShift(8, driver);
-                                    setAvailability(driver, 8, second);
-                                    hour.addHours(driver.getNumber(), 8);
+                                    addShift(8, driver, second);
                                 }
                             }
                         }
@@ -200,15 +194,35 @@ public class WorkSchedule {
         return false;
     }
 
+    private void addShift(int shift, Driver driver, Day day) {
+        day.addShift(shift, driver);
+        setAvailability(driver, shift, day);
+        hour.addHours(driver.getNumber(), shift);
+    }
+
     public void generate() {
         for (Day day : days) {
             manageDay(day);
         }
     }
 
+    // For testing purposes
+    private int printFourShift(int driverNumber) {
+        if (DriverData.contains(driverNumber)) {
+            int counter = 0;
+            for (Integer number : shiftFour) {
+                if (number == driverNumber) {
+                    counter++;
+                }
+            }
+            return counter;
+        }
+        return -1;
+    }
+
     private void manageDay(Day day) {
         boolean finish = false;
-        int actualShiftNumber = 1;
+        int actualShiftNumber = 4;
         while (!finish) {
             if (actualShiftNumber == 0) {
                 finish = true;
@@ -291,7 +305,10 @@ public class WorkSchedule {
     }
 
     private int generateNext(int previous) {
-        if (previous == 7) {
+        if(previous == 4){
+            previous = 0;
+        }
+        if (previous == 7 || previous == 3) {
             previous++;
         }
         if (++previous <= 10) {
@@ -331,23 +348,20 @@ public class WorkSchedule {
         initializeDays();
         setConditions();
         generate();
-        showWorkSchedule();
+        showHours();
         saveWorkSchedule();
-//        printHours();
+        for (int i = 1; i <= DriverData.getMaxNumber(); i++) {
+            if (printFourShift(i) != -1) {
+                System.out.println("Driver " + i + " has got\t" + printFourShift(i) + "\tshifts number 4");
+            }
+        }
 //        System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
     }
 
-    // For testing purposes
-    private void printHours() {
-        for (Driver driver : DriverData.getDrivers()) {
-            System.out.println("Driver " + driver.getNumber() + " has got " + hour.getHours().get(driver) + " hours");
-        }
-    }
-
-    public void showWorkSchedule() {
+    public void showHours() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < days.size(); i++) {
-            sb.append(days.get(i).toString() + "  |  " + days.get(i).dailyWorkSchedule() + "\n");
+        for (Driver driver : DriverData.getDrivers()) {
+            sb.append("Kierowca " + driver.getNumber() + " ma zagrafikowanych " + hour.getHours().get(driver) + " godzin\n\n");
         }
         this.controller.getDisplaySchedule().setText(sb.toString());
     }
