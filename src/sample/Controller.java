@@ -112,7 +112,7 @@ public class Controller {
                             setText(null);
                         } else {
                             setText(condition.toString());
-                            if(condition.isPossibleShift() == true){
+                            if(condition.isPossibleShift()){
                                 setTextFill(Color.GREEN);
                             } else {
                                 setTextFill(Color.RED);

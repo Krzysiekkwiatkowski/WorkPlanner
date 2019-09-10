@@ -123,26 +123,6 @@ public class Day {
         return date;
     }
 
-    public String dailyWorkSchedule() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i <= Shift.getShifts().size(); i++) {
-            sb.append("[" + Shift.getShift(i).getNumber() + "]   ");
-            List<Driver> drivers = shifts.get(i);
-            if (drivers != null) {
-                for (int j = 0; j < drivers.size(); j++) {
-                    if (j < drivers.size() - 1) {
-                        sb.append(drivers.get(j).getNumber() + ",");
-                    } else {
-                        sb.append(drivers.get(j).getNumber() + "   ");
-                    }
-                }
-            } else {
-                sb.append("-");
-            }
-        }
-        return sb.toString();
-    }
-
     public boolean checkAvailability(int driverNumber, int shiftNumber) {
         if(driverNumber != 0) {
             Driver driver = DriverData.getDriver(driverNumber);
@@ -180,6 +160,10 @@ public class Day {
             default:
                 return null;
         }
+    }
+
+    public boolean isNextDayHoliday() {
+        return nextDayHoliday;
     }
 
     @Override

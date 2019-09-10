@@ -12,13 +12,17 @@ public class WorkSchedule {
     private List<Day> days;
     private Map<Driver, List<Condition>> conditions;
     private ExcelSaving excel = new ExcelSaving(this);
-    private List<Integer> shiftFour;
     private Hour hour;
+    private List<Integer> shiftFour;
+    private List<Integer> shiftEight;
+    private ShiftManager manager;
 
     public WorkSchedule(Controller controller) {
         days = new ArrayList<>();
         hour = new Hour();
         shiftFour = new ArrayList<>();
+        shiftEight = new ArrayList<>();
+        manager = new ShiftManager();
         this.controller = controller;
         this.month = getMonth(LocalDate.now().getMonth().plus(1).toString());
         conditions = new HashMap<>();
@@ -147,53 +151,6 @@ public class WorkSchedule {
         return null;
     }
 
-    private boolean prepareShift(Day day, int actualShiftNumber) {
-        int numberOfDrivers = checkNumberOfDrivers(day, actualShiftNumber);
-        int driverNumber = 0;
-        while (day.getShifts().get(actualShiftNumber).size() < numberOfDrivers) {
-            driverNumber = generateDriverNumber(driverNumber);
-            if (day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().containsKey(actualShiftNumber)) {
-                if (actualShiftNumber != 10 && actualShiftNumber != 8 && actualShiftNumber != 4) {
-                    addShift(actualShiftNumber, DriverData.getDriver(driverNumber), day);
-                } else if (actualShiftNumber == 4) {
-                    for (int i = 0; i < hour.getDrivers().size(); i++) {
-                        Driver driver = hour.getDrivers().get(i);
-                        if ((!shiftFour.contains(driver.getNumber())) && day.checkAvailability(driver.getNumber(), 4) && day.getShifts().get(4).size() < checkNumberOfDrivers(day, 4)) {
-                            addShift(4, driver, day);
-                            shiftFour.add(driver.getNumber());
-                            if(shiftFour.size() == DriverData.getDrivers().size()){
-                                shiftFour.clear();
-                            }
-                        }
-                        if (day.getShifts().get(4).size() == checkNumberOfDrivers(day, 4)) {
-                            break;
-                        }
-                    }
-                } else {
-                    if (actualShiftNumber != 8) {
-                        for (int i = 0; i < checkNumberOfDrivers(day, 10); i++) {
-                            Driver driver = day.getShifts().get(1).get(i);
-                            addShift(actualShiftNumber, driver, day);
-                            if (i == checkNumberOfDrivers(day, 10) - 1) {
-                                Day second = getNextDay(day, 2);
-                                if (second != null) {
-                                    int random = (int) (Math.random() * (i + 1));
-                                    driver = day.getShifts().get(10).get(random);
-                                    addShift(8, driver, second);
-                                }
-                            }
-                        }
-                    }
-                }
-                if (day.getShifts().get(actualShiftNumber).size() == numberOfDrivers) {
-                    hour.sortByHours();
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     private void addShift(int shift, Driver driver, Day day) {
         day.addShift(shift, driver);
         setAvailability(driver, shift, day);
@@ -203,41 +160,54 @@ public class WorkSchedule {
     public void generate() {
         for (Day day : days) {
             manageDay(day);
+            hour.sortByHours();
         }
-    }
-
-    // For testing purposes
-    private int printFourShift(int driverNumber) {
-        if (DriverData.contains(driverNumber)) {
-            int counter = 0;
-            for (Integer number : shiftFour) {
-                if (number == driverNumber) {
-                    counter++;
-                }
-            }
-            return counter;
-        }
-        return -1;
     }
 
     private void manageDay(Day day) {
-        boolean finish = false;
-        int actualShiftNumber = 4;
-        while (!finish) {
-            if (actualShiftNumber == 0) {
-                finish = true;
-            }
-            if (day.getShifts().containsKey(actualShiftNumber)) {
-                prepareShift(day, actualShiftNumber);
-                actualShiftNumber = generateNext(actualShiftNumber);
-            } else {
-                actualShiftNumber = generateNext(actualShiftNumber);
-                if (actualShiftNumber > Shift.getShifts().size()) {
-                    finish = true;
+        System.out.println("Managing day " + day.getDate().toString());
+        manageRequiredShifts(day);
+//        manageOptionalShifts(day);
+    }
+
+
+    // Managing shift required for specific day
+
+
+    private void manageRequiredShifts(Day day) {
+        List<Integer> shifts = manager.getRequired(day);
+        int driverNumber = hour.getDrivers().get(0).getNumber();
+        int index = 0;
+        while (true) {
+            int actualShiftNumber = shifts.get(index);
+            if(actualShiftNumber < 10) {
+                if (day.getShifts().containsKey(actualShiftNumber) && day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().get(actualShiftNumber).size() < checkNumberOfDrivers(day, actualShiftNumber)) {
+                    addShift(actualShiftNumber, DriverData.getDriver(driverNumber), day);
+                    if (actualShiftNumber == 1 && checkNumberOfDrivers(day, 10) > day.getShifts().get(10).size()) {
+                        addShift(10, DriverData.getDriver(driverNumber), day);
+                    }
+                    if (day.getShifts().get(actualShiftNumber).size() == checkNumberOfDrivers(day, actualShiftNumber)) {
+                        if (index + 1 < shifts.size()) {
+                            index++;
+                        } else {
+                            break;
+                        }
+                    }
                 }
+            } else {
+                break;
             }
+            driverNumber = generateDriverNumber(driverNumber);
         }
     }
+
+    private void manageOptionalShifts(Day day) {
+        List<Integer> shifts = manager.getOptional(day);
+    }
+
+
+    // Managing shift optional for specific day
+
 
     private void initializeDays() {
         List<LocalDate> holidays = HolidayController.getHolidays();
@@ -304,19 +274,6 @@ public class WorkSchedule {
         return 0;
     }
 
-    private int generateNext(int previous) {
-        if(previous == 4){
-            previous = 0;
-        }
-        if (previous == 7 || previous == 3) {
-            previous++;
-        }
-        if (++previous <= 10) {
-            return previous;
-        }
-        return 0;
-    }
-
     private int generateDriverNumber(int driverNumber) {
         if (driverNumber != 0) {
             int index = hour.getDrivers().indexOf(DriverData.getDriver(driverNumber));
@@ -344,18 +301,13 @@ public class WorkSchedule {
     }
 
     public void generateWorkSchedule() {
-//        long millis = System.currentTimeMillis();
+        long millis = System.currentTimeMillis();
         initializeDays();
         setConditions();
         generate();
         showHours();
         saveWorkSchedule();
-        for (int i = 1; i <= DriverData.getMaxNumber(); i++) {
-            if (printFourShift(i) != -1) {
-                System.out.println("Driver " + i + " has got\t" + printFourShift(i) + "\tshifts number 4");
-            }
-        }
-//        System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
+        System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
     }
 
     public void showHours() {
