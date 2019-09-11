@@ -15,6 +15,8 @@ public class WorkSchedule {
     private Hour hour;
     private List<Integer> shiftFour;
     private List<Integer> shiftEight;
+    private List<Integer> shiftFourSpare;
+    private List<Integer> shiftEightSpare;
     private ShiftManager manager;
 
     public WorkSchedule(Controller controller) {
@@ -22,6 +24,8 @@ public class WorkSchedule {
         hour = new Hour();
         shiftFour = new ArrayList<>();
         shiftEight = new ArrayList<>();
+        shiftFourSpare = new ArrayList<>();
+        shiftEightSpare = new ArrayList<>();
         manager = new ShiftManager();
         this.controller = controller;
         this.month = getMonth(LocalDate.now().getMonth().plus(1).toString());
@@ -180,9 +184,15 @@ public class WorkSchedule {
         int index = 0;
         while (true) {
             int actualShiftNumber = shifts.get(index);
-            if(actualShiftNumber < 10) {
+            if (actualShiftNumber < 10) {
                 if (day.getShifts().containsKey(actualShiftNumber) && day.checkAvailability(driverNumber, actualShiftNumber) && day.getShifts().get(actualShiftNumber).size() < checkNumberOfDrivers(day, actualShiftNumber)) {
-                    addShift(actualShiftNumber, DriverData.getDriver(driverNumber), day);
+                    if (actualShiftNumber != 4 && actualShiftNumber != 8) {
+                        addShift(actualShiftNumber, DriverData.getDriver(driverNumber), day);
+                    } else if (actualShiftNumber == 4) {
+                        manageShifts(actualShiftNumber, day);
+                    } else if (actualShiftNumber == 8) {
+                        manageShifts(actualShiftNumber, day);
+                    }
                     if (actualShiftNumber == 1 && checkNumberOfDrivers(day, 10) > day.getShifts().get(10).size()) {
                         addShift(10, DriverData.getDriver(driverNumber), day);
                     }
@@ -201,13 +211,81 @@ public class WorkSchedule {
         }
     }
 
+    private void manageShifts(int actualShiftNumber, Day day) {
+        int driverNumber = hour.getDrivers().get(0).getNumber();
+        boolean needAnotherRound = false;
+        List<Integer> list;
+        List<Integer> listSpare;
+        if(actualShiftNumber == 4){
+            list = shiftFour;
+            listSpare = shiftFourSpare;
+        } else {
+            list = shiftEight;
+            listSpare = shiftEightSpare;
+        }
+        while (true) {
+            if (list.size() < DriverData.getDrivers().size() && !list.contains(driverNumber)) {
+                addDistributedShift(actualShiftNumber, driverNumber, day, true);
+                break;
+            }
+            if (driverNumber == hour.getDrivers().get(hour.getDrivers().size() - 1).getNumber()) {
+                needAnotherRound = true;
+            }
+            driverNumber = generateDriverNumber(driverNumber);
+        }
+        while (needAnotherRound) {
+            if (!listSpare.contains(driverNumber)) {
+                addDistributedShift(actualShiftNumber, driverNumber, day, false);
+                break;
+            }
+        }
+    }
+
+    private void addDistributedShift(int shiftNumber, int driverNumber, Day day, boolean standardList) {
+        addShift(shiftNumber, DriverData.getDriver(driverNumber), day);
+        if (shiftNumber == 4) {
+            manageLists(4, driverNumber, standardList);
+        } else if (shiftNumber == 8) {
+            manageLists(8, driverNumber, standardList);
+        }
+    }
+
+    private void manageLists(int shiftNumber, int driverNumber, boolean standardList) {
+        List<Integer> list;
+        List<Integer> listSpare;
+        if (shiftNumber == 4) {
+            list = shiftFour;
+            listSpare = shiftFourSpare;
+        } else {
+            list = shiftEight;
+            listSpare = shiftEightSpare;
+        }
+        if (standardList) {
+            list.add(driverNumber);
+            if (list.size() == DriverData.getDrivers().size()) {
+                list.clear();
+                if (listSpare.size() > 0) {
+                    if(shiftNumber == 4) {
+                        shiftFour = new ArrayList<>(listSpare);
+                    } else {
+                        shiftEight = new ArrayList<>(listSpare);
+                    }
+                }
+            }
+        } else {
+            listSpare.add(driverNumber);
+        }
+    }
+
+    // Managing shift optional for specific day
+
+
     private void manageOptionalShifts(Day day) {
         List<Integer> shifts = manager.getOptional(day);
     }
 
 
     // Managing shift optional for specific day
-
 
     private void initializeDays() {
         List<LocalDate> holidays = HolidayController.getHolidays();
