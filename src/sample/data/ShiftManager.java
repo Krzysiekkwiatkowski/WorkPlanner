@@ -31,23 +31,18 @@ public class ShiftManager {
     }
 
     public List<Integer> getOptional(Day day) {
-        List<Integer> shifts;
+        List<Integer> shifts = new ArrayList<>();
         String dayName = day.getDate().getDayOfWeek().toString();
         switch (dayName) {
-            case "FRIDAY":
-                shifts = null;
-                break;
             case "SATURDAY":
-                shifts = Arrays.asList(2);
-                break;
-            case "SUNDAY":
-                shifts = null;
+                shifts.add(7);
+                shifts.add(2);
                 break;
             default:
-                shifts = null;
+                shifts.add(7);
                 break;
         }
-        return sortList(shifts);
+        return shifts;
     }
 
     private List<Integer> getTypicalDay() {

@@ -68,6 +68,8 @@ public class ExcelSaving {
                                 sb.append(drivers.get(i).getNumber());
                             }
                         }
+                    } else {
+                        sb.append("-");
                     }
                 } else {
                     sb.append("-");
