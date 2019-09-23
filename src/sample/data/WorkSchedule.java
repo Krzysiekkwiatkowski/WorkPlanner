@@ -233,16 +233,46 @@ public class WorkSchedule {
     private void manageTypicalShift(int shiftNumber, Day day) {
         List<Driver> drivers = hour.getDrivers();
         for (int i = 0; i < drivers.size(); i++) {
-            if (day.checkAvailability(drivers.get(i).getNumber(), shiftNumber) && day.getShifts().get(shiftNumber).size() < checkNumberOfDrivers(day, shiftNumber)) {
+            if (day.checkAvailability(drivers.get(i).getNumber(), shiftNumber) && day.getShifts().get(shiftNumber).size() < checkNumberOfDrivers(day, shiftNumber) && checkUniqueness(drivers.get(i).getNumber(), day)) {
                 addShift(shiftNumber, drivers.get(i), day);
                 if (shiftNumber == 1 && checkNumberOfDrivers(day, 10) > day.getShifts().get(10).size()) {
-                    addShift(10, drivers.get(i), day);
+                    if(drivers.get(i).getNumber() != 15){
+                        addShift(10, drivers.get(i), day);
+                    }
                 }
                 if (day.getShifts().get(shiftNumber).size() == checkNumberOfDrivers(day, shiftNumber)) {
                     break;
                 }
             }
         }
+    }
+
+    private boolean checkUniqueness(int driverNumber, Day day){
+        int dayBack = 0;
+        switch (day.getDate().getDayOfWeek().getValue()){
+            case 4:
+                dayBack = 1;
+                break;
+            case 5:
+                dayBack = 2;
+                break;
+            case 6:
+                dayBack = 3;
+                break;
+        }
+        if(dayBack == 0){
+            return true;
+        }
+        Day previousDay;
+        for (int i = 0; i < dayBack; i++) {
+            previousDay = getPreviousDay(day, (i + 1));
+            if(previousDay != null){
+                if(previousDay.getShifts().get(1).contains(DriverData.getDriver(driverNumber))){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private void manageShiftEight(Day day) {

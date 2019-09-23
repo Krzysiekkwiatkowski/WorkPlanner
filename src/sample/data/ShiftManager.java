@@ -2,7 +2,6 @@ package sample.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class ShiftManager {
@@ -17,14 +16,15 @@ public class ShiftManager {
                 shifts = Arrays.asList(1, 3, 5, 8, 9, 10);
                 break;
             case "SUNDAY":
-                shifts = Arrays.asList(1, 3, 5, 8, 10);
-                break;
-            default:
-                shifts = getTypicalDay();
-                if(day.isNextDayHoliday()){
-                    shifts.add(9);
-                    Collections.sort(shifts);
+                if(day.isNextDayHoliday()) {
+                    shifts = Arrays.asList(1, 3, 5, 8, 9, 10);
+                    break;
+                } else {
+                    shifts = Arrays.asList(1, 3, 5, 8, 10);
+                    break;
                 }
+            default:
+                shifts = getTypicalDay(day);
                 break;
         }
         return sortList(shifts);
@@ -45,13 +45,22 @@ public class ShiftManager {
         return shifts;
     }
 
-    private List<Integer> getTypicalDay() {
-        return Arrays.asList(1, 2, 4, 5, 6, 8, 10);
+    private List<Integer> getTypicalDay(Day day) {
+        if(day.isNextDayHoliday()){
+            return Arrays.asList(1, 2, 4, 5, 6, 8, 9, 10);
+        } else {
+            return Arrays.asList(1, 2, 4, 5, 6, 8, 10);
+        }
     }
 
     private List<Integer> sortList(List<Integer> list) {
         if (list != null) {
             List<Integer> sortedList = new ArrayList<>(list);
+            if (sortedList.contains(9)) {
+                int index = sortedList.indexOf(9);
+                sortedList.remove(index);
+                sortedList.add(0, 9);
+            }
             if (sortedList.contains(8)) {
                 int index = sortedList.indexOf(8);
                 sortedList.remove(index);

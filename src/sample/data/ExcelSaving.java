@@ -9,12 +9,14 @@ import jxl.format.BorderLineStyle;
 import jxl.write.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.List;
 
 public class ExcelSaving {
     private final WorkSchedule schedule;
     private final File file;
+    private final File fileCopy;
     private WritableWorkbook excelData;
     private WritableSheet sheet;
     private WritableCellFormat cellFormat = null;
@@ -22,6 +24,7 @@ public class ExcelSaving {
     public ExcelSaving(WorkSchedule workSchedule) {
         this.schedule = workSchedule;
         file = new File("Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls");
+        fileCopy = new File("/home/oem/Desktop/Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls");
         try {
             excelData = Workbook.createWorkbook(file);
         } catch (IOException e) {
@@ -114,6 +117,7 @@ public class ExcelSaving {
             }
             excelData.write();
             excelData.close();
+//            copyFile();
         } catch (WriteException | IOException e) {
             System.out.println("Couldn't save the file");
             e.printStackTrace();
@@ -139,5 +143,13 @@ public class ExcelSaving {
             }
         }
         return max;
+    }
+
+    private void copyFile(){
+        try {
+            Files.copy(file.toPath(), fileCopy.toPath());
+        } catch (IOException e){
+            System.out.println("Couldn't copy work schedule file");
+        }
     }
 }

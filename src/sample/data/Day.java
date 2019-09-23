@@ -45,7 +45,11 @@ public class Day {
         for (Driver driver : DriverData.getDrivers()) {
             Map<Integer, Boolean> availabilityMap = new HashMap<>();
             for (Shift shift : Shift.getShifts()) {
-                availabilityMap.put(shift.getNumber(), true);
+                if(shift.getNumber() == 10 && driver.getNumber() == 15) {
+                    availabilityMap.put(shift.getNumber(), false);
+                } else {
+                    availabilityMap.put(shift.getNumber(), true);
+                }
             }
             availability.put(driver, availabilityMap);
         }
