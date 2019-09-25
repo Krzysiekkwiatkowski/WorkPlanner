@@ -10,7 +10,7 @@ public class ShiftManager {
         String dayName = day.getDate().getDayOfWeek().toString();
         switch (dayName) {
             case "FRIDAY":
-                shifts = Arrays.asList(1, 2, 4, 5, 6, 8, 9, 10);
+                shifts = Arrays.asList(1, 2, 5, 8, 9, 10);
                 break;
             case "SATURDAY":
                 shifts = Arrays.asList(1, 3, 5, 8, 9, 10);
@@ -38,8 +38,12 @@ public class ShiftManager {
                 shifts.add(7);
                 shifts.add(2);
                 break;
+            case "SUNDAY":
+                shifts.add(7);
+                break;
             default:
                 shifts.add(7);
+                shifts.add(6);
                 break;
         }
         return shifts;
@@ -47,9 +51,9 @@ public class ShiftManager {
 
     private List<Integer> getTypicalDay(Day day) {
         if(day.isNextDayHoliday()){
-            return Arrays.asList(1, 2, 4, 5, 6, 8, 9, 10);
+            return Arrays.asList(1, 2, 4, 5, 8, 9, 10);
         } else {
-            return Arrays.asList(1, 2, 4, 5, 6, 8, 10);
+            return Arrays.asList(1, 2, 4, 5, 8, 10);
         }
     }
 

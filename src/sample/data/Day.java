@@ -13,10 +13,10 @@ public class Day {
     private Map<Driver, List<Condition>> conditions;
     private Map<Driver, Map<Integer, Boolean>> availability;
 
-    public Day(LocalDate date, boolean holiday) {
+    public Day(LocalDate date, boolean nextDayHoliday, boolean holiday) {
         this.date = date;
         String dayOfWeek = date.getDayOfWeek().toString();
-        this.nextDayHoliday = holiday;
+        this.nextDayHoliday = nextDayHoliday;
         shifts = new HashMap<>();
         List<Integer> tempConditions = new ArrayList<>();
         switch (dayOfWeek) {
@@ -48,7 +48,19 @@ public class Day {
                 if(shift.getNumber() == 10 && driver.getNumber() == 15) {
                     availabilityMap.put(shift.getNumber(), false);
                 } else {
-                    availabilityMap.put(shift.getNumber(), true);
+                    if(driver.getNumber() != 15){
+                        availabilityMap.put(shift.getNumber(), true);
+                    } else {
+                        if(holiday || dayOfWeek.equals("SUNDAY")){
+                            if(shift.getNumber() == 1 || shift.getNumber() == 3){
+                                availabilityMap.put(shift.getNumber(), true);
+                            } else {
+                                availabilityMap.put(shift.getNumber(), false);
+                            }
+                        } else {
+                            availabilityMap.put(shift.getNumber(), true);
+                        }
+                    }
                 }
             }
             availability.put(driver, availabilityMap);
