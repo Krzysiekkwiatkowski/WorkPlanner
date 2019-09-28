@@ -7,17 +7,13 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ExcelLoading {
     private WorkSchedule schedule;
     private List<Day> previousDays;
     private int monthLong;
-
-    // 1,2,3,4,5,6  od  1
-    // 7  od  2
-    // 8,9 dwa dni później od 1
-    // 10 trzy dni póżniej id 5
 
     public ExcelLoading(WorkSchedule schedule, String fileName) {
         this.schedule = schedule;
@@ -28,6 +24,17 @@ public class ExcelLoading {
             previousDays.add(day);
         }
         loadData(fileName);
+        setAvailability();
+    }
+
+    private void setAvailability(){
+        List<Driver> drivers = DriverData.getDrivers();
+        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        for (Day day : previousDays) {
+            for (Driver driver : drivers) {
+                day.setDriverAvailability(driver, list);
+            }
+        }
     }
 
     private void loadData(String fileName) {
@@ -41,11 +48,18 @@ public class ExcelLoading {
                 for (int i = 2; i < 12; i++) {
                     input = sheet.getCell(i, j).getContents();
                     if(!input.contains("-")){
-                        String[] parts = input.split(",");
-                        for (int k = 0; k < parts.length; k++) {
-                            if(day.getShifts().containsKey(i - 1)) {
-                                day.addShift((i - 1), DriverData.getDriver(Integer.parseInt(parts[k].trim())));
+                        if(input.contains(",")) {
+                            String[] parts = input.split(",");
+                            for (int k = 0; k < parts.length; k++) {
+                                if (day.getShifts().containsKey(i - 1)) {
+                                    schedule.addShift((i - 1), DriverData.getDriver(Integer.parseInt(parts[k].trim())), day);
+                                }
                             }
+                        } else {
+                            if(!day.getShifts().containsKey((i-1))) {
+                                day.getShifts().put((i-1), new ArrayList<>());
+                            }
+                            schedule.addShift((i - 1), DriverData.getDriver(Integer.parseInt(input.trim())), day);
                         }
                     }
                 }
@@ -57,5 +71,9 @@ public class ExcelLoading {
                 workbook.close();
             }
         }
+    }
+
+    public List<Day> getPreviousDays(){
+        return previousDays;
     }
 }
