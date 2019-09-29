@@ -78,7 +78,7 @@ public class Day {
 
     private void manageShifts(List<Integer> conditions) {
         if (nextDayHoliday) {
-            conditions = redCardCondition(conditions);
+            conditions =  redCardCondition(conditions);
         }
         if (conditions.size() > 0) {
             for (Shift shift : Shift.getShifts()) {

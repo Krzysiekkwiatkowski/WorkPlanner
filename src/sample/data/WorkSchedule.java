@@ -3,6 +3,7 @@ package sample.data;
 import sample.Controller;
 import sample.HolidayController;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -11,6 +12,7 @@ public class WorkSchedule {
     private String month;
     private Controller controller;
     private List<Day> days;
+    private List<Day> saintDays;
     private Map<Driver, List<Condition>> conditions;
     private ExcelSaving excel = new ExcelSaving(this);
     private ExcelLoading excelLoad;
@@ -24,6 +26,7 @@ public class WorkSchedule {
     public WorkSchedule(Controller controller) {
         this.date = LocalDate.now();
         days = new ArrayList<>();
+        saintDays = new ArrayList<>();
         excelLoad = new ExcelLoading(this, ("Grafik" + getMonth(date.getMonth().toString()) + ".xls"));
         hour = new Hour();
         shiftFour = new ArrayList<>();
@@ -169,14 +172,14 @@ public class WorkSchedule {
         day.addShift(shiftNumber, driver);
         setAvailability(driver, shiftNumber, day);
         if (date.getMonth() != day.getDate().getMonth()) {
-            hour.addHours(driver.getNumber(), shiftNumber);
+            hour.addHours(driver.getNumber(), shiftNumber, saintDays.contains(day));
         }
     }
 
     public void generate() {
         for (Day day : days) {
             manageDay(day);
-            hour.sortByHours();
+            hour.sortByHours(!saintDays.contains(day));
         }
     }
 
@@ -406,6 +409,15 @@ public class WorkSchedule {
                 day = new Day(actualDate, holidays.contains(actualDate), false);
             }
             days.add(day);
+            Day saintDayCheck = getPreviousDay(day, 1);
+            if (saintDayCheck != null) {
+                if (holidays.contains(saintDayCheck.getDate())) {
+                    saintDays.add(day);
+                }
+            }
+            if (day.getDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
+                saintDays.add(day);
+            }
         }
     }
 
@@ -485,20 +497,28 @@ public class WorkSchedule {
         setConditions();
         generate();
         showHours();
-//        removePreviousDays();
+        removePreviousDays();
         saveWorkSchedule();
+        showSaintHours();
         System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
     }
 
-    private void setPreviousDaysAvailability(){
+    // Method for testing purposes
+    private void showSaintHours(){
+        for (Driver driver : hour.getSaintHours().keySet()) {
+            System.out.println("Driver " + driver.getNumber() + " has got " + hour.getSaintHours().get(driver) + " hours.");
+        }
+    }
+
+    private void setPreviousDaysAvailability() {
         Day day;
         List<Driver> drivers;
         for (int i = 0; i < excelLoad.getPreviousDays().size(); i++) {
             day = days.get(i);
             for (Integer shiftNumber : day.getShifts().keySet()) {
-                if(day.getShifts().containsKey(shiftNumber)){
+                if (day.getShifts().containsKey(shiftNumber)) {
                     drivers = day.getShifts().get(shiftNumber);
-                    for (Driver driver : drivers){
+                    for (Driver driver : drivers) {
                         setAvailability(driver, shiftNumber, day);
                     }
                 }
