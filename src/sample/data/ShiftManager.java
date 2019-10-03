@@ -51,9 +51,9 @@ public class ShiftManager {
 
     private List<Integer> getTypicalDay(Day day) {
         if(day.isNextDayHoliday()){
-            return Arrays.asList(1, 2, 4, 5, 8, 9, 10);
+            return Arrays.asList(4, 1, 2, 5, 8, 9, 10);
         } else {
-            return Arrays.asList(1, 2, 4, 5, 8, 10);
+            return Arrays.asList(4, 1, 2, 5, 8, 10);
         }
     }
 

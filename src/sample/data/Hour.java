@@ -38,6 +38,7 @@ public class Hour {
 
     public int addHours(int driverNumber, int shiftNumber, boolean saintDay) {
         Driver driver = DriverData.getDriver(driverNumber);
+        int hoursToAdd;
         if (shiftNumber == 1 || shiftNumber == 2 || shiftNumber == 5 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9 || shiftNumber == 10) {
             if (hours.containsKey(driver)) {
                 hours.put(driver, hours.get(driver) + 8);
@@ -50,7 +51,7 @@ public class Hour {
                     saintHours.put(driver, saintHours.get(driver) + 8);
                 }
             }
-            return 8;
+            hoursToAdd = 8;
         } else if (shiftNumber == 3 || shiftNumber == 6) {
             if (hours.containsKey(driver)) {
                 hours.put(driver, hours.get(driver) + 4);
@@ -63,7 +64,7 @@ public class Hour {
                     saintHours.put(driver, saintHours.get(driver) + 4);
                 }
             }
-            return 4;
+            hoursToAdd = 4;
         } else {
             if (hours.containsKey(driver)) {
                 hours.put(driver, hours.get(driver) + 16);
@@ -76,11 +77,12 @@ public class Hour {
                     saintHours.put(driver, saintHours.get(driver) + 16);
                 }
             }
+            hoursToAdd = 16;
         }
         if (!drivers.contains(driver)) {
             drivers.add(driver);
         }
-        return 16;
+        return hoursToAdd;
     }
 
     public void sortByHours(boolean typicalDay) {

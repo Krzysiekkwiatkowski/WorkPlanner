@@ -52,14 +52,14 @@ public class ExcelLoading {
                             String[] parts = input.split(",");
                             for (int k = 0; k < parts.length; k++) {
                                 if (day.getShifts().containsKey(i - 1)) {
-                                    schedule.addShift((i - 1), DriverData.getDriver(Integer.parseInt(parts[k].trim())), day);
+                                    schedule.addShift((i - 1), Integer.parseInt(parts[k].trim()), day);
                                 }
                             }
                         } else {
                             if(!day.getShifts().containsKey((i-1))) {
                                 day.getShifts().put((i-1), new ArrayList<>());
                             }
-                            schedule.addShift((i - 1), DriverData.getDriver(Integer.parseInt(input.trim())), day);
+                            schedule.addShift((i - 1), Integer.parseInt(input.trim()), day);
                         }
                     }
                 }

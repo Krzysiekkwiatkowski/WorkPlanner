@@ -2,6 +2,7 @@ package sample.data;
 
 import sample.Controller;
 import sample.HolidayController;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
@@ -95,40 +96,10 @@ public class WorkSchedule {
         return null;
     }
 
-    private void addHours(int driverNumber, int shiftNumber, boolean saintDay){
+    private void addHours(int shiftNumber, int driverNumber, boolean saintDay) {
         int hours = hour.addHours(driverNumber, shiftNumber, saintDay);
-        switch (shiftNumber){
-            case 1:
-                firstShift.put(driverNumber, (firstShift.get(driverNumber) + hours));
-                break;
-            case 2:
-                secondShift.put(driverNumber, (secondShift.get(driverNumber) + hours));
-                break;
-            case 3:
-                thirdShift.put(driverNumber, (thirdShift.get(driverNumber) + hours));
-                break;
-            case 4:
-                fourthShift.put(driverNumber, (fourthShift.get(driverNumber) + hours));
-                break;
-            case 5:
-                fifthShift.put(driverNumber, (fifthShift.get(driverNumber) + hours));
-                break;
-            case 6:
-                sixthShift.put(driverNumber, (sixthShift.get(driverNumber) + hours));
-                break;
-            case 7:
-                seventhShift.put(driverNumber, (seventhShift.get(driverNumber) + hours));
-                break;
-            case 8:
-                eighthShift.put(driverNumber, (eighthShift.get(driverNumber) + hours));
-                break;
-            case 9:
-                ninthShift.put(driverNumber, (ninthShift.get(driverNumber) + hours));
-                break;
-            case 10:
-                tenthShift.put(driverNumber, (tenthShift.get(driverNumber) + hours));
-                break;
-        }
+        Map<Integer, Integer> map = getMap(shiftNumber);
+        map.put(driverNumber, (map.get(driverNumber) + hours));
     }
 
     protected void setAvailability(Driver driver, int shiftNumber, Day day) {
@@ -235,7 +206,7 @@ public class WorkSchedule {
 
     private void manageDay(Day day) {
         manageRequiredShifts(day);
-        manageOptionalShifts(day);
+//        manageOptionalShifts(day);
     }
 
     private void manageRequiredShifts(Day day) {
@@ -245,8 +216,8 @@ public class WorkSchedule {
         }
     }
 
-    private Map<Integer, Integer> getMap(int shiftNumber){
-        switch (shiftNumber){
+    private Map<Integer, Integer> getMap(int shiftNumber) {
+        switch (shiftNumber) {
             case 1:
                 return firstShift;
             case 2:
@@ -271,13 +242,13 @@ public class WorkSchedule {
         return null;
     }
 
-    private List<Driver> getSortedList(Map<Integer, Integer> map){
+    private List<Driver> getSortedList(Map<Integer, Integer> map) {
         List<Driver> sortedList = new ArrayList<>();
         List<Driver> actual = new ArrayList<>();
         int numberOfShifts = 0;
-        while (sortedList.size() < map.size()){
+        while (sortedList.size() < map.size()) {
             for (Integer driverNumber : map.keySet()) {
-                if(map.get(driverNumber) == numberOfShifts){
+                if (map.get(driverNumber) == numberOfShifts) {
                     actual.add(DriverData.getDriver(driverNumber));
                 }
             }
@@ -288,7 +259,20 @@ public class WorkSchedule {
         return sortedList;
     }
 
+    protected void addShift(int shiftNumber, int driverNumber, Day day) {
+        day.addShift(shiftNumber, DriverData.getDriver(driverNumber));
+        if (day.getDate().getMonth() != LocalDate.now().getMonth()) {
+            addHours(shiftNumber, driverNumber, saintDays.contains(day));
+        }
+        setAvailability(DriverData.getDriver(driverNumber), shiftNumber, day);
+    }
+
     private void manageTypicalShift(int shiftNumber, Day day, List<Driver> drivers) {
+        for (int i = 0; i < drivers.size(); i++) {
+            if (day.checkAvailability(drivers.get(i).getNumber(), shiftNumber) && (day.getShifts().get(shiftNumber).size() < checkNumberOfDrivers(day, shiftNumber)) && checkUniqueness(shiftNumber, drivers.get(i).getNumber(), day)) {
+                addShift(shiftNumber, drivers.get(i).getNumber(), day);
+            }
+        }
     }
 
     private void manageShiftEight(Day day, List<Driver> drivers) {
