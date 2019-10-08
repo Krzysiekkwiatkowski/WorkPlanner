@@ -206,7 +206,7 @@ public class WorkSchedule {
 
     private void manageDay(Day day) {
         manageRequiredShifts(day);
-//        manageOptionalShifts(day);
+        manageOptionalShifts(day);
     }
 
     private void manageRequiredShifts(Day day) {
@@ -214,6 +214,37 @@ public class WorkSchedule {
         for (int i = 0; i < shifts.size(); i++) {
             manageTypicalShift(shifts.get(i), day, getSortedList(getMap(shifts.get(i))));
         }
+    }
+
+    private void manageOptionalShifts(Day day) {
+        List<Integer> shifts = manager.getOptional(day);
+        int max = getMaxDrivers(shifts, day);
+        for (int i = 0; i < max; i++) {
+            for (Integer shiftNumber : shifts) {
+                manageOptionalShifts(shiftNumber, day);
+            }
+        }
+    }
+
+    private void manageOptionalShifts(int shiftNumber, Day day) {
+        List<Driver> drivers = getSortedList(getMap(shiftNumber));
+        for (int i = 0; i < drivers.size(); i++) {
+            if(day.getShifts().get(shiftNumber).size() < checkNumberOfDrivers(day, shiftNumber) && day.checkAvailability(drivers.get(i).getNumber(), shiftNumber)){
+                addShift(shiftNumber, drivers.get(i).getNumber(), day);
+                break;
+            }
+        }
+    }
+
+    private int getMaxDrivers(List<Integer> shifts, Day day){
+        int max = 0;
+        for (Integer shiftNumber : shifts) {
+            int actual = checkNumberOfDrivers(day, shiftNumber);
+            if(actual > max){
+                max = actual;
+            }
+        }
+        return max;
     }
 
     private Map<Integer, Integer> getMap(int shiftNumber) {
@@ -294,12 +325,6 @@ public class WorkSchedule {
     }
 
     private void manageShiftEight(Day day, List<Driver> drivers) {
-    }
-
-    private void manageOptionalShifts(Day day) {
-    }
-
-    private void manageOptionalShifts(int shiftNumber, Day day) {
     }
 
     private boolean checkUniqueness(int shiftNumber, int driverNumber, Day day) {
