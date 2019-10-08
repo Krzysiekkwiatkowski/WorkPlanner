@@ -85,49 +85,6 @@ public class Hour {
         return hoursToAdd;
     }
 
-    public void sortByHours(boolean typicalDay) {
-        if(typicalDay){
-            if (drivers.size() > 1) {
-                for (int i = 0; i < drivers.size() - 1; i++) {
-                    if (hours.get(drivers.get(i)) > hours.get(drivers.get(i + 1))) {
-                        Driver driver = drivers.get(i);
-                        drivers.set(i, drivers.get(i + 1));
-                        drivers.set(i + 1, driver);
-                        i = 0;
-                    }
-                }
-            }
-        } else {
-            List<Driver> sortedList = new ArrayList<>();
-            int i = 0;
-            while(sortedList.size() < drivers.size()){
-                List<Driver> drivers = new ArrayList<>();
-                for (Driver driver : saintHours.keySet()) {
-                    if(saintHours.get(driver) == i){
-                        drivers.add(driver);
-                    }
-                }
-                sortedList.addAll(sortList(drivers));
-                i += 4;
-            }
-            drivers = sortedList;
-            show(drivers);
-        }
-    }
-
-    private List<Driver> sortList(List<Driver> drivers){
-        List<Driver> sorted = new ArrayList<>(drivers);
-        for (int i = 0; i < sorted.size() - 1; i++) {
-            if (hours.get(sorted.get(i)) > hours.get(sorted.get(i + 1))) {
-                Driver driver = sorted.get(i);
-                sorted.set(i, sorted.get(i + 1));
-                sorted.set(i + 1, driver);
-                i = 0;
-            }
-        }
-        return sorted;
-    }
-
     private void show(List<Driver> drivers){
         for (int j = 0; j < drivers.size(); j++) {
             System.out.println("Driver " + drivers.get(j).getNumber() + " has " + hours.get(drivers.get(j)) + " standard hours and " + saintHours.get(drivers.get(j)) + " saint hours.");

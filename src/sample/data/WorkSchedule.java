@@ -46,7 +46,7 @@ public class WorkSchedule {
         ninthShift = new HashMap<>();
         tenthShift = new HashMap<>();
         manager = new ShiftManager();
-        for (Driver driver : DriverData.getDrivers()) {
+        for (Driver driver : hour.getDrivers()) {
             firstShift.put(driver.getNumber(), 0);
             secondShift.put(driver.getNumber(), 0);
             thirdShift.put(driver.getNumber(), 0);
@@ -252,11 +252,29 @@ public class WorkSchedule {
                     actual.add(DriverData.getDriver(driverNumber));
                 }
             }
-            sortedList.addAll(actual);
+            sortedList.addAll(randomOrder(actual));
             numberOfShifts++;
             actual.clear();
         }
         return sortedList;
+    }
+
+    private List<Driver> randomOrder(List<Driver> drivers){
+        Random random = new Random();
+        if(drivers.size() > 0) {
+            List<Driver> randomList = new ArrayList<>();
+            List<Integer> numbers = new ArrayList<>();
+            while (numbers.size() < drivers.size()) {
+                int number = random.nextInt(drivers.size());
+                if (!numbers.contains(number)) {
+                    randomList.add(drivers.get(number));
+                    numbers.add(number);
+                }
+            }
+            return randomList;
+        } else {
+            return drivers;
+        }
     }
 
     protected void addShift(int shiftNumber, int driverNumber, Day day) {
