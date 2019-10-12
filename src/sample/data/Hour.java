@@ -85,10 +85,21 @@ public class Hour {
         return hoursToAdd;
     }
 
-    private void show(List<Driver> drivers){
+    protected void show(List<Driver> drivers){
         for (int j = 0; j < drivers.size(); j++) {
             System.out.println("Driver " + drivers.get(j).getNumber() + " has " + hours.get(drivers.get(j)) + " standard hours and " + saintHours.get(drivers.get(j)) + " saint hours.");
         }
+    }
+
+    protected int getMaxSaintHours(){
+        List<Driver> drivers = DriverData.getDrivers();
+        int max = 0;
+        for (int i = 0; i < drivers.size(); i++) {
+            if(saintHours.get(drivers.get(i)) > max){
+                max = saintHours.get(drivers.get(i));
+            }
+        }
+        return max;
     }
 
     public Map<Driver, Integer> getHours() {
