@@ -5,7 +5,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.RadioButton?>
-<DialogPane fx:controller="sample.ConditionController" xmlns:fx="http://javafx.com/fxml">
+<DialogPane fx:controller="com.programs.ConditionController" xmlns:fx="http://javafx.com/fxml">
     <fx:define>
         <ToggleGroup fx:id="shiftToggle"/>
     </fx:define>

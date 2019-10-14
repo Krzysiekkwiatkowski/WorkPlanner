@@ -1,8 +1,7 @@
-package sample.data;
+package com.programs.data;
 
-import sample.Controller;
-import sample.HolidayController;
-
+import com.programs.Controller;
+import com.programs.HolidayController;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
@@ -31,6 +30,7 @@ public class WorkSchedule {
     private ShiftManager manager;
 
     public WorkSchedule(Controller controller) {
+        DriverData.loadDrivers();
         this.date = LocalDate.now();
         days = new ArrayList<>();
         saintDays = new ArrayList<>();
@@ -678,7 +678,7 @@ public class WorkSchedule {
         days.removeAll(excelLoad.getPreviousDays());
     }
 
-    private void removeNextDay(){
+    private void removeNextDay() {
         days.remove(days.size() - 1);
     }
 
@@ -717,6 +717,18 @@ public class WorkSchedule {
 
     public List<Day> getDays() {
         return days;
+    }
+
+    public void updateDriversList(Driver driver, boolean deletion) {
+        for (Day day : days) {
+            if (day.getDate().getMonth() == LocalDate.now().getMonth().plus(1)) {
+                if (deletion) {
+                    day.updateListsDeletion(driver);
+                } else {
+                    day.updateListsAddition(driver);
+                }
+            }
+        }
     }
 
     public void setConditions() {

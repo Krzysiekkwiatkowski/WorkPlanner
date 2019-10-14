@@ -1,5 +1,9 @@
-package sample;
+package com.programs;
 
+import com.programs.data.Condition;
+import com.programs.data.Driver;
+import com.programs.data.DriverData;
+import com.programs.data.WorkSchedule;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
-import sample.data.*;
+import com.programs.data.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -153,8 +157,10 @@ public class Controller {
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             DriverController controller = fxmlLoader.getController();
-            driversList.getItems().add(controller.processResult());
+            Driver driver = controller.processResult();
+            driversList.getItems().add(driver);
             sortList(driversList.getItems());
+            schedule.updateDriversList(driver, false);
         }
     }
 
@@ -245,6 +251,7 @@ public class Controller {
             DriverData.deleteDriver(driver);
             driversList.getItems().removeAll(driver);
             sortList(driversList.getItems());
+            schedule.updateDriversList(driver, true);
         }
     }
 

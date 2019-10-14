@@ -1,4 +1,4 @@
-package sample.data;
+package com.programs.data;
 
 public class Driver implements Comparable<Driver> {
     private int number;

@@ -1,4 +1,4 @@
-package sample.data;
+package com.programs.data;
 
 import jxl.Cell;
 import jxl.CellView;

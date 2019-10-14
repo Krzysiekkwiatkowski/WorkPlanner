@@ -1,4 +1,4 @@
-package sample.data;
+package com.programs.data;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,38 +12,37 @@ public class DriverData {
     private static File data = new File("drivers.txt");
 
     public static ObservableList<Driver> getDrivers() {
-        if(drivers.isEmpty()) {
-            try {
-                Scanner scanner = new Scanner(data);
-                String firstName;
-                String lastName;
-                int number;
-                int phone;
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    if (!line.trim().isEmpty()) {
-                        String[] values = line.split(" ");
-                        firstName = values[1];
-                        lastName = values[2];
-                        try {
-                            number = Integer.parseInt(values[0]);
-                            phone = Integer.parseInt(values[3]);
-                        } catch (IllegalArgumentException e) {
-                            number = 0;
-                            phone = 0;
-                            continue;
-                        }
-                        Driver driver = new Driver(number, firstName, lastName, phone);
-                        drivers.add(driver);
+        return drivers;
+    }
+
+    protected static void loadDrivers() {
+        try {
+            Scanner scanner = new Scanner(data);
+            String firstName;
+            String lastName;
+            int number;
+            int phone;
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (!line.trim().isEmpty()) {
+                    String[] values = line.split(" ");
+                    firstName = values[1];
+                    lastName = values[2];
+                    try {
+                        number = Integer.parseInt(values[0]);
+                        phone = Integer.parseInt(values[3]);
+                    } catch (IllegalArgumentException e) {
+                        number = 0;
+                        phone = 0;
+                        continue;
                     }
+                    Driver driver = new Driver(number, firstName, lastName, phone);
+                    drivers.add(driver);
                 }
-            } catch (FileNotFoundException e) {
-                System.out.println("File not found");
-                e.printStackTrace();
             }
-            return drivers;
-        } else {
-            return drivers;
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+            e.printStackTrace();
         }
     }
 
@@ -79,28 +78,28 @@ public class DriverData {
         }
     }
 
-    public static Driver getDriver(int driverNumber){
+    public static Driver getDriver(int driverNumber) {
         for (Driver driver : drivers) {
-            if(driver.getNumber() == driverNumber){
+            if (driver.getNumber() == driverNumber) {
                 return driver;
             }
         }
         return null;
     }
 
-    public static boolean contains(int number){
+    public static boolean contains(int number) {
         for (Driver driver : drivers) {
-            if(driver.getNumber() == number){
+            if (driver.getNumber() == number) {
                 return true;
             }
         }
         return false;
     }
 
-    public static int getMaxNumber(){
+    public static int getMaxNumber() {
         int max = 0;
         for (Driver driver : drivers) {
-            if(driver.getNumber() > max){
+            if (driver.getNumber() > max) {
                 max = driver.getNumber();
             }
         }

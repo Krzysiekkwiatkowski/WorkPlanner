@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Spinner?>
-<DialogPane fx:controller="sample.DriverController" xmlns:fx="http://javafx.com/fxml">
+<DialogPane fx:controller="com.programs.DriverController" xmlns:fx="http://javafx.com/fxml">
     <content>
         <GridPane vgap="10" hgap="10">
             <Label text="Numer:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>

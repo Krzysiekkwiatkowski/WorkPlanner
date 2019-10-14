@@ -1,4 +1,4 @@
-package sample.data;
+package com.programs.data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,15 +9,39 @@ import java.util.Map;
 public class Day {
     private LocalDate date;
     private boolean nextDayHoliday;
+    private boolean holiday;
     private Map<Integer, List<Driver>> shifts;
     private Map<Driver, List<Condition>> conditions;
     private Map<Driver, Map<Integer, Boolean>> availability;
 
     public Day(LocalDate date, boolean nextDayHoliday, boolean holiday) {
         this.date = date;
-        String dayOfWeek = date.getDayOfWeek().toString();
         this.nextDayHoliday = nextDayHoliday;
+        this.holiday = holiday;
         shifts = new HashMap<>();
+        initializeLists(date);
+    }
+
+    protected void updateListsDeletion(Driver driver) {
+        for (Integer shiftNumber : shifts.keySet()) {
+            if (shifts.get(shiftNumber).contains(driver)) {
+                shifts.get(driver).remove(driver);
+            }
+        }
+        if (conditions.containsKey(driver)) {
+            conditions.remove(driver);
+        }
+        if (availability.containsKey(driver)) {
+            availability.remove(driver);
+        }
+    }
+
+    protected void updateListsAddition(Driver driver) {
+        initializeAvailability(driver);
+    }
+
+    private void initializeLists(LocalDate date) {
+        String dayOfWeek = date.getDayOfWeek().toString();
         List<Integer> tempConditions = new ArrayList<>();
         switch (dayOfWeek) {
             case "FRIDAY":
@@ -43,42 +67,49 @@ public class Day {
         conditions = new HashMap<>();
         availability = new HashMap<>();
         for (Driver driver : DriverData.getDrivers()) {
-            Map<Integer, Boolean> availabilityMap = new HashMap<>();
-            for (Shift shift : Shift.getShifts()) {
-                if(shift.getNumber() == 10 && driver.getNumber() == 15) {
-                    availabilityMap.put(shift.getNumber(), false);
-                } else {
-                    if(driver.getNumber() != 15){
-                        availabilityMap.put(shift.getNumber(), true);
-                    } else {
-                        if(holiday || dayOfWeek.equals("SUNDAY")){
-                            if(shift.getNumber() == 1 || shift.getNumber() == 3){
-                                availabilityMap.put(shift.getNumber(), true);
-                            } else {
-                                availabilityMap.put(shift.getNumber(), false);
-                            }
-                        } else {
-                            availabilityMap.put(shift.getNumber(), true);
-                        }
-                    }
-                }
-            }
-            availability.put(driver, availabilityMap);
+            initializeAvailability(driver);
         }
     }
 
-    public void setDriverAvailability(Driver driver, List<Integer> conditions){
+    private void initializeAvailability(Driver driver) {
+        String dayOfWeek = date.getDayOfWeek().toString();
+        Map<Integer, Boolean> availabilityMap = new HashMap<>();
+        for (Shift shift : Shift.getShifts()) {
+            if (shift.getNumber() == 10 && driver.getNumber() == 15) {
+                availabilityMap.put(shift.getNumber(), false);
+            } else {
+                if (driver.getNumber() != 15) {
+                    availabilityMap.put(shift.getNumber(), true);
+                } else {
+                    if (holiday || dayOfWeek.equals("SUNDAY")) {
+                        if (shift.getNumber() == 1 || shift.getNumber() == 3) {
+                            availabilityMap.put(shift.getNumber(), true);
+                        } else {
+                            availabilityMap.put(shift.getNumber(), false);
+                        }
+                    } else {
+                        availabilityMap.put(shift.getNumber(), true);
+                    }
+                }
+            }
+        }
+        availability.put(driver, availabilityMap);
+    }
+
+    public void setDriverAvailability(Driver driver, List<Integer> conditions) {
         Map<Integer, Boolean> map = availability.get(driver);
-        for (Integer shiftNumber : map.keySet()) {
-            if(conditions.contains(shiftNumber)){
-                map.replace(shiftNumber, false);
+        if(map != null) {
+            for (Integer shiftNumber : map.keySet()) {
+                if (conditions.contains(shiftNumber)) {
+                    map.replace(shiftNumber, false);
+                }
             }
         }
     }
 
     private void manageShifts(List<Integer> conditions) {
         if (nextDayHoliday) {
-            conditions =  redCardCondition(conditions);
+            conditions = redCardCondition(conditions);
         }
         if (conditions.size() > 0) {
             for (Shift shift : Shift.getShifts()) {
@@ -140,7 +171,7 @@ public class Day {
     }
 
     public boolean checkAvailability(int driverNumber, int shiftNumber) {
-        if(driverNumber != 0) {
+        if (driverNumber != 0) {
             Driver driver = DriverData.getDriver(driverNumber);
             if (availability.get(driver).get(shiftNumber) && shifts.containsKey(shiftNumber)) {
                 return true;

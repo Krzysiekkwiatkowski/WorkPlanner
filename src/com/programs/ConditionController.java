@@ -1,11 +1,12 @@
-package sample;
+package com.programs;
 
+import com.programs.data.Condition;
+import com.programs.data.DriverData;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
-import sample.data.Condition;
-import sample.data.DriverData;
+
 import java.time.LocalDate;
 
 public class ConditionController {

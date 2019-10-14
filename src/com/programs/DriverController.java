@@ -1,10 +1,10 @@
-package sample;
+package com.programs;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
-import sample.data.Driver;
-import sample.data.DriverData;
+import com.programs.data.Driver;
+import com.programs.data.DriverData;
 
 public class DriverController {
 

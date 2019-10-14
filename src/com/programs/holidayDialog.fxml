@@ -2,7 +2,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.DatePicker?>
-<DialogPane fx:controller="sample.HolidayController" xmlns:fx="http://javafx.com/fxml">
+<DialogPane fx:controller="com.programs.HolidayController" xmlns:fx="http://javafx.com/fxml">
     <content>
         <GridPane vgap="10" hgap="10">
             <Label text="Wybierz datę czerwonej kartki:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
