@@ -2,6 +2,7 @@ package com.programs.data;
 
 import com.programs.Controller;
 import com.programs.HolidayController;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
@@ -224,7 +225,7 @@ public class WorkSchedule {
         List<Integer> shifts = manager.getRequired(day);
         for (int i = 0; i < shifts.size(); i++) {
             if (shifts.get(i) != 10) {
-                manageTypicalShift(shifts.get(i), day, getSortedList(getMap(shifts.get(i)), day));
+                manageTypicalShift(shifts.get(i), day, verifyDrivers(getSortedList(getMap(shifts.get(i)), day)));
             } else {
                 manageShiftTenth(day);
             }
@@ -242,7 +243,7 @@ public class WorkSchedule {
     }
 
     private void manageOptionalShifts(int shiftNumber, Day day) {
-        List<Driver> drivers = getSortedList(getMap(shiftNumber), day);
+        List<Driver> drivers = verifyDrivers(getSortedList(getMap(shiftNumber), day));
         for (int i = 0; i < drivers.size(); i++) {
             if ((day.getShifts().get(shiftNumber).size() + getDisposedValue(shiftNumber)) < checkNumberOfDrivers(day, shiftNumber) && day.checkAvailability(drivers.get(i).getNumber(), shiftNumber) && canBeDistributed(drivers.get(i).getNumber())) {
                 addShift(shiftNumber, drivers.get(i).getNumber(), day);
@@ -254,7 +255,7 @@ public class WorkSchedule {
     private void manageShiftEighth(Day day) {
         Day previousDay = getPreviousDay(day, 3);
         if (day.getDate().getMonth() != LocalDate.now().getMonth()) {
-            List<Driver> drivers = previousDay.getShifts().get(10);
+            List<Driver> drivers = verifyDrivers(previousDay.getShifts().get(10));
             List<Driver> sortedDrivers = getSortedList(getMap(8), day);
             for (int i = 0; i < sortedDrivers.size(); i++) {
                 if (drivers.contains(sortedDrivers.get(i)) && (day.getShifts().get(8).size() < checkNumberOfDrivers(day, 8)) && day.checkAvailability(sortedDrivers.get(i).getNumber(), 8) && canBeDistributed(sortedDrivers.get(i).getNumber())) {
@@ -266,14 +267,14 @@ public class WorkSchedule {
     }
 
     private void manageShiftTenth(Day day) {
-        List<Driver> drivers = day.getShifts().get(1);
+        List<Driver> drivers = verifyDrivers(day.getShifts().get(1));
         for (int i = 0; i < drivers.size(); i++) {
             if ((day.getShifts().get(10).size() < checkNumberOfDrivers(day, 10)) && (day.checkAvailability(drivers.get(i).getNumber(), 10)) && (drivers.get(i).getNumber() != 15)) {
                 addShift(10, drivers.get(i).getNumber(), day);
             }
         }
         if (day.getShifts().get(10).size() < checkNumberOfDrivers(day, 10)) {
-            drivers = getSortedList(getMap(10), day);
+            drivers = verifyDrivers(getSortedList(getMap(10), day));
             for (int i = 0; i < drivers.size(); i++) {
                 if ((day.getShifts().get(10).size() < checkNumberOfDrivers(day, 10)) && (day.checkAvailability(drivers.get(i).getNumber(), 10))) {
                     addShift(10, drivers.get(i).getNumber(), day);
@@ -297,7 +298,7 @@ public class WorkSchedule {
         }
         Day previousDay = getPreviousDay(day, 3);
         if (day.getDate().getMonth() != LocalDate.now().getMonth()) {
-            List<Driver> drivers = previousDay.getShifts().get(10);
+            List<Driver> drivers = verifyDrivers(previousDay.getShifts().get(10));
             drivers.remove(day.getShifts().get(8));
             Random random = new Random();
             List<Integer> used = new ArrayList<>();
@@ -309,9 +310,11 @@ public class WorkSchedule {
                     for (int i = 0; i < sortedDrivers.size(); i++) {
                         if ((day.getShifts().get(shiftNumber).size() < checkNumberOfDrivers(day, shiftNumber)) && day.checkAvailability(sortedDrivers.get(i).getNumber(), shiftNumber)) {
                             spareDistribution.put(sortedDrivers.get(i).getNumber(), shiftNumber);
-                            sortedDrivers.remove(i);
                             used.add(shiftNumber);
                             break;
+                        }
+                        if(i == (sortedDrivers.size() - 1)){
+                            used.add(shiftNumber);
                         }
                     }
                     if (sortedDrivers.size() == 0) {
@@ -320,6 +323,29 @@ public class WorkSchedule {
                 }
             }
         }
+    }
+
+    private List<Driver> verifyDrivers(List<Driver> drivers){
+        if(DriverData.getDrivers().containsAll(drivers)){
+            return drivers;
+        } else {
+            List<Driver> actual = new ArrayList<>();
+            for (Driver driver : drivers) {
+                if(DriverData.getDrivers().contains(driver)){
+                    actual.add(driver);
+                }
+            }
+            return actual;
+        }
+    }
+
+    private Map<Integer, Integer> verifyMap(Map<Integer, Integer> map){
+        Map<Integer, Integer> sortedMap = new HashMap<>();
+        List<Driver> drivers = DriverData.getDrivers();
+        for (int i = 0; i < drivers.size(); i++) {
+            sortedMap.put(drivers.get(i).getNumber(), map.get(drivers.get(i).getNumber()));
+        }
+        return sortedMap;
     }
 
     private boolean canBeDistributed(int driverNumber) {
@@ -335,8 +361,12 @@ public class WorkSchedule {
         int shift = 0;
         while (sorted.size() < drivers.size()) {
             for (int i = 0; i < drivers.size(); i++) {
-                if (map.get(drivers.get(i).getNumber()) == shift) {
-                    sorted.add(drivers.get(i));
+                if (drivers.get(i) != null) {
+                    if (map.get(drivers.get(i).getNumber()) == shift) {
+                        sorted.add(drivers.get(i));
+                    }
+                } else {
+                    drivers.remove(i);
                 }
             }
             shift++;
@@ -390,25 +420,25 @@ public class WorkSchedule {
     private Map<Integer, Integer> getMap(int shiftNumber) {
         switch (shiftNumber) {
             case 1:
-                return firstShift;
+                return verifyMap(firstShift);
             case 2:
-                return secondShift;
+                return verifyMap(secondShift);
             case 3:
-                return thirdShift;
+                return verifyMap(thirdShift);
             case 4:
-                return fourthShift;
+                return verifyMap(fourthShift);
             case 5:
-                return fifthShift;
+                return verifyMap(fifthShift);
             case 6:
-                return sixthShift;
+                return verifyMap(sixthShift);
             case 7:
-                return seventhShift;
+                return verifyMap(seventhShift);
             case 8:
-                return eighthShift;
+                return verifyMap(eighthShift);
             case 9:
-                return ninthShift;
+                return verifyMap(ninthShift);
             case 10:
-                return tenthShift;
+                return verifyMap(tenthShift);
         }
         return null;
     }
