@@ -15,7 +15,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
-import com.programs.data.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -160,7 +159,7 @@ public class Controller {
             Driver driver = controller.processResult();
             driversList.getItems().add(driver);
             sortList(driversList.getItems());
-            schedule.updateDriversList(driver, false);
+            schedule.addDriverToUpdate(driver, false);
         }
     }
 
@@ -251,7 +250,7 @@ public class Controller {
             DriverData.deleteDriver(driver);
             driversList.getItems().removeAll(driver);
             sortList(driversList.getItems());
-            schedule.updateDriversList(driver, true);
+            schedule.addDriverToUpdate(driver, true);
         }
     }
 

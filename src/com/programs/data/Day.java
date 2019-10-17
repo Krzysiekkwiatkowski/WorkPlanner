@@ -93,12 +93,12 @@ public class Day {
                 }
             }
         }
-        availability.put(driver, availabilityMap);
+        this.availability.put(driver, availabilityMap);
     }
 
     public void setDriverAvailability(Driver driver, List<Integer> conditions) {
         Map<Integer, Boolean> map = availability.get(driver);
-        if(map != null) {
+        if (map != null) {
             for (Integer shiftNumber : map.keySet()) {
                 if (conditions.contains(shiftNumber)) {
                     map.replace(shiftNumber, false);
@@ -173,8 +173,10 @@ public class Day {
     public boolean checkAvailability(int driverNumber, int shiftNumber) {
         if (driverNumber != 0) {
             Driver driver = DriverData.getDriver(driverNumber);
-            if (availability.get(driver).get(shiftNumber) && shifts.containsKey(shiftNumber)) {
-                return true;
+            if (availability.get(driver) != null) {
+                if (availability.get(driver).get(shiftNumber) && shifts.containsKey(shiftNumber)) {
+                    return true;
+                }
             }
         }
         return false;

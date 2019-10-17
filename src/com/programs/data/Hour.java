@@ -102,6 +102,12 @@ public class Hour {
         return max;
     }
 
+    protected void initializeHours(Driver driver){
+        hours.put(driver, 0);
+        saintHours.put(driver, 0);
+        drivers.add(driver);
+    }
+
     public Map<Driver, Integer> getHours() {
         return hours;
     }
