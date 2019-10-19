@@ -2,7 +2,6 @@ package com.programs.data;
 
 import com.programs.Controller;
 import com.programs.HolidayController;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
@@ -52,7 +51,7 @@ public class WorkSchedule {
         manager = new ShiftManager();
         for (Driver driver : hour.getDrivers()) {
             for (int i = 1; i < 11; i++) {
-                initializeMaps(i, driver, true);
+                initializeMaps(i, driver);
             }
         }
         this.controller = controller;
@@ -64,21 +63,21 @@ public class WorkSchedule {
         driversToUpdate = new HashMap<>();
     }
 
-    private void initializeMaps(int shiftNumber, Driver driver, boolean initialize) {
-        Map<Integer, Integer> map = getMap(shiftNumber, initialize);
+    private void initializeMaps(int shiftNumber, Driver driver) {
+        Map<Integer, Integer> map = getMap(shiftNumber);
         map.put(driver.getNumber(), 0);
     }
 
     public String getMonth(String month) {
         switch (month) {
             case "JANUARY":
-                return "Styczeń";
+                return "Styczen";
             case "FEBRUARY":
                 return "Luty";
             case "MARCH":
                 return "Marzec";
             case "APRIL":
-                return "Kwiecień";
+                return "Kwiecien";
             case "MAY":
                 return "Maj";
             case "JUNE":
@@ -86,22 +85,22 @@ public class WorkSchedule {
             case "JULY":
                 return "Lipiec";
             case "AUGUST":
-                return "Sierpień";
+                return "Sierpien";
             case "SEPTEMBER":
-                return "Wrzesień";
+                return "Wrzesien";
             case "OCTOBER":
-                return "Październik";
+                return "Pazdziernik";
             case "NOVEMBER":
                 return "Listopad";
             case "DECEMBER":
-                return "Grudzień";
+                return "Grudzien";
         }
         return null;
     }
 
     private void addHours(int shiftNumber, int driverNumber, boolean saintDay) {
         int hours = hour.addHours(driverNumber, shiftNumber, saintDay);
-        Map<Integer, Integer> map = getMap(shiftNumber, false);
+        Map<Integer, Integer> map = getMap(shiftNumber);
         map.put(driverNumber, (map.get(driverNumber) + hours));
     }
 
@@ -225,7 +224,7 @@ public class WorkSchedule {
         List<Integer> shifts = manager.getRequired(day);
         for (int i = 0; i < shifts.size(); i++) {
             if (shifts.get(i) != 10) {
-                manageTypicalShift(shifts.get(i), day, verifyDrivers(getSortedList(getMap(shifts.get(i), false), day)));
+                manageTypicalShift(shifts.get(i), day, verifyDrivers(getSortedList(getMap(shifts.get(i)), day)));
             } else {
                 manageShiftTenth(day);
             }
@@ -243,7 +242,7 @@ public class WorkSchedule {
     }
 
     private void manageOptionalShifts(int shiftNumber, Day day) {
-        List<Driver> drivers = verifyDrivers(getSortedList(getMap(shiftNumber, false), day));
+        List<Driver> drivers = verifyDrivers(getSortedList(getMap(shiftNumber), day));
         for (int i = 0; i < drivers.size(); i++) {
             if ((day.getShifts().get(shiftNumber).size() + getDisposedValue(shiftNumber)) < checkNumberOfDrivers(day, shiftNumber) && day.checkAvailability(drivers.get(i).getNumber(), shiftNumber) && canBeDistributed(drivers.get(i).getNumber())) {
                 addShift(shiftNumber, drivers.get(i).getNumber(), day);
@@ -256,7 +255,7 @@ public class WorkSchedule {
         Day previousDay = getPreviousDay(day, 3);
         if (day.getDate().getMonth() != LocalDate.now().getMonth()) {
             List<Driver> drivers = verifyDrivers(previousDay.getShifts().get(10));
-            List<Driver> sortedDrivers = getSortedList(getMap(8, false), day);
+            List<Driver> sortedDrivers = getSortedList(getMap(8), day);
             for (int i = 0; i < sortedDrivers.size(); i++) {
                 if (drivers.contains(sortedDrivers.get(i)) && (day.getShifts().get(8).size() < checkNumberOfDrivers(day, 8)) && day.checkAvailability(sortedDrivers.get(i).getNumber(), 8) && canBeDistributed(sortedDrivers.get(i).getNumber())) {
                     addShift(8, sortedDrivers.get(i).getNumber(), day);
@@ -274,7 +273,7 @@ public class WorkSchedule {
             }
         }
         if (day.getShifts().get(10).size() < checkNumberOfDrivers(day, 10)) {
-            drivers = verifyDrivers(getSortedList(getMap(10, false), day));
+            drivers = verifyDrivers(getSortedList(getMap(10), day));
             for (int i = 0; i < drivers.size(); i++) {
                 if ((day.getShifts().get(10).size() < checkNumberOfDrivers(day, 10)) && (day.checkAvailability(drivers.get(i).getNumber(), 10))) {
                     addShift(10, drivers.get(i).getNumber(), day);
@@ -339,13 +338,56 @@ public class WorkSchedule {
         }
     }
 
-    private Map<Integer, Integer> verifyMap(Map<Integer, Integer> map) {
-        Map<Integer, Integer> sortedMap = new HashMap<>();
-        List<Driver> drivers = DriverData.getDrivers();
-        for (int i = 0; i < drivers.size(); i++) {
-            sortedMap.put(drivers.get(i).getNumber(), map.get(drivers.get(i).getNumber()));
+    private void verifyMap(Map<Integer, Integer> map, int shiftNumber) {
+        Map<Integer, Integer> verifiedMap = new HashMap<>();
+        for (Driver driver : DriverData.getDrivers()) {
+            if (map.containsKey(driver.getNumber())) {
+                verifiedMap.put(driver.getNumber(), map.get(driver.getNumber()));
+            } else {
+                verifiedMap.put(driver.getNumber(), 0);
+            }
         }
-        return sortedMap;
+        switch (shiftNumber) {
+            case 1:
+                firstShift = verifiedMap;
+                break;
+            case 2:
+                secondShift = verifiedMap;
+                break;
+            case 3:
+                thirdShift = verifiedMap;
+                break;
+            case 4:
+                fourthShift = verifiedMap;
+                break;
+            case 5:
+                fifthShift = verifiedMap;
+                break;
+            case 6:
+                sixthShift = verifiedMap;
+                break;
+            case 7:
+                seventhShift = verifiedMap;
+                break;
+            case 8:
+                eighthShift = verifiedMap;
+                break;
+            case 9:
+                ninthShift = verifiedMap;
+                break;
+            case 10:
+                tenthShift = verifiedMap;
+                break;
+            default:
+                map = null;
+                break;
+        }
+    }
+
+    private void verifyMaps() {
+        for (int i = 1; i < 11; i++) {
+            verifyMap(getMap(i), i);
+        }
     }
 
     private boolean canBeDistributed(int driverNumber) {
@@ -357,7 +399,7 @@ public class WorkSchedule {
 
     private List<Driver> sortLimited(int shiftNumber, List<Driver> drivers) {
         List<Driver> sorted = new ArrayList<>();
-        Map<Integer, Integer> map = getMap(shiftNumber, false);
+        Map<Integer, Integer> map = getMap(shiftNumber);
         int shift = 0;
         while (sorted.size() < drivers.size()) {
             for (int i = 0; i < drivers.size(); i++) {
@@ -392,7 +434,7 @@ public class WorkSchedule {
         for (int i = 0; i < drivers.size(); i++) {
             sb.append("Driver " + drivers.get(i).getNumber() + "\t");
             for (int j = 1; j <= Shift.getShifts().size(); j++) {
-                sb.append(j + " : " + getMap(j, false).get(drivers.get(i).getNumber()) + "\t");
+                sb.append(j + " : " + getMap(j).get(drivers.get(i).getNumber()) + "\t");
             }
             sb.append("\n");
         }
@@ -417,7 +459,7 @@ public class WorkSchedule {
         }
     }
 
-    private Map<Integer, Integer> getMap(int shiftNumber, boolean initialize) {
+    private Map<Integer, Integer> getMap(int shiftNumber) {
         Map<Integer, Integer> map;
         switch (shiftNumber) {
             case 1:
@@ -454,11 +496,7 @@ public class WorkSchedule {
                 map = null;
                 break;
         }
-        if(!initialize) {
-            return verifyMap(map);
-        } else {
-            return map;
-        }
+        return map;
     }
 
     private List<Driver> getSortedList(Map<Integer, Integer> map, Day day) {
@@ -695,6 +733,7 @@ public class WorkSchedule {
         getPreviousDays();
         initializeDays();
         updateDriversList();
+        verifyMaps();
         setPreviousDaysAvailability();
         setConditions();
         generate();
@@ -702,8 +741,7 @@ public class WorkSchedule {
         removePreviousDays();
         removeNextDay();
         saveWorkSchedule();
-//        showDistribution();
-        hour.show(DriverData.getDrivers());
+        showDistribution();
         System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
     }
 
@@ -738,7 +776,7 @@ public class WorkSchedule {
     public void showHours() {
         StringBuilder sb = new StringBuilder();
         for (Driver driver : DriverData.getDrivers()) {
-            sb.append("Kierowca " + driver.getNumber() + " ma zagrafikowanych " + hour.getHours().get(driver) + " godzin\n\n");
+            sb.append("Kierowca " + driver.getNumber() + " ma zagrafikowanych " + hour.getHours().get(driver) + " godzin, w tym " + hour.getSaintHours().get(driver) + " w święta\n\n");
         }
         this.controller.getDisplaySchedule().setText(sb.toString());
     }
@@ -768,7 +806,7 @@ public class WorkSchedule {
         return days;
     }
 
-    public void addDriverToUpdate(Driver driver, boolean deletion){
+    public void addDriverToUpdate(Driver driver, boolean deletion) {
         driversToUpdate.put(driver, deletion);
     }
 
@@ -777,7 +815,7 @@ public class WorkSchedule {
             if (!driversToUpdate.get(driver)) {
                 hour.initializeHours(driver);
                 for (int i = 1; i < 11; i++) {
-                    initializeMaps(i, driver, true);
+                    initializeMaps(i, driver);
                 }
             }
             for (Day day : days) {

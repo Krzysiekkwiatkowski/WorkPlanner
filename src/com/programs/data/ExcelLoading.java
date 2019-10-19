@@ -27,7 +27,7 @@ public class ExcelLoading {
         setAvailability();
     }
 
-    private void setAvailability(){
+    private void setAvailability() {
         List<Driver> drivers = DriverData.getDrivers();
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         for (Day day : previousDays) {
@@ -47,8 +47,8 @@ public class ExcelLoading {
                 Day day = previousDays.get(j - monthLong + 1);
                 for (int i = 2; i < 12; i++) {
                     input = sheet.getCell(i, j).getContents();
-                    if(!input.contains("-")){
-                        if(input.contains(",")) {
+                    if (!input.contains("-")) {
+                        if (input.contains(",")) {
                             String[] parts = input.split(",");
                             for (int k = 0; k < parts.length; k++) {
                                 if (day.getShifts().containsKey(i - 1)) {
@@ -56,8 +56,8 @@ public class ExcelLoading {
                                 }
                             }
                         } else {
-                            if(!day.getShifts().containsKey((i-1))) {
-                                day.getShifts().put((i-1), new ArrayList<>());
+                            if (!day.getShifts().containsKey((i - 1))) {
+                                day.getShifts().put((i - 1), new ArrayList<>());
                             }
                             schedule.addShift((i - 1), Integer.parseInt(input.trim()), day);
                         }
@@ -73,7 +73,7 @@ public class ExcelLoading {
         }
     }
 
-    public List<Day> getPreviousDays(){
+    public List<Day> getPreviousDays() {
         return previousDays;
     }
 }

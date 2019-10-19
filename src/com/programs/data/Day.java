@@ -125,11 +125,9 @@ public class Day {
     }
 
     private List<Integer> redCardCondition(List<Integer> conditions) {
-        int index = -1;
         if (conditions.contains(9)) {
-            index = conditions.indexOf(9);
+            conditions.remove(conditions.indexOf(9));
         }
-        conditions.remove(index);
         return conditions;
     }
 

@@ -3,14 +3,14 @@ package com.programs.data;
 import java.time.LocalDate;
 
 public class Condition {
-    private int shiftNumber;
+    private Shift shift;
     private int driverNumber;
     private LocalDate date;
     private boolean possibleShift;
 
-    public Condition(int shiftNumber, int driverNumber, LocalDate date, boolean possibleShift) {
-        if(date != null) {
-            this.shiftNumber = shiftNumber;
+    public Condition(Shift shift, int driverNumber, LocalDate date, boolean possibleShift) {
+        if(date != null && shift != null) {
+            this.shift = shift;
             this.driverNumber = driverNumber;
             this.date = date;
             this.possibleShift = possibleShift;
@@ -21,12 +21,12 @@ public class Condition {
         return driverNumber;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public int getShiftNumber(){
+        return shift.getNumber();
     }
 
-    public int getShiftNumber() {
-        return shiftNumber;
+    public LocalDate getDate() {
+        return date;
     }
 
     public boolean isPossibleShift() {
@@ -35,6 +35,6 @@ public class Condition {
 
     @Override
     public String toString() {
-        return driverNumber + ", " + date.toString() + " godziny " + Shift.getShift(shiftNumber).getHours();
+        return driverNumber + ", " + date.toString() + " godziny " + shift.getHours();
     }
 }

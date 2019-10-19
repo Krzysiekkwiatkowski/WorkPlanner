@@ -31,6 +31,15 @@ public final class Shift {
         return shifts.get(number - 1);
     }
 
+    public static Shift getShift(String shiftSignature){
+        for (Shift shift : shifts) {
+            if(shift.getHours().equals(shiftSignature)){
+                return shift;
+            }
+        }
+        return null;
+    }
+
     public static List<Shift> getShifts(){
         return shifts;
     }

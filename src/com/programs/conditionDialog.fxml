@@ -5,14 +5,33 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <DialogPane fx:controller="com.programs.ConditionController" xmlns:fx="http://javafx.com/fxml">
     <fx:define>
         <ToggleGroup fx:id="shiftToggle"/>
     </fx:define>
     <content>
         <GridPane vgap="10" hgap="10">
-            <Label text="Numer zmiany:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <Spinner fx:id="shiftNumber" GridPane.rowIndex="0" GridPane.columnIndex="1" min="1" max="10" editable="true"/>
+            <Label text="Zmiana:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="comboBox" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Wybierz zmianę"/>
+                        <String fx:value="6-14"/>
+                        <String fx:value="7:30-15:30"/>
+                        <String fx:value="10-14"/>
+                        <String fx:value="6-22"/>
+                        <String fx:value="14-22"/>
+                        <String fx:value="14-18"/>
+                        <String fx:value="15:30-23:30"/>
+                        <String fx:value="17-1"/>
+                        <String fx:value="18-2"/>
+                        <String fx:value="22-6"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
             <Label text="Numer kierowcy:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
             <Spinner fx:id="driverNumber" GridPane.rowIndex="1" GridPane.columnIndex="1" min="1" max="30" editable="true"/>
             <Label text="Data:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>

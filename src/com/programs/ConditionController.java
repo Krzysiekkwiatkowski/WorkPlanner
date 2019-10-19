@@ -2,7 +2,9 @@ package com.programs;
 
 import com.programs.data.Condition;
 import com.programs.data.DriverData;
+import com.programs.data.Shift;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
@@ -12,7 +14,7 @@ import java.time.LocalDate;
 public class ConditionController {
 
     @FXML
-    private Spinner<Integer> shiftNumber;
+    private ComboBox<String> comboBox;
 
     @FXML
     private Spinner<Integer> driverNumber;
@@ -27,7 +29,7 @@ public class ConditionController {
     private RadioButton unwantedShift;
 
     public Condition processResult() {
-        int shift = shiftNumber.getValue();
+        Shift shift = Shift.getShift(comboBox.getValue());
         int driver = driverNumber.getValue();
         LocalDate date = conditionDate.getValue();
         boolean wanted = wantedShift.isSelected();
