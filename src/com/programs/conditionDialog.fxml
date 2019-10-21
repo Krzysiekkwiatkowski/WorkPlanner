@@ -7,28 +7,16 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <DialogPane fx:controller="com.programs.ConditionController" xmlns:fx="http://javafx.com/fxml">
     <fx:define>
         <ToggleGroup fx:id="shiftToggle"/>
     </fx:define>
     <content>
         <GridPane vgap="10" hgap="10">
-            <Label text="Zmiana:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label text="Wybierz zmianę:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
             <ComboBox fx:id="comboBox" GridPane.rowIndex="0" GridPane.columnIndex="1">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Wybierz zmianę"/>
-                        <String fx:value="6-14"/>
-                        <String fx:value="7:30-15:30"/>
-                        <String fx:value="10-14"/>
-                        <String fx:value="6-22"/>
-                        <String fx:value="14-22"/>
-                        <String fx:value="14-18"/>
-                        <String fx:value="15:30-23:30"/>
-                        <String fx:value="17-1"/>
-                        <String fx:value="18-2"/>
-                        <String fx:value="22-6"/>
                     </FXCollections>
                 </items>
             </ComboBox>

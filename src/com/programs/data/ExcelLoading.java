@@ -20,7 +20,7 @@ public class ExcelLoading {
         previousDays = new ArrayList<>();
         this.monthLong = LocalDate.now().lengthOfMonth();
         for (int i = 2; i >= 0; i--) {
-            Day day = new Day((LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), monthLong - i)), false, false);
+            Day day = new Day((LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), monthLong - i)), false, false, schedule);
             previousDays.add(day);
         }
         loadData(fileName);

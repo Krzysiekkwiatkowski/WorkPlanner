@@ -2,6 +2,7 @@ package com.programs.data;
 
 import com.programs.Controller;
 import com.programs.HolidayController;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
@@ -98,7 +99,7 @@ public class WorkSchedule {
         return null;
     }
 
-    private void addHours(int shiftNumber, int driverNumber, boolean saintDay) {
+    protected void addHours(int shiftNumber, int driverNumber, boolean saintDay) {
         int hours = hour.addHours(driverNumber, shiftNumber, saintDay);
         Map<Integer, Integer> map = getMap(shiftNumber);
         map.put(driverNumber, (map.get(driverNumber) + hours));
@@ -244,7 +245,7 @@ public class WorkSchedule {
     private void manageOptionalShifts(int shiftNumber, Day day) {
         List<Driver> drivers = verifyDrivers(getSortedList(getMap(shiftNumber), day));
         for (int i = 0; i < drivers.size(); i++) {
-            if ((day.getShifts().get(shiftNumber).size() + getDisposedValue(shiftNumber)) < checkNumberOfDrivers(day, shiftNumber) && day.checkAvailability(drivers.get(i).getNumber(), shiftNumber) && canBeDistributed(drivers.get(i).getNumber())) {
+            if ((day.getShifts().get(shiftNumber).size() + getDisposedValue(shiftNumber)) < checkNumberOfDrivers(day, shiftNumber) && day.checkAvailability(drivers.get(i).getNumber(), shiftNumber) && canBeDistributed(drivers.get(i).getNumber()) && checkFutureAvailability(DriverData.getDriver(i), shiftNumber, day)) {
                 addShift(shiftNumber, drivers.get(i).getNumber(), day);
                 break;
             }
@@ -257,7 +258,7 @@ public class WorkSchedule {
             List<Driver> drivers = verifyDrivers(previousDay.getShifts().get(10));
             List<Driver> sortedDrivers = getSortedList(getMap(8), day);
             for (int i = 0; i < sortedDrivers.size(); i++) {
-                if (drivers.contains(sortedDrivers.get(i)) && (day.getShifts().get(8).size() < checkNumberOfDrivers(day, 8)) && day.checkAvailability(sortedDrivers.get(i).getNumber(), 8) && canBeDistributed(sortedDrivers.get(i).getNumber())) {
+                if (drivers.contains(sortedDrivers.get(i)) && (day.getShifts().get(8).size() < checkNumberOfDrivers(day, 8)) && day.checkAvailability(sortedDrivers.get(i).getNumber(), 8) && canBeDistributed(sortedDrivers.get(i).getNumber()) && checkFutureAvailability(sortedDrivers.get(i), 8, day)) {
                     addShift(8, sortedDrivers.get(i).getNumber(), day);
                     break;
                 }
@@ -268,14 +269,14 @@ public class WorkSchedule {
     private void manageShiftTenth(Day day) {
         List<Driver> drivers = verifyDrivers(day.getShifts().get(1));
         for (int i = 0; i < drivers.size(); i++) {
-            if ((day.getShifts().get(10).size() < checkNumberOfDrivers(day, 10)) && (day.checkAvailability(drivers.get(i).getNumber(), 10)) && (drivers.get(i).getNumber() != 15)) {
+            if ((day.getShifts().get(10).size() < checkNumberOfDrivers(day, 10)) && (day.checkAvailability(drivers.get(i).getNumber(), 10)) && (drivers.get(i).getNumber() != 15) && checkFutureAvailability(drivers.get(i), 10, day)) {
                 addShift(10, drivers.get(i).getNumber(), day);
             }
         }
         if (day.getShifts().get(10).size() < checkNumberOfDrivers(day, 10)) {
             drivers = verifyDrivers(getSortedList(getMap(10), day));
             for (int i = 0; i < drivers.size(); i++) {
-                if ((day.getShifts().get(10).size() < checkNumberOfDrivers(day, 10)) && (day.checkAvailability(drivers.get(i).getNumber(), 10))) {
+                if ((day.getShifts().get(10).size() < checkNumberOfDrivers(day, 10)) && (day.checkAvailability(drivers.get(i).getNumber(), 10)) && checkFutureAvailability(drivers.get(i), 10, day)) {
                     addShift(10, drivers.get(i).getNumber(), day);
                 }
             }
@@ -307,7 +308,7 @@ public class WorkSchedule {
                 if (!used.contains(shiftNumber)) {
                     List<Driver> sortedDrivers = sortLimited(shiftNumber, drivers);
                     for (int i = 0; i < sortedDrivers.size(); i++) {
-                        if ((day.getShifts().get(shiftNumber).size() < checkNumberOfDrivers(day, shiftNumber)) && day.checkAvailability(sortedDrivers.get(i).getNumber(), shiftNumber)) {
+                        if ((day.getShifts().get(shiftNumber).size() < checkNumberOfDrivers(day, shiftNumber)) && day.checkAvailability(sortedDrivers.get(i).getNumber(), shiftNumber) && checkFutureAvailability(sortedDrivers.get(i), shiftNumber, day)) {
                             spareDistribution.put(sortedDrivers.get(i).getNumber(), shiftNumber);
                             used.add(shiftNumber);
                             break;
@@ -564,9 +565,83 @@ public class WorkSchedule {
         setAvailability(DriverData.getDriver(driverNumber), shiftNumber, day);
     }
 
+    private boolean checkFutureAvailability(Driver driver, int shiftNumber, Day day) {
+        Map<Integer, List<Integer>> checkMap = new HashMap<>();
+        int dayIndex;
+        switch (shiftNumber) {
+            case 1:
+                checkMap.put(days.indexOf(day), Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9));
+                return checkFutureAvailability(driver, checkMap);
+            case 2:
+                checkMap.put(days.indexOf(day), Arrays.asList(3, 4, 5, 6, 7, 8, 9, 10));
+                return checkFutureAvailability(driver, checkMap);
+            case 3:
+                checkMap.put(days.indexOf(day), Arrays.asList(4, 5, 6, 7, 8, 9, 10));
+                return checkFutureAvailability(driver, checkMap);
+            case 4:
+                checkMap.put(days.indexOf(day), Arrays.asList(5, 6, 7, 8, 9, 10));
+                return checkFutureAvailability(driver, checkMap);
+            case 5:
+                checkMap.put(days.indexOf(day), Arrays.asList(6, 7, 8, 9, 10));
+                return checkFutureAvailability(driver, checkMap);
+            case 6:
+                checkMap.put(days.indexOf(day), Arrays.asList(7, 8, 9, 10));
+                return checkFutureAvailability(driver, checkMap);
+            case 7:
+                dayIndex = days.indexOf(day);
+                checkMap.put(dayIndex, Arrays.asList(8, 9, 10));
+                if ((dayIndex + 1) < days.size()) {
+                    checkMap.put((dayIndex + 1), Arrays.asList(1));
+                }
+                return checkFutureAvailability(driver, checkMap);
+            case 8:
+                dayIndex = days.indexOf(day);
+                checkMap.put(dayIndex, Arrays.asList(9, 10));
+                if ((dayIndex + 1) < days.size()) {
+                    checkMap.put(dayIndex + 1, Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+                }
+                return checkFutureAvailability(driver, checkMap);
+            case 9:
+                dayIndex = days.indexOf(day);
+                checkMap.put(dayIndex, Arrays.asList(10));
+                if ((dayIndex + 1) < days.size()) {
+                    checkMap.put(dayIndex + 1, Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+                }
+                return checkFutureAvailability(driver, checkMap);
+            case 10:
+                dayIndex = days.indexOf(day) + 1;
+                if (dayIndex < days.size()) {
+                    checkMap.put(dayIndex, Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+                    dayIndex++;
+                }
+                if (dayIndex < days.size()) {
+                    checkMap.put(dayIndex, Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+                    dayIndex++;
+                }
+                if (dayIndex < days.size()) {
+                    checkMap.put(dayIndex, Arrays.asList(1, 2, 3, 4));
+                }
+                return checkFutureAvailability(driver, checkMap);
+        }
+        return false;
+    }
+
+    private boolean checkFutureAvailability(Driver driver, Map<Integer, List<Integer>> shiftsToCheck) {
+        for (Integer dayIndex : shiftsToCheck.keySet()) {
+            for (int j = 0; j < shiftsToCheck.get(dayIndex).size(); j++) {
+                if (days.get(dayIndex).getShifts().get(shiftsToCheck.get(dayIndex).get(j)) != null) {
+                    if (days.get(dayIndex).getShifts().get(shiftsToCheck.get(dayIndex).get(j)).contains(driver)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     private void manageTypicalShift(int shiftNumber, Day day, List<Driver> drivers) {
         for (int i = 0; i < drivers.size(); i++) {
-            if (day.checkAvailability(drivers.get(i).getNumber(), shiftNumber) && ((day.getShifts().get(shiftNumber).size() + getDisposedValue(shiftNumber)) < checkNumberOfDrivers(day, shiftNumber)) && checkUniqueness(shiftNumber, drivers.get(i).getNumber(), day) && (!day.getShifts().get(shiftNumber).contains(drivers.get(i))) && (!spareDistribution.containsKey(drivers.get(i).getNumber()))) {
+            if (day.checkAvailability(drivers.get(i).getNumber(), shiftNumber) && ((day.getShifts().get(shiftNumber).size() + getDisposedValue(shiftNumber)) < checkNumberOfDrivers(day, shiftNumber)) && checkUniqueness(shiftNumber, drivers.get(i).getNumber(), day) && (!day.getShifts().get(shiftNumber).contains(drivers.get(i))) && (!spareDistribution.containsKey(drivers.get(i).getNumber())) && checkFutureAvailability(drivers.get(i), shiftNumber, day)) {
                 addShift(shiftNumber, drivers.get(i).getNumber(), day);
             }
         }
@@ -618,12 +693,12 @@ public class WorkSchedule {
             Day day;
             if (previousDay != null) {
                 if (previousDay.isNextDayHoliday()) {
-                    day = new Day(actualDate, holidays.contains(actualDate), true);
+                    day = new Day(actualDate, holidays.contains(actualDate), true, this);
                 } else {
-                    day = new Day(actualDate, holidays.contains(actualDate), false);
+                    day = new Day(actualDate, holidays.contains(actualDate), false, this);
                 }
             } else {
-                day = new Day(actualDate, holidays.contains(actualDate), false);
+                day = new Day(actualDate, holidays.contains(actualDate), false, this);
             }
             days.add(day);
             Day saintDayCheck = getPreviousDay(day, 1);
@@ -641,12 +716,12 @@ public class WorkSchedule {
         Day day;
         if (previousDay != null) {
             if (previousDay.isNextDayHoliday()) {
-                day = new Day(actualDate, holidays.contains(actualDate), true);
+                day = new Day(actualDate, holidays.contains(actualDate), true, this);
             } else {
-                day = new Day(actualDate, holidays.contains(actualDate), false);
+                day = new Day(actualDate, holidays.contains(actualDate), false, this);
             }
         } else {
-            day = new Day(actualDate, holidays.contains(actualDate), false);
+            day = new Day(actualDate, holidays.contains(actualDate), false, this);
         }
         days.add(day);
         Day saintDayCheck = getPreviousDay(day, 1);
@@ -741,7 +816,7 @@ public class WorkSchedule {
         removePreviousDays();
         removeNextDay();
         saveWorkSchedule();
-        showDistribution();
+//        showDistribution();
         System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
     }
 
@@ -833,8 +908,20 @@ public class WorkSchedule {
     public void setConditions() {
         for (Driver driver : conditions.keySet()) {
             for (Condition condition : conditions.get(driver)) {
-                days.get(condition.getDate().getDayOfMonth() - 1).setCondition(driver, condition);
+                int index = getIndexByDate(condition.getDate());
+                if (index >= 0) {
+                    days.get(index).setCondition(driver, condition);
+                }
             }
         }
+    }
+
+    private int getIndexByDate(LocalDate date) {
+        for (int i = 0; i < days.size(); i++) {
+            if (days.get(i).getDate().equals(date)) {
+                return days.indexOf(days.get(i));
+            }
+        }
+        return -1;
     }
 }

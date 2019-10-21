@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Day {
+    private WorkSchedule schedule;
     private LocalDate date;
     private boolean nextDayHoliday;
     private boolean holiday;
@@ -14,7 +15,8 @@ public class Day {
     private Map<Driver, List<Condition>> conditions;
     private Map<Driver, Map<Integer, Boolean>> availability;
 
-    public Day(LocalDate date, boolean nextDayHoliday, boolean holiday) {
+    public Day(LocalDate date, boolean nextDayHoliday, boolean holiday, WorkSchedule schedule) {
+        this.schedule = schedule;
         this.date = date;
         this.nextDayHoliday = nextDayHoliday;
         this.holiday = holiday;
@@ -143,10 +145,15 @@ public class Day {
         } else {
             for (Shift shift : Shift.getShifts()) {
                 if (shift.getNumber() != condition.getShiftNumber()) {
-                    availability.get(driver).put(shift.getNumber(), false);
+                    if (condition.getShiftNumber() == 1) {
+                        if (shift.getNumber() != 10) {
+                            availability.get(driver).put(shift.getNumber(), false);
+                        }
+                    } else {
+                        availability.get(driver).put(shift.getNumber(), false);
+                    }
                 } else {
-                    availability.get(driver).put(shift.getNumber(), true);
-                    shifts.get(shift.getNumber()).add(driver);
+                    schedule.addShift(shift.getNumber(), driver.getNumber(), this);
                 }
             }
         }

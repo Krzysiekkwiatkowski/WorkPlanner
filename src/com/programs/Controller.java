@@ -201,11 +201,13 @@ public class Controller {
             System.out.println("Couldn't load the dialog");
             e.printStackTrace();
         }
+        ConditionController controller = fxmlLoader.getController();
+        controller.loadShifts();
+        controller.getComboBox().getSelectionModel().selectFirst();
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            ConditionController controller = fxmlLoader.getController();
             Condition condition = controller.processResult();
             if (condition != null) {
                 schedule.addCondition(DriverData.getDriver(condition.getDriverNumber()), condition);
