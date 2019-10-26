@@ -2,7 +2,6 @@ package com.programs.data;
 
 import com.programs.Controller;
 import com.programs.HolidayController;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
@@ -816,7 +815,7 @@ public class WorkSchedule {
         removePreviousDays();
         removeNextDay();
         saveWorkSchedule();
-//        showDistribution();
+        showDistribution();
         System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
     }
 

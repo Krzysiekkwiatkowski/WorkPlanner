@@ -141,11 +141,17 @@ public class Day {
             this.conditions.get(driver).add(condition);
         }
         if (!condition.isPossibleShift()) {
-            availability.get(driver).put(condition.getShiftNumber(), false);
+            if(!condition.isAllDayLong()) {
+                availability.get(driver).put(condition.getShiftsNumbers().get(0), false);
+            } else {
+                for (int i = 0; i < condition.getShiftsNumbers().size(); i++) {
+                    availability.get(driver).put(condition.getShiftsNumbers().get(i), false);
+                }
+            }
         } else {
             for (Shift shift : Shift.getShifts()) {
-                if (shift.getNumber() != condition.getShiftNumber()) {
-                    if (condition.getShiftNumber() == 1) {
+                if (shift.getNumber() != condition.getShiftsNumbers().get(0)) {
+                    if (condition.getShiftsNumbers().get(0) == 1) {
                         if (shift.getNumber() != 10) {
                             availability.get(driver).put(shift.getNumber(), false);
                         }
@@ -154,18 +160,6 @@ public class Day {
                     }
                 } else {
                     schedule.addShift(shift.getNumber(), driver.getNumber(), this);
-                }
-            }
-        }
-    }
-
-    public void removeCondition(Condition condition) {
-        Driver driver = DriverData.getDriver(condition.getDriverNumber());
-        if (conditions.containsKey(driver)) {
-            for (Condition driverCondition : conditions.get(driver)) {
-                if (driverCondition == condition) {
-                    conditions.get(driver).remove(driverCondition);
-                    availability.get(driver).replace(condition.getShiftNumber(), true);
                 }
             }
         }

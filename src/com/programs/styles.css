@@ -9,11 +9,13 @@
 .menu-item {
     -fx-background-color: lightgrey;
     -fx-border-color: black;
+    -fx-border-width: 2px;
 }
 
 .menu {
     -fx-background-color: lightgrey;
     -fx-border-color: black;
+    -fx-border-width: 2px;
 }
 
 .menu:hover, .menu:showing {

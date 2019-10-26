@@ -118,7 +118,11 @@ public class Controller {
                             if(condition.isPossibleShift()){
                                 setTextFill(Color.GREEN);
                             } else {
-                                setTextFill(Color.RED);
+                                if(!condition.isAllDayLong()) {
+                                    setTextFill(Color.RED);
+                                } else {
+                                    setTextFill(Color.BLUE);
+                                }
                             }
                         }
                     }
@@ -265,7 +269,6 @@ public class Controller {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             schedule.getConditions().get(DriverData.getDriver(condition.getDriverNumber())).remove(condition);
-            schedule.getDay(condition.getDate()).removeCondition(condition);
             conditions.remove(condition);
             conditionList.getItems().remove(condition);
         }
