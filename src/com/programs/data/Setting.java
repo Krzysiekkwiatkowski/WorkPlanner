@@ -84,7 +84,7 @@ public class Setting {
         }
     }
 
-    protected void saveSetting(){
+    public void saveSetting(){
         saveData();
     }
 }

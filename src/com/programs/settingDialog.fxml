@@ -1,0 +1,115 @@
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.RadioButton?>
+<DialogPane fx:controller="com.programs.SettingController" xmlns:fx="http://javafx.com/fxml">
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleMon1"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleMon2"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleMon3"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleMon4"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleMon5"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleMon6"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleMon7"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleMon8"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleMon9"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleMon10"/>
+    </fx:define>
+    <content>
+        <GridPane vgap="10" hgap="10">
+            <HBox GridPane.rowIndex="0">
+                <Label text="Poniedziałek" GridPane.rowIndex="0" prefWidth="230"/>
+                <Label text="6-14" prefWidth="115" GridPane.columnIndex="1"/>
+                <Label text="7:30-15:30" prefWidth="115" GridPane.columnIndex="2"/>
+                <Label text="10-14" prefWidth="115" GridPane.columnIndex="3"/>
+                <Label text="6-22" prefWidth="115" GridPane.columnIndex="4"/>
+                <Label text="14-22" prefWidth="115" GridPane.columnIndex="5"/>
+                <Label text="14-18" prefWidth="115" GridPane.columnIndex="6"/>
+                <Label text="15:30-23:30" prefWidth="115" GridPane.columnIndex="7"/>
+                <Label text="17-1" prefWidth="115" GridPane.columnIndex="8"/>
+                <Label text="18-2" prefWidth="115" GridPane.columnIndex="9"/>
+                <Label text="22-6" prefWidth="115" GridPane.columnIndex="10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="1" spacing="15">
+                <Label text="   Zmiany wymagane" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sMonR1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonR1" GridPane.rowIndex="2" GridPane.columnIndex="1" toggleGroup="$shiftToggleMon1"/>
+                <Spinner fx:id="sMonR2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonR2" GridPane.columnIndex="2" toggleGroup="$shiftToggleMon2"/>
+                <Spinner fx:id="sMonR3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonR3" GridPane.columnIndex="3" toggleGroup="$shiftToggleMon3"/>
+                <Spinner fx:id="sMonR4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonR4" GridPane.columnIndex="4" toggleGroup="$shiftToggleMon4"/>
+                <Spinner fx:id="sMonR5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonR5" GridPane.columnIndex="5" toggleGroup="$shiftToggleMon5"/>
+                <Spinner fx:id="sMonR6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonR6" GridPane.columnIndex="6" toggleGroup="$shiftToggleMon6"/>
+                <Spinner fx:id="sMonR7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonR7" GridPane.columnIndex="7" toggleGroup="$shiftToggleMon7"/>
+                <Spinner fx:id="sMonR8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonR8" GridPane.columnIndex="8" toggleGroup="$shiftToggleMon8"/>
+                <Spinner fx:id="sMonR9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonR9" GridPane.columnIndex="9" toggleGroup="$shiftToggleMon9"/>
+                <Spinner fx:id="sMonR10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonR10" GridPane.columnIndex="10" toggleGroup="$shiftToggleMon10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="2" spacing="15">
+                <Label text="   Zmiany opcjonalne" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sMonO1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonO1" GridPane.columnIndex="1" toggleGroup="$shiftToggleMon1"/>
+                <Spinner fx:id="sMonO2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonO2" GridPane.columnIndex="2" toggleGroup="$shiftToggleMon2"/>
+                <Spinner fx:id="sMonO3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonO3" GridPane.columnIndex="3" toggleGroup="$shiftToggleMon3"/>
+                <Spinner fx:id="sMonO4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonO4" GridPane.columnIndex="4" toggleGroup="$shiftToggleMon4"/>
+                <Spinner fx:id="sMonO5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonO5" GridPane.columnIndex="5" toggleGroup="$shiftToggleMon5"/>
+                <Spinner fx:id="sMonO6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonO6" GridPane.columnIndex="6" toggleGroup="$shiftToggleMon6"/>
+                <Spinner fx:id="sMonO7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonO7" GridPane.columnIndex="7" toggleGroup="$shiftToggleMon7"/>
+                <Spinner fx:id="sMonO8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonO8" GridPane.columnIndex="8" toggleGroup="$shiftToggleMon8"/>
+                <Spinner fx:id="sMonO9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonO9" GridPane.columnIndex="9" toggleGroup="$shiftToggleMon9"/>
+                <Spinner fx:id="sMonO10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdMonO10" GridPane.columnIndex="10" toggleGroup="$shiftToggleMon10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="3" spacing="90">
+                <Label text="   Brak zmiany" GridPane.columnIndex="0" prefWidth="200"/>
+                <RadioButton fx:id="rdMonL1" GridPane.columnIndex="1" toggleGroup="$shiftToggleMon1"/>
+                <RadioButton fx:id="rdMonL2" GridPane.columnIndex="2" toggleGroup="$shiftToggleMon2"/>
+                <RadioButton fx:id="rdMonL3" GridPane.columnIndex="3" toggleGroup="$shiftToggleMon3"/>
+                <RadioButton fx:id="rdMonL4" GridPane.columnIndex="4" toggleGroup="$shiftToggleMon4"/>
+                <RadioButton fx:id="rdMonL5" GridPane.columnIndex="5" toggleGroup="$shiftToggleMon5"/>
+                <RadioButton fx:id="rdMonL6" GridPane.columnIndex="6" toggleGroup="$shiftToggleMon6"/>
+                <RadioButton fx:id="rdMonL7" GridPane.columnIndex="7" toggleGroup="$shiftToggleMon7"/>
+                <RadioButton fx:id="rdMonL8" GridPane.columnIndex="8" toggleGroup="$shiftToggleMon8"/>
+                <RadioButton fx:id="rdMonL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleMon9"/>
+                <RadioButton fx:id="rdMonL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleMon10"/>
+            </HBox>
+        </GridPane>
+    </content>
+</DialogPane>

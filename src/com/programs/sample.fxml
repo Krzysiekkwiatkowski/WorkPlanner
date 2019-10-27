@@ -19,6 +19,8 @@
                     <SeparatorMenuItem/>
                     <MenuItem text="Dodaj czerwoną kartkę" onAction="#showHolidayDialog"/>
                     <SeparatorMenuItem/>
+                    <MenuItem text="Ustawienia grafiku" onAction="#showSettingDialog"/>
+                    <SeparatorMenuItem/>
                     <MenuItem text="Wyjście" onAction="#exitAction"/>
                 </Menu>
                 <Menu text="Kierowca">

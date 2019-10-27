@@ -60,7 +60,6 @@ public class ConditionController {
                 comboBox.visibleProperty().setValue(true);
             }
         });
-
     }
 
     public Condition processResult() {

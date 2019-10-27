@@ -1,9 +1,6 @@
 package com.programs;
 
-import com.programs.data.Condition;
-import com.programs.data.Driver;
-import com.programs.data.DriverData;
-import com.programs.data.WorkSchedule;
+import com.programs.data.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -242,6 +239,28 @@ public class Controller {
         if(result.isPresent() && result.get() == ButtonType.OK){
             HolidayController holidayController = fxmlLoader.getController();
             holidayController.processResult();
+        }
+    }
+
+    @FXML
+    private void showSettingDialog(){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainBorderPane.getScene().getWindow());
+        dialog.setTitle("Aktualne ustawienia grafiku");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("settingDialog.fxml"));
+        try {
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        } catch (IOException e){
+            System.out.println("Couldn't load the dialog");
+        }
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            SettingController settingController = fxmlLoader.getController();
+            Setting setting = settingController.processResult();
+            setting.saveSetting();
         }
     }
 
