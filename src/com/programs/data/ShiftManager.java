@@ -5,6 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ShiftManager {
+    private Setting setting;
+
+    public ShiftManager(){
+        setting = new Setting();
+    }
+
     public List<Integer> getRequired(Day day) {
         List<Integer> shifts;
         String dayName = day.getDate().getDayOfWeek().toString();
