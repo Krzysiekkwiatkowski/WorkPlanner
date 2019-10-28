@@ -1,5 +1,7 @@
 package com.programs.data;
 
+import com.programs.SettingController;
+
 import java.io.*;
 import java.time.DayOfWeek;
 import java.util.HashMap;
@@ -7,12 +9,14 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Setting {
+    private SettingController controller;
     private File file;
     private Map<DayOfWeek, Map<String, Integer>> requiredShifts;
     private Map<DayOfWeek, Map<String, Integer>> optionalShifts;
     private Scanner scanner;
 
-    public Setting() {
+    public Setting(SettingController controller) {
+        controller = this.controller;
         file = new File("setting.txt");
         try {
             scanner = new Scanner(file);
@@ -28,6 +32,7 @@ public class Setting {
             optionalShifts.put(daysOfWeeks[i], new HashMap<>());
         }
         loadData();
+
     }
 
     private void saveData() {
@@ -86,5 +91,13 @@ public class Setting {
 
     public void saveSetting(){
         saveData();
+    }
+
+    public Map<DayOfWeek, Map<String, Integer>> getRequiredShifts() {
+        return requiredShifts;
+    }
+
+    public Map<DayOfWeek, Map<String, Integer>> getOptionalShifts() {
+        return optionalShifts;
     }
 }

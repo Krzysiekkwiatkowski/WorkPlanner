@@ -36,6 +36,186 @@
     <fx:define>
         <ToggleGroup fx:id="shiftToggleMon10"/>
     </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleTue1"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleTue2"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleTue3"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleTue4"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleTue5"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleTue6"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleTue7"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleTue8"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleTue9"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleTue10"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleWed1"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleWed2"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleWed3"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleWed4"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleWed5"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleWed6"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleWed7"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleWed8"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleWed9"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleWed10"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleThu1"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleThu2"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleThu3"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleThu4"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleThu5"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleThu6"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleThu7"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleThu8"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleThu9"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleThu10"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleFri1"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleFri2"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleFri3"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleFri4"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleFri5"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleFri6"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleFri7"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleFri8"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleFri9"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleFri10"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSat1"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSat2"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSat3"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSat4"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSat5"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSat6"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSat7"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSat8"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSat9"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSat10"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSun1"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSun2"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSun3"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSun4"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSun5"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSun6"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSun7"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSun8"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSun9"/>
+    </fx:define>
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggleSun10"/>
+    </fx:define>
     <content>
         <GridPane vgap="10" hgap="10">
             <HBox GridPane.rowIndex="0">
@@ -109,6 +289,438 @@
                 <RadioButton fx:id="rdMonL8" GridPane.columnIndex="8" toggleGroup="$shiftToggleMon8"/>
                 <RadioButton fx:id="rdMonL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleMon9"/>
                 <RadioButton fx:id="rdMonL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleMon10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="4">
+                <Label text="Wtorek" GridPane.rowIndex="4" prefWidth="230"/>
+                <Label text="6-14" prefWidth="115" GridPane.columnIndex="1"/>
+                <Label text="7:30-15:30" prefWidth="115" GridPane.columnIndex="2"/>
+                <Label text="10-14" prefWidth="115" GridPane.columnIndex="3"/>
+                <Label text="6-22" prefWidth="115" GridPane.columnIndex="4"/>
+                <Label text="14-22" prefWidth="115" GridPane.columnIndex="5"/>
+                <Label text="14-18" prefWidth="115" GridPane.columnIndex="6"/>
+                <Label text="15:30-23:30" prefWidth="115" GridPane.columnIndex="7"/>
+                <Label text="17-1" prefWidth="115" GridPane.columnIndex="8"/>
+                <Label text="18-2" prefWidth="115" GridPane.columnIndex="9"/>
+                <Label text="22-6" prefWidth="115" GridPane.columnIndex="10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="5" spacing="15">
+                <Label text="   Zmiany wymagane" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sTueR1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueR1" GridPane.rowIndex="2" GridPane.columnIndex="1" toggleGroup="$shiftToggleTue1"/>
+                <Spinner fx:id="sTueR2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueR2" GridPane.columnIndex="2" toggleGroup="$shiftToggleTue2"/>
+                <Spinner fx:id="sTueR3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueR3" GridPane.columnIndex="3" toggleGroup="$shiftToggleTue3"/>
+                <Spinner fx:id="sTueR4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueR4" GridPane.columnIndex="4" toggleGroup="$shiftToggleTue4"/>
+                <Spinner fx:id="sTueR5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueR5" GridPane.columnIndex="5" toggleGroup="$shiftToggleTue5"/>
+                <Spinner fx:id="sTueR6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueR6" GridPane.columnIndex="6" toggleGroup="$shiftToggleTue6"/>
+                <Spinner fx:id="sTueR7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueR7" GridPane.columnIndex="7" toggleGroup="$shiftToggleTue7"/>
+                <Spinner fx:id="sTueR8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueR8" GridPane.columnIndex="8" toggleGroup="$shiftToggleTue8"/>
+                <Spinner fx:id="sTueR9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueR9" GridPane.columnIndex="9" toggleGroup="$shiftToggleTue9"/>
+                <Spinner fx:id="sTueR10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueR10" GridPane.columnIndex="10" toggleGroup="$shiftToggleTue10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="6" spacing="15">
+                <Label text="   Zmiany opcjonalne" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sTueO1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueO1" GridPane.columnIndex="1" toggleGroup="$shiftToggleTue1"/>
+                <Spinner fx:id="sTueO2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueO2" GridPane.columnIndex="2" toggleGroup="$shiftToggleTue2"/>
+                <Spinner fx:id="sTueO3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueO3" GridPane.columnIndex="3" toggleGroup="$shiftToggleTue3"/>
+                <Spinner fx:id="sTueO4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueO4" GridPane.columnIndex="4" toggleGroup="$shiftToggleTue4"/>
+                <Spinner fx:id="sTueO5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueO5" GridPane.columnIndex="5" toggleGroup="$shiftToggleTue5"/>
+                <Spinner fx:id="sTueO6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueO6" GridPane.columnIndex="6" toggleGroup="$shiftToggleTue6"/>
+                <Spinner fx:id="sTueO7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueO7" GridPane.columnIndex="7" toggleGroup="$shiftToggleTue7"/>
+                <Spinner fx:id="sTueO8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueO8" GridPane.columnIndex="8" toggleGroup="$shiftToggleTue8"/>
+                <Spinner fx:id="sTueO9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueO9" GridPane.columnIndex="9" toggleGroup="$shiftToggleTue9"/>
+                <Spinner fx:id="sTueO10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdTueO10" GridPane.columnIndex="10" toggleGroup="$shiftToggleTue10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="7" spacing="90">
+                <Label text="   Brak zmiany" GridPane.columnIndex="0" prefWidth="200"/>
+                <RadioButton fx:id="rdTueL1" GridPane.columnIndex="1" toggleGroup="$shiftToggleTue1"/>
+                <RadioButton fx:id="rdTueL2" GridPane.columnIndex="2" toggleGroup="$shiftToggleTue2"/>
+                <RadioButton fx:id="rdTueL3" GridPane.columnIndex="3" toggleGroup="$shiftToggleTue3"/>
+                <RadioButton fx:id="rdTueL4" GridPane.columnIndex="4" toggleGroup="$shiftToggleTue4"/>
+                <RadioButton fx:id="rdTueL5" GridPane.columnIndex="5" toggleGroup="$shiftToggleTue5"/>
+                <RadioButton fx:id="rdTueL6" GridPane.columnIndex="6" toggleGroup="$shiftToggleTue6"/>
+                <RadioButton fx:id="rdTueL7" GridPane.columnIndex="7" toggleGroup="$shiftToggleTue7"/>
+                <RadioButton fx:id="rdTueL8" GridPane.columnIndex="8" toggleGroup="$shiftToggleTue8"/>
+                <RadioButton fx:id="rdTueL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleTue9"/>
+                <RadioButton fx:id="rdTueL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleTue10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="8">
+                <Label text="Środa" GridPane.rowIndex="8" prefWidth="230"/>
+                <Label text="6-14" prefWidth="115" GridPane.columnIndex="1"/>
+                <Label text="7:30-15:30" prefWidth="115" GridPane.columnIndex="2"/>
+                <Label text="10-14" prefWidth="115" GridPane.columnIndex="3"/>
+                <Label text="6-22" prefWidth="115" GridPane.columnIndex="4"/>
+                <Label text="14-22" prefWidth="115" GridPane.columnIndex="5"/>
+                <Label text="14-18" prefWidth="115" GridPane.columnIndex="6"/>
+                <Label text="15:30-23:30" prefWidth="115" GridPane.columnIndex="7"/>
+                <Label text="17-1" prefWidth="115" GridPane.columnIndex="8"/>
+                <Label text="18-2" prefWidth="115" GridPane.columnIndex="9"/>
+                <Label text="22-6" prefWidth="115" GridPane.columnIndex="10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="9" spacing="15">
+                <Label text="   Zmiany wymagane" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sWedR1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedR1" GridPane.rowIndex="2" GridPane.columnIndex="1" toggleGroup="$shiftToggleWed1"/>
+                <Spinner fx:id="sWedR2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedR2" GridPane.columnIndex="2" toggleGroup="$shiftToggleWed2"/>
+                <Spinner fx:id="sWedR3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedR3" GridPane.columnIndex="3" toggleGroup="$shiftToggleWed3"/>
+                <Spinner fx:id="sWedR4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedR4" GridPane.columnIndex="4" toggleGroup="$shiftToggleWed4"/>
+                <Spinner fx:id="sWedR5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedR5" GridPane.columnIndex="5" toggleGroup="$shiftToggleWed5"/>
+                <Spinner fx:id="sWedR6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedR6" GridPane.columnIndex="6" toggleGroup="$shiftToggleWed6"/>
+                <Spinner fx:id="sWedR7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedR7" GridPane.columnIndex="7" toggleGroup="$shiftToggleWed7"/>
+                <Spinner fx:id="sWedR8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedR8" GridPane.columnIndex="8" toggleGroup="$shiftToggleWed8"/>
+                <Spinner fx:id="sWedR9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedR9" GridPane.columnIndex="9" toggleGroup="$shiftToggleWed9"/>
+                <Spinner fx:id="sWedR10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedR10" GridPane.columnIndex="10" toggleGroup="$shiftToggleWed10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="10" spacing="15">
+                <Label text="   Zmiany opcjonalne" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sWedO1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedO1" GridPane.columnIndex="1" toggleGroup="$shiftToggleWed1"/>
+                <Spinner fx:id="sWedO2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedO2" GridPane.columnIndex="2" toggleGroup="$shiftToggleWed2"/>
+                <Spinner fx:id="sWedO3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedO3" GridPane.columnIndex="3" toggleGroup="$shiftToggleWed3"/>
+                <Spinner fx:id="sWedO4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedO4" GridPane.columnIndex="4" toggleGroup="$shiftToggleWed4"/>
+                <Spinner fx:id="sWedO5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedO5" GridPane.columnIndex="5" toggleGroup="$shiftToggleWed5"/>
+                <Spinner fx:id="sWedO6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedO6" GridPane.columnIndex="6" toggleGroup="$shiftToggleWed6"/>
+                <Spinner fx:id="sWedO7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedO7" GridPane.columnIndex="7" toggleGroup="$shiftToggleWed7"/>
+                <Spinner fx:id="sWedO8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedO8" GridPane.columnIndex="8" toggleGroup="$shiftToggleWed8"/>
+                <Spinner fx:id="sWedO9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedO9" GridPane.columnIndex="9" toggleGroup="$shiftToggleWed9"/>
+                <Spinner fx:id="sWedO10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdWedO10" GridPane.columnIndex="10" toggleGroup="$shiftToggleWed10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="11" spacing="90">
+                <Label text="   Brak zmiany" GridPane.columnIndex="0" prefWidth="200"/>
+                <RadioButton fx:id="rdWedL1" GridPane.columnIndex="1" toggleGroup="$shiftToggleWed1"/>
+                <RadioButton fx:id="rdWedL2" GridPane.columnIndex="2" toggleGroup="$shiftToggleWed2"/>
+                <RadioButton fx:id="rdWedL3" GridPane.columnIndex="3" toggleGroup="$shiftToggleWed3"/>
+                <RadioButton fx:id="rdWedL4" GridPane.columnIndex="4" toggleGroup="$shiftToggleWed4"/>
+                <RadioButton fx:id="rdWedL5" GridPane.columnIndex="5" toggleGroup="$shiftToggleWed5"/>
+                <RadioButton fx:id="rdWedL6" GridPane.columnIndex="6" toggleGroup="$shiftToggleWed6"/>
+                <RadioButton fx:id="rdWedL7" GridPane.columnIndex="7" toggleGroup="$shiftToggleWed7"/>
+                <RadioButton fx:id="rdWedL8" GridPane.columnIndex="8" toggleGroup="$shiftToggleWed8"/>
+                <RadioButton fx:id="rdWedL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleWed9"/>
+                <RadioButton fx:id="rdWedL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleWed10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="12">
+                <Label text="Czwartek" GridPane.rowIndex="12" prefWidth="230"/>
+                <Label text="6-14" prefWidth="115" GridPane.columnIndex="1"/>
+                <Label text="7:30-15:30" prefWidth="115" GridPane.columnIndex="2"/>
+                <Label text="10-14" prefWidth="115" GridPane.columnIndex="3"/>
+                <Label text="6-22" prefWidth="115" GridPane.columnIndex="4"/>
+                <Label text="14-22" prefWidth="115" GridPane.columnIndex="5"/>
+                <Label text="14-18" prefWidth="115" GridPane.columnIndex="6"/>
+                <Label text="15:30-23:30" prefWidth="115" GridPane.columnIndex="7"/>
+                <Label text="17-1" prefWidth="115" GridPane.columnIndex="8"/>
+                <Label text="18-2" prefWidth="115" GridPane.columnIndex="9"/>
+                <Label text="22-6" prefWidth="115" GridPane.columnIndex="10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="13" spacing="15">
+                <Label text="   Zmiany wymagane" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sThuR1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuR1" GridPane.rowIndex="2" GridPane.columnIndex="1" toggleGroup="$shiftToggleThu1"/>
+                <Spinner fx:id="sThuR2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuR2" GridPane.columnIndex="2" toggleGroup="$shiftToggleThu2"/>
+                <Spinner fx:id="sThuR3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuR3" GridPane.columnIndex="3" toggleGroup="$shiftToggleThu3"/>
+                <Spinner fx:id="sThuR4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuR4" GridPane.columnIndex="4" toggleGroup="$shiftToggleThu4"/>
+                <Spinner fx:id="sThuR5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuR5" GridPane.columnIndex="5" toggleGroup="$shiftToggleThu5"/>
+                <Spinner fx:id="sThuR6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuR6" GridPane.columnIndex="6" toggleGroup="$shiftToggleThu6"/>
+                <Spinner fx:id="sThuR7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuR7" GridPane.columnIndex="7" toggleGroup="$shiftToggleThu7"/>
+                <Spinner fx:id="sThuR8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuR8" GridPane.columnIndex="8" toggleGroup="$shiftToggleThu8"/>
+                <Spinner fx:id="sThuR9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuR9" GridPane.columnIndex="9" toggleGroup="$shiftToggleThu9"/>
+                <Spinner fx:id="sThuR10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuR10" GridPane.columnIndex="10" toggleGroup="$shiftToggleThu10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="14" spacing="15">
+                <Label text="   Zmiany opcjonalne" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sThuO1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuO1" GridPane.columnIndex="1" toggleGroup="$shiftToggleThu1"/>
+                <Spinner fx:id="sThuO2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuO2" GridPane.columnIndex="2" toggleGroup="$shiftToggleThu2"/>
+                <Spinner fx:id="sThuO3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuO3" GridPane.columnIndex="3" toggleGroup="$shiftToggleThu3"/>
+                <Spinner fx:id="sThuO4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuO4" GridPane.columnIndex="4" toggleGroup="$shiftToggleThu4"/>
+                <Spinner fx:id="sThuO5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuO5" GridPane.columnIndex="5" toggleGroup="$shiftToggleThu5"/>
+                <Spinner fx:id="sThuO6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuO6" GridPane.columnIndex="6" toggleGroup="$shiftToggleThu6"/>
+                <Spinner fx:id="sThuO7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuO7" GridPane.columnIndex="7" toggleGroup="$shiftToggleThu7"/>
+                <Spinner fx:id="sThuO8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuO8" GridPane.columnIndex="8" toggleGroup="$shiftToggleThu8"/>
+                <Spinner fx:id="sThuO9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuO9" GridPane.columnIndex="9" toggleGroup="$shiftToggleThu9"/>
+                <Spinner fx:id="sThuO10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdThuO10" GridPane.columnIndex="10" toggleGroup="$shiftToggleThu10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="15" spacing="90">
+                <Label text="   Brak zmiany" GridPane.columnIndex="0" prefWidth="200"/>
+                <RadioButton fx:id="rdThuL1" GridPane.columnIndex="1" toggleGroup="$shiftToggleThu1"/>
+                <RadioButton fx:id="rdThuL2" GridPane.columnIndex="2" toggleGroup="$shiftToggleThu2"/>
+                <RadioButton fx:id="rdThuL3" GridPane.columnIndex="3" toggleGroup="$shiftToggleThu3"/>
+                <RadioButton fx:id="rdThuL4" GridPane.columnIndex="4" toggleGroup="$shiftToggleThu4"/>
+                <RadioButton fx:id="rdThuL5" GridPane.columnIndex="5" toggleGroup="$shiftToggleThu5"/>
+                <RadioButton fx:id="rdThuL6" GridPane.columnIndex="6" toggleGroup="$shiftToggleThu6"/>
+                <RadioButton fx:id="rdThuL7" GridPane.columnIndex="7" toggleGroup="$shiftToggleThu7"/>
+                <RadioButton fx:id="rdThuL8" GridPane.columnIndex="8" toggleGroup="$shiftToggleThu8"/>
+                <RadioButton fx:id="rdThuL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleThu9"/>
+                <RadioButton fx:id="rdThuL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleThu10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="16">
+                <Label text="Piątek" GridPane.rowIndex="16" prefWidth="230"/>
+                <Label text="6-14" prefWidth="115" GridPane.columnIndex="1"/>
+                <Label text="7:30-15:30" prefWidth="115" GridPane.columnIndex="2"/>
+                <Label text="10-14" prefWidth="115" GridPane.columnIndex="3"/>
+                <Label text="6-22" prefWidth="115" GridPane.columnIndex="4"/>
+                <Label text="14-22" prefWidth="115" GridPane.columnIndex="5"/>
+                <Label text="14-18" prefWidth="115" GridPane.columnIndex="6"/>
+                <Label text="15:30-23:30" prefWidth="115" GridPane.columnIndex="7"/>
+                <Label text="17-1" prefWidth="115" GridPane.columnIndex="8"/>
+                <Label text="18-2" prefWidth="115" GridPane.columnIndex="9"/>
+                <Label text="22-6" prefWidth="115" GridPane.columnIndex="10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="17" spacing="15">
+                <Label text="   Zmiany wymagane" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sFriR1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriR1" GridPane.rowIndex="2" GridPane.columnIndex="1" toggleGroup="$shiftToggleFri1"/>
+                <Spinner fx:id="sFriR2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriR2" GridPane.columnIndex="2" toggleGroup="$shiftToggleFri2"/>
+                <Spinner fx:id="sFriR3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriR3" GridPane.columnIndex="3" toggleGroup="$shiftToggleFri3"/>
+                <Spinner fx:id="sFriR4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriR4" GridPane.columnIndex="4" toggleGroup="$shiftToggleFri4"/>
+                <Spinner fx:id="sFriR5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriR5" GridPane.columnIndex="5" toggleGroup="$shiftToggleFri5"/>
+                <Spinner fx:id="sFriR6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriR6" GridPane.columnIndex="6" toggleGroup="$shiftToggleFri6"/>
+                <Spinner fx:id="sFriR7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriR7" GridPane.columnIndex="7" toggleGroup="$shiftToggleFri7"/>
+                <Spinner fx:id="sFriR8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriR8" GridPane.columnIndex="8" toggleGroup="$shiftToggleFri8"/>
+                <Spinner fx:id="sFriR9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriR9" GridPane.columnIndex="9" toggleGroup="$shiftToggleFri9"/>
+                <Spinner fx:id="sFriR10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriR10" GridPane.columnIndex="10" toggleGroup="$shiftToggleFri10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="18" spacing="15">
+                <Label text="   Zmiany opcjonalne" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sFriO1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriO1" GridPane.columnIndex="1" toggleGroup="$shiftToggleFri1"/>
+                <Spinner fx:id="sFriO2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriO2" GridPane.columnIndex="2" toggleGroup="$shiftToggleFri2"/>
+                <Spinner fx:id="sFriO3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriO3" GridPane.columnIndex="3" toggleGroup="$shiftToggleFri3"/>
+                <Spinner fx:id="sFriO4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriO4" GridPane.columnIndex="4" toggleGroup="$shiftToggleFri4"/>
+                <Spinner fx:id="sFriO5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriO5" GridPane.columnIndex="5" toggleGroup="$shiftToggleFri5"/>
+                <Spinner fx:id="sFriO6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriO6" GridPane.columnIndex="6" toggleGroup="$shiftToggleFri6"/>
+                <Spinner fx:id="sFriO7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriO7" GridPane.columnIndex="7" toggleGroup="$shiftToggleFri7"/>
+                <Spinner fx:id="sFriO8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriO8" GridPane.columnIndex="8" toggleGroup="$shiftToggleFri8"/>
+                <Spinner fx:id="sFriO9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriO9" GridPane.columnIndex="9" toggleGroup="$shiftToggleFri9"/>
+                <Spinner fx:id="sFriO10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdFriO10" GridPane.columnIndex="10" toggleGroup="$shiftToggleFri10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="19" spacing="90">
+                <Label text="   Brak zmiany" GridPane.columnIndex="0" prefWidth="200"/>
+                <RadioButton fx:id="rdFriL1" GridPane.columnIndex="1" toggleGroup="$shiftToggleFri1"/>
+                <RadioButton fx:id="rdFriL2" GridPane.columnIndex="2" toggleGroup="$shiftToggleFri2"/>
+                <RadioButton fx:id="rdFriL3" GridPane.columnIndex="3" toggleGroup="$shiftToggleFri3"/>
+                <RadioButton fx:id="rdFriL4" GridPane.columnIndex="4" toggleGroup="$shiftToggleFri4"/>
+                <RadioButton fx:id="rdFriL5" GridPane.columnIndex="5" toggleGroup="$shiftToggleFri5"/>
+                <RadioButton fx:id="rdFriL6" GridPane.columnIndex="6" toggleGroup="$shiftToggleFri6"/>
+                <RadioButton fx:id="rdFriL7" GridPane.columnIndex="7" toggleGroup="$shiftToggleFri7"/>
+                <RadioButton fx:id="rdFriL8" GridPane.columnIndex="8" toggleGroup="$shiftToggleFri8"/>
+                <RadioButton fx:id="rdFriL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleFri9"/>
+                <RadioButton fx:id="rdFriL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleFri10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="20">
+                <Label text="Sobota" GridPane.rowIndex="20" prefWidth="230"/>
+                <Label text="6-14" prefWidth="115" GridPane.columnIndex="1"/>
+                <Label text="7:30-15:30" prefWidth="115" GridPane.columnIndex="2"/>
+                <Label text="10-14" prefWidth="115" GridPane.columnIndex="3"/>
+                <Label text="6-22" prefWidth="115" GridPane.columnIndex="4"/>
+                <Label text="14-22" prefWidth="115" GridPane.columnIndex="5"/>
+                <Label text="14-18" prefWidth="115" GridPane.columnIndex="6"/>
+                <Label text="15:30-23:30" prefWidth="115" GridPane.columnIndex="7"/>
+                <Label text="17-1" prefWidth="115" GridPane.columnIndex="8"/>
+                <Label text="18-2" prefWidth="115" GridPane.columnIndex="9"/>
+                <Label text="22-6" prefWidth="115" GridPane.columnIndex="10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="21" spacing="15">
+                <Label text="   Zmiany wymagane" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sSatR1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatR1" GridPane.rowIndex="2" GridPane.columnIndex="1" toggleGroup="$shiftToggleSat1"/>
+                <Spinner fx:id="sSatR2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatR2" GridPane.columnIndex="2" toggleGroup="$shiftToggleSat2"/>
+                <Spinner fx:id="sSatR3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatR3" GridPane.columnIndex="3" toggleGroup="$shiftToggleSat3"/>
+                <Spinner fx:id="sSatR4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatR4" GridPane.columnIndex="4" toggleGroup="$shiftToggleSat4"/>
+                <Spinner fx:id="sSatR5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatR5" GridPane.columnIndex="5" toggleGroup="$shiftToggleSat5"/>
+                <Spinner fx:id="sSatR6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatR6" GridPane.columnIndex="6" toggleGroup="$shiftToggleSat6"/>
+                <Spinner fx:id="sSatR7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatR7" GridPane.columnIndex="7" toggleGroup="$shiftToggleSat7"/>
+                <Spinner fx:id="sSatR8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatR8" GridPane.columnIndex="8" toggleGroup="$shiftToggleSat8"/>
+                <Spinner fx:id="sSatR9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatR9" GridPane.columnIndex="9" toggleGroup="$shiftToggleSat9"/>
+                <Spinner fx:id="sSatR10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatR10" GridPane.columnIndex="10" toggleGroup="$shiftToggleSat10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="22" spacing="15">
+                <Label text="   Zmiany opcjonalne" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sSatO1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatO1" GridPane.columnIndex="1" toggleGroup="$shiftToggleSat1"/>
+                <Spinner fx:id="sSatO2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatO2" GridPane.columnIndex="2" toggleGroup="$shiftToggleSat2"/>
+                <Spinner fx:id="sSatO3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatO3" GridPane.columnIndex="3" toggleGroup="$shiftToggleSat3"/>
+                <Spinner fx:id="sSatO4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatO4" GridPane.columnIndex="4" toggleGroup="$shiftToggleSat4"/>
+                <Spinner fx:id="sSatO5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatO5" GridPane.columnIndex="5" toggleGroup="$shiftToggleSat5"/>
+                <Spinner fx:id="sSatO6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatO6" GridPane.columnIndex="6" toggleGroup="$shiftToggleSat6"/>
+                <Spinner fx:id="sSatO7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatO7" GridPane.columnIndex="7" toggleGroup="$shiftToggleSat7"/>
+                <Spinner fx:id="sSatO8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatO8" GridPane.columnIndex="8" toggleGroup="$shiftToggleSat8"/>
+                <Spinner fx:id="sSatO9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatO9" GridPane.columnIndex="9" toggleGroup="$shiftToggleSat9"/>
+                <Spinner fx:id="sSatO10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSatO10" GridPane.columnIndex="10" toggleGroup="$shiftToggleSat10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="23" spacing="90">
+                <Label text="   Brak zmiany" GridPane.columnIndex="0" prefWidth="200"/>
+                <RadioButton fx:id="rdSatL1" GridPane.columnIndex="1" toggleGroup="$shiftToggleSat1"/>
+                <RadioButton fx:id="rdSatL2" GridPane.columnIndex="2" toggleGroup="$shiftToggleSat2"/>
+                <RadioButton fx:id="rdSatL3" GridPane.columnIndex="3" toggleGroup="$shiftToggleSat3"/>
+                <RadioButton fx:id="rdSatL4" GridPane.columnIndex="4" toggleGroup="$shiftToggleSat4"/>
+                <RadioButton fx:id="rdSatL5" GridPane.columnIndex="5" toggleGroup="$shiftToggleSat5"/>
+                <RadioButton fx:id="rdSatL6" GridPane.columnIndex="6" toggleGroup="$shiftToggleSat6"/>
+                <RadioButton fx:id="rdSatL7" GridPane.columnIndex="7" toggleGroup="$shiftToggleSat7"/>
+                <RadioButton fx:id="rdSatL8" GridPane.columnIndex="8" toggleGroup="$shiftToggleSat8"/>
+                <RadioButton fx:id="rdSatL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleSat9"/>
+                <RadioButton fx:id="rdSatL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleSat10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="24">
+                <Label text="Niedziela" GridPane.rowIndex="24" prefWidth="230"/>
+                <Label text="6-14" prefWidth="115" GridPane.columnIndex="1"/>
+                <Label text="7:30-15:30" prefWidth="115" GridPane.columnIndex="2"/>
+                <Label text="10-14" prefWidth="115" GridPane.columnIndex="3"/>
+                <Label text="6-22" prefWidth="115" GridPane.columnIndex="4"/>
+                <Label text="14-22" prefWidth="115" GridPane.columnIndex="5"/>
+                <Label text="14-18" prefWidth="115" GridPane.columnIndex="6"/>
+                <Label text="15:30-23:30" prefWidth="115" GridPane.columnIndex="7"/>
+                <Label text="17-1" prefWidth="115" GridPane.columnIndex="8"/>
+                <Label text="18-2" prefWidth="115" GridPane.columnIndex="9"/>
+                <Label text="22-6" prefWidth="115" GridPane.columnIndex="10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="25" spacing="15">
+                <Label text="   Zmiany wymagane" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sSunR1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunR1" GridPane.rowIndex="2" GridPane.columnIndex="1" toggleGroup="$shiftToggleSun1"/>
+                <Spinner fx:id="sSunR2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunR2" GridPane.columnIndex="2" toggleGroup="$shiftToggleSun2"/>
+                <Spinner fx:id="sSunR3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunR3" GridPane.columnIndex="3" toggleGroup="$shiftToggleSun3"/>
+                <Spinner fx:id="sSunR4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunR4" GridPane.columnIndex="4" toggleGroup="$shiftToggleSun4"/>
+                <Spinner fx:id="sSunR5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunR5" GridPane.columnIndex="5" toggleGroup="$shiftToggleSun5"/>
+                <Spinner fx:id="sSunR6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunR6" GridPane.columnIndex="6" toggleGroup="$shiftToggleSun6"/>
+                <Spinner fx:id="sSunR7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunR7" GridPane.columnIndex="7" toggleGroup="$shiftToggleSun7"/>
+                <Spinner fx:id="sSunR8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunR8" GridPane.columnIndex="8" toggleGroup="$shiftToggleSun8"/>
+                <Spinner fx:id="sSunR9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunR9" GridPane.columnIndex="9" toggleGroup="$shiftToggleSun9"/>
+                <Spinner fx:id="sSunR10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunR10" GridPane.columnIndex="10" toggleGroup="$shiftToggleSun10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="26" spacing="15">
+                <Label text="   Zmiany opcjonalne" GridPane.columnIndex="0" prefWidth="200"/>
+                <Spinner fx:id="sSunO1" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunO1" GridPane.columnIndex="1" toggleGroup="$shiftToggleSun1"/>
+                <Spinner fx:id="sSunO2" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunO2" GridPane.columnIndex="2" toggleGroup="$shiftToggleSun2"/>
+                <Spinner fx:id="sSunO3" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunO3" GridPane.columnIndex="3" toggleGroup="$shiftToggleSun3"/>
+                <Spinner fx:id="sSunO4" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunO4" GridPane.columnIndex="4" toggleGroup="$shiftToggleSun4"/>
+                <Spinner fx:id="sSunO5" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunO5" GridPane.columnIndex="5" toggleGroup="$shiftToggleSun5"/>
+                <Spinner fx:id="sSunO6" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunO6" GridPane.columnIndex="6" toggleGroup="$shiftToggleSun6"/>
+                <Spinner fx:id="sSunO7" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunO7" GridPane.columnIndex="7" toggleGroup="$shiftToggleSun7"/>
+                <Spinner fx:id="sSunO8" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunO8" GridPane.columnIndex="8" toggleGroup="$shiftToggleSun8"/>
+                <Spinner fx:id="sSunO9" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunO9" GridPane.columnIndex="9" toggleGroup="$shiftToggleSun9"/>
+                <Spinner fx:id="sSunO10" min="0" max="4" maxWidth="60"/>
+                <RadioButton fx:id="rdSunO10" GridPane.columnIndex="10" toggleGroup="$shiftToggleSun10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="27" spacing="90">
+                <Label text="   Brak zmiany" GridPane.columnIndex="0" prefWidth="200"/>
+                <RadioButton fx:id="rdSunL1" GridPane.columnIndex="1" toggleGroup="$shiftToggleSun1"/>
+                <RadioButton fx:id="rdSunL2" GridPane.columnIndex="2" toggleGroup="$shiftToggleSun2"/>
+                <RadioButton fx:id="rdSunL3" GridPane.columnIndex="3" toggleGroup="$shiftToggleSun3"/>
+                <RadioButton fx:id="rdSunL4" GridPane.columnIndex="4" toggleGroup="$shiftToggleSun4"/>
+                <RadioButton fx:id="rdSunL5" GridPane.columnIndex="5" toggleGroup="$shiftToggleSun5"/>
+                <RadioButton fx:id="rdSunL6" GridPane.columnIndex="6" toggleGroup="$shiftToggleSun6"/>
+                <RadioButton fx:id="rdSunL7" GridPane.columnIndex="7" toggleGroup="$shiftToggleSun7"/>
+                <RadioButton fx:id="rdSunL8" GridPane.columnIndex="8" toggleGroup="$shiftToggleSun8"/>
+                <RadioButton fx:id="rdSunL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleSun9"/>
+                <RadioButton fx:id="rdSunL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleSun10"/>
             </HBox>
         </GridPane>
     </content>
