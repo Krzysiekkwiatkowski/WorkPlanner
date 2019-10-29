@@ -735,55 +735,10 @@ public class WorkSchedule {
     }
 
     private int checkNumberOfDrivers(Day day, int shiftNumber) {
-        String dayCondition = day.getDate().getDayOfWeek().toString();
-        switch (dayCondition) {
-            case "MONDAY":
-                return typicalDay(shiftNumber);
-            case "TUESDAY":
-                return typicalDay(shiftNumber);
-            case "WEDNESDAY":
-                return typicalDay(shiftNumber);
-            case "THURSDAY":
-                return typicalDay(shiftNumber);
-            case "FRIDAY":
-                if (shiftNumber == 2 || shiftNumber == 10) {
-                    return 2;
-                } else if (shiftNumber == 3 || shiftNumber == 4 || shiftNumber == 6 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9) {
-                    return 1;
-                } else if (shiftNumber == 1 || shiftNumber == 5) {
-                    return 3;
-                } else {
-                    return 0;
-                }
-            case "SATURDAY":
-                if (shiftNumber == 1 || shiftNumber == 5 || shiftNumber == 10) {
-                    return 3;
-                } else if (shiftNumber == 2 || shiftNumber == 3 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9) {
-                    return 1;
-                }
-                break;
-            case "SUNDAY":
-                if (shiftNumber == 1 || shiftNumber == 5) {
-                    return 3;
-                } else if (shiftNumber == 2 || shiftNumber == 3 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9) {
-                    return 1;
-                } else if (shiftNumber == 10) {
-                    return 2;
-                }
-                break;
+        if(day.getDate().toString().equals("2019-11-04") && shiftNumber == 1){
+            System.out.println(manager.checkNumberOfDrivers(day, shiftNumber));
         }
-        return 0;
-    }
-
-    private int typicalDay(int shiftNumber) {
-        if (shiftNumber == 2 || shiftNumber == 10) {
-            return 2;
-        } else if (shiftNumber == 3 || shiftNumber == 4 || shiftNumber == 6 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9) {
-            return 1;
-        } else if (shiftNumber == 1 || shiftNumber == 5) {
-            return 3;
-        }
-        return 0;
+        return manager.checkNumberOfDrivers(day, shiftNumber);
     }
 
     public void clearConditions() {

@@ -1,7 +1,6 @@
 package com.programs.data;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ShiftManager {
@@ -11,60 +10,53 @@ public class ShiftManager {
         setting = new Setting();
     }
 
-    // 4,8,9
     public List<Integer> getRequired(Day day) {
-        List<Integer> shifts;
-        String dayName = day.getDate().getDayOfWeek().toString();
-        switch (dayName) {
-            case "FRIDAY":
-                shifts = Arrays.asList(1, 2, 5, 8, 9, 10);
-                break;
-            case "SATURDAY":
-                shifts = Arrays.asList(1, 3, 5, 8, 9, 10);
-                break;
-            case "SUNDAY":
-                if(day.isNextDayHoliday()) {
-                    shifts = Arrays.asList(1, 3, 5, 8, 9, 10);
-                    break;
-                } else {
-                    shifts = Arrays.asList(1, 3, 5, 8, 10);
-                    break;
-                }
-            default:
-                shifts = getTypicalDay(day);
-                break;
+        List<Integer> shifts = new ArrayList<>();
+        for (Shift shift : Shift.getShifts()) {
+            if(setting.getRequiredShifts().get(day.getDate().getDayOfWeek()).get(shift.getHours()) != 0){
+                shifts.add(shift.getNumber());
+            }
         }
-        return sortList(shifts);
+        if(day.isNextDayHoliday()){
+            shifts.add(9);
+        }
+        return sortRequiredList(shifts);
     }
 
     public List<Integer> getOptional(Day day) {
         List<Integer> shifts = new ArrayList<>();
-        String dayName = day.getDate().getDayOfWeek().toString();
-        switch (dayName) {
-            case "SATURDAY":
-                shifts.add(7);
-                shifts.add(2);
-                break;
-            case "SUNDAY":
-                shifts.add(7);
-                break;
-            default:
-                shifts.add(7);
-                shifts.add(6);
-                break;
+        for (Shift shift : Shift.getShifts()) {
+            if(setting.getOptionalShifts().get(day.getDate().getDayOfWeek()).get(shift.getHours()) != 0){
+                shifts.add(shift.getNumber());
+            }
         }
-        return shifts;
+        return sortOptionalList(shifts);
     }
 
-    private List<Integer> getTypicalDay(Day day) {
-        if(day.isNextDayHoliday()){
-            return Arrays.asList(4, 1, 2, 5, 8, 9, 10);
-        } else {
-            return Arrays.asList(4, 1, 2, 5, 8, 10);
+    private List<Integer> sortOptionalList(List<Integer> list){
+        if(list != null){
+            List<Integer> sortedList = new ArrayList<>(list);
+            if(sortedList.contains(6)){
+                int index = sortedList.indexOf(6);
+                sortedList.remove(index);
+                sortedList.add(0, 6);
+            }
+            if(sortedList.contains(2)){
+                int index = sortedList.indexOf(2);
+                sortedList.remove(index);
+                sortedList.add(0, 2);
+            }
+            if(sortedList.contains(7)){
+                int index = sortedList.indexOf(7);
+                sortedList.remove(index);
+                sortedList.add(0, 7);
+            }
+            return sortedList;
         }
+        return null;
     }
 
-    private List<Integer> sortList(List<Integer> list) {
+    private List<Integer> sortRequiredList(List<Integer> list) {
         if (list != null) {
             List<Integer> sortedList = new ArrayList<>(list);
             if (sortedList.contains(9)) {
@@ -85,5 +77,18 @@ public class ShiftManager {
             return sortedList;
         }
         return null;
+    }
+
+    protected int checkNumberOfDrivers(Day day, int shiftNumber){
+        if(setting.getRequiredShifts().get(day.getDate().getDayOfWeek()).get(Shift.getShift(shiftNumber).getHours()) != 0){
+            return setting.getRequiredShifts().get(day.getDate().getDayOfWeek()).get(Shift.getShift(shiftNumber).getHours());
+        } else if(setting.getOptionalShifts().get(day.getDate().getDayOfWeek()).get(Shift.getShift(shiftNumber).getHours()) != 0){
+            return setting.getOptionalShifts().get(day.getDate().getDayOfWeek()).get(Shift.getShift(shiftNumber).getHours());
+        } else {
+            if(shiftNumber == 9 && day.isNextDayHoliday()){
+                return 1;
+            }
+            return 0;
+        }
     }
 }

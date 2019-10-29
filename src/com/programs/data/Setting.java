@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class Setting {
     private File file;
-    private Map<DayOfWeek, Map<String, Integer>> requiredShifts;
-    private Map<DayOfWeek, Map<String, Integer>> optionalShifts;
+    private static Map<DayOfWeek, Map<String, Integer>> requiredShifts;
+    private static Map<DayOfWeek, Map<String, Integer>> optionalShifts;
     private Scanner scanner;
 
     public Setting() {
