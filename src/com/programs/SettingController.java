@@ -1072,7 +1072,7 @@ public class SettingController {
     private RadioButton rdSunL10;
 
     public void initialize(){
-        setting = new Setting(this);
+        setting = new Setting();
         rdRequiredList = new ArrayList<>();
         rdOptionalList = new ArrayList<>();
         rdLackList = new ArrayList<>();
@@ -1428,20 +1428,51 @@ public class SettingController {
         rdLackList.add(rdSunL10);
         sRequiredList.add(sSunR10);
         sOptionalList.add(sSunO10);
-
         for (int i = 0; i < (7 * Shift.getShifts().size()); i++) {
             initializeEvent(i);
         }
     }
 
-    private void loadData(){
+    protected void loadValues(){
         DayOfWeek[] daysOfWeek = DayOfWeek.values();
         Map<DayOfWeek, Map<String, Integer>> requiredShifts = setting.getRequiredShifts();
         Map<DayOfWeek, Map<String, Integer>> optionalShifts = setting.getOptionalShifts();
+        int j = 0;
+        for (int i = 0; i < daysOfWeek.length; i++) {
+            for (String shift : requiredShifts.get(daysOfWeek[i]).keySet()) {
+                if(requiredShifts.get(daysOfWeek[i]).get(shift) != 0){
+                    rdRequiredList.get(j).selectedProperty().setValue(true);
+                    sRequiredList.get(j).getValueFactory().setValue(requiredShifts.get(daysOfWeek[i]).get(shift));
+                } else if(optionalShifts.get(daysOfWeek[i]).get(shift) != 0){
+                    rdOptionalList.get(j).selectedProperty().setValue(true);
+                    sOptionalList.get(j).getValueFactory().setValue(optionalShifts.get(daysOfWeek[i]).get(shift));
+                } else {
+                    rdLackList.get(j).selectedProperty().setValue(true);
+                }
+                j++;
+            }
+        }
     }
 
     protected Setting processResult(){
-        return null;
+        int index = 0;
+        for (int i = 1; i < 8; i++) {
+            DayOfWeek dayOfWeek = DayOfWeek.of(i);
+            for (int j = 0; j < Shift.getShifts().size(); j++) {
+                if(rdRequiredList.get(index).isSelected()){
+                    setting.getRequiredShifts().get(dayOfWeek).put(Shift.getShift(j + 1).getHours(), sRequiredList.get(index).getValue());
+                    setting.getOptionalShifts().get(dayOfWeek).put(Shift.getShift(j + 1).getHours(), 0);
+                } else if(rdOptionalList.get(index).isSelected()) {
+                    setting.getRequiredShifts().get(dayOfWeek).put(Shift.getShift(j + 1).getHours(), 0);
+                    setting.getOptionalShifts().get(dayOfWeek).put(Shift.getShift(j + 1).getHours(), sOptionalList.get(index).getValue());
+                } else {
+                    setting.getRequiredShifts().get(dayOfWeek).put(Shift.getShift(j + 1).getHours(), 0);
+                    setting.getOptionalShifts().get(dayOfWeek).put(Shift.getShift(j + 1).getHours(), 0);
+                }
+                index++;
+            }
+        }
+        return setting;
     }
 
     private void initializeEvent(int number){

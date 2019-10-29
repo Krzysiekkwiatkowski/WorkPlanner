@@ -1,22 +1,18 @@
 package com.programs.data;
 
-import com.programs.SettingController;
-
 import java.io.*;
 import java.time.DayOfWeek;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Setting {
-    private SettingController controller;
     private File file;
     private Map<DayOfWeek, Map<String, Integer>> requiredShifts;
     private Map<DayOfWeek, Map<String, Integer>> optionalShifts;
     private Scanner scanner;
 
-    public Setting(SettingController controller) {
-        controller = this.controller;
+    public Setting() {
         file = new File("setting.txt");
         try {
             scanner = new Scanner(file);
@@ -24,15 +20,14 @@ public class Setting {
             System.out.println("File not found");
             e.printStackTrace();
         }
-        requiredShifts = new HashMap<>();
-        optionalShifts = new HashMap<>();
+        requiredShifts = new LinkedHashMap<>();
+        optionalShifts = new LinkedHashMap<>();
         DayOfWeek[] daysOfWeeks = DayOfWeek.values();
         for (int i = 0; i < daysOfWeeks.length; i++) {
-            requiredShifts.put(daysOfWeeks[i], new HashMap<>());
-            optionalShifts.put(daysOfWeeks[i], new HashMap<>());
+            requiredShifts.put(daysOfWeeks[i], new LinkedHashMap<>());
+            optionalShifts.put(daysOfWeeks[i], new LinkedHashMap<>());
         }
         loadData();
-
     }
 
     private void saveData() {

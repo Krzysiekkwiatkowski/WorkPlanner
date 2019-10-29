@@ -256,6 +256,8 @@ public class Controller {
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        SettingController controller = fxmlLoader.getController();
+        controller.loadValues();
         Optional<ButtonType> result = dialog.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK){
             SettingController settingController = fxmlLoader.getController();

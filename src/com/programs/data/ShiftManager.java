@@ -11,6 +11,7 @@ public class ShiftManager {
         setting = new Setting();
     }
 
+    // 4,8,9
     public List<Integer> getRequired(Day day) {
         List<Integer> shifts;
         String dayName = day.getDate().getDayOfWeek().toString();
