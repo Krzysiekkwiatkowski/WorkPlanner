@@ -21,6 +21,8 @@
                     <SeparatorMenuItem/>
                     <MenuItem text="Ustawienia grafiku" onAction="#showSettingDialog"/>
                     <SeparatorMenuItem/>
+                    <MenuItem text="Uzupełnij dni" onAction="#showLastDaysDialog"/>
+                    <SeparatorMenuItem/>
                     <MenuItem text="Wyjście" onAction="#exitAction"/>
                 </Menu>
                 <Menu text="Kierowca">
