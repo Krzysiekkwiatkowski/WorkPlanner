@@ -2,6 +2,7 @@ package com.programs.data;
 
 import com.programs.Controller;
 import com.programs.HolidayController;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
@@ -29,6 +30,8 @@ public class WorkSchedule {
     private Map<Integer, Integer> spareDistribution;
     private ShiftManager manager;
     private Map<Driver, Boolean> driversToUpdate;
+    private List<LastDays> lastDays = null;
+    private String freeTime = "2,5 dnia";
 
     public WorkSchedule(Controller controller) {
         DriverData.loadDrivers();
@@ -168,20 +171,73 @@ public class WorkSchedule {
                 if (nextDay != null) {
                     nextDay.setDriverAvailability(driver, availabilityNextDay);
                 }
-                availabilitySecondDay = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-                nextDay = getNextDay(nextDay, 1);
-                if (nextDay != null) {
-                    nextDay.setDriverAvailability(driver, availabilitySecondDay);
-                }
-                List<Integer> availabilityThirdNextDay = Arrays.asList(1, 2, 3, 4);
-                if (nextDay != null) {
+                if (freeTime.equals("2,5 dnia")) {
+                    availabilitySecondDay = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
                     nextDay = getNextDay(nextDay, 1);
-                }
-                if (nextDay != null) {
-                    nextDay.setDriverAvailability(driver, availabilityThirdNextDay);
+                    if (nextDay != null) {
+                        nextDay.setDriverAvailability(driver, availabilitySecondDay);
+                    }
+                    List<Integer> availabilityThirdNextDay = Arrays.asList(1, 2, 3, 4);
+                    if (nextDay != null) {
+                        nextDay = getNextDay(nextDay, 1);
+                    }
+                    if (nextDay != null) {
+                        nextDay.setDriverAvailability(driver, availabilityThirdNextDay);
+                    }
+                } else {
+                    availabilitySecondDay = Arrays.asList(1, 2, 3, 4);
+                    nextDay = getNextDay(nextDay, 1);
+                    if (nextDay != null) {
+                        nextDay.setDriverAvailability(driver, availabilitySecondDay);
+                    }
                 }
                 break;
         }
+    }
+
+    private void updatePreviousDaysShifts() {
+        Day actualDay;
+        Map<String, String> actualMap;
+        for (int i = 0; i < lastDays.size(); i++) {
+            actualDay = getDayByDate(lastDays.get(i).getDate());
+            actualMap = lastDays.get(i).getShifts();
+            for (String hours : actualMap.keySet()) {
+                updateShift(hours, actualMap.get(hours), actualDay);
+            }
+        }
+    }
+
+    private void updateShift(String hours, String input, Day day) {
+        if (!input.equals("-")) {
+            String[] driversNumbers = input.split(",");
+            for (int i = 0; i < driversNumbers.length; i++) {
+                int driverNumber = 0;
+                try {
+                    driverNumber = Integer.parseInt(driversNumbers[i].trim());
+                } catch (NumberFormatException e) {
+                    continue;
+                }
+                if (driverNumber != 0) {
+                    if (i == 0) {
+                        if (day.getShifts().get(Shift.getShift(hours).getNumber()) != null) {
+                            day.getShifts().get(Shift.getShift(hours).getNumber()).clear();
+                        } else {
+                            day.getShifts().put(Shift.getShift(hours).getNumber(), new ArrayList<>());
+                        }
+                    }
+                    day.getShifts().get(Shift.getShift(hours).getNumber()).add(DriverData.getDriver(driverNumber));
+                }
+            }
+        }
+    }
+
+    private Day getDayByDate(LocalDate date) {
+        for (int i = 0; i < days.size(); i++) {
+            if (days.get(i).getDate().toString().equals(date.toString())) {
+                return days.get(i);
+            }
+        }
+        return null;
     }
 
     private Day getNextDay(Day day, int plusDay) {
@@ -208,6 +264,12 @@ public class WorkSchedule {
 
     private void manageDay(Day day) {
         tryDistribute(day);
+//        if(day.getDate().toString().equals("2019-12-09") || day.getDate().toString().equals("2019-12-16") || day.getDate().toString().equals("2019-12-23") || day.getDate().toString().equals("2019-12-30")){
+//            for (Integer number : spareDistribution.keySet()) {
+//                System.out.println(number + " ");
+//            }
+//            System.out.println();
+//        }
         manageRequiredShifts(day);
         manageOptionalShifts(day);
         addSpareShifts(day);
@@ -252,7 +314,12 @@ public class WorkSchedule {
     }
 
     private void manageShiftEighth(Day day) {
-        Day previousDay = getPreviousDay(day, 3);
+        Day previousDay;
+        if (freeTime.equals("2,5 dnia")) {
+            previousDay = getPreviousDay(day, 3);
+        } else {
+            previousDay = getPreviousDay(day, 2);
+        }
         if (day.getDate().getMonth() != LocalDate.now().getMonth()) {
             List<Driver> drivers = verifyDrivers(previousDay.getShifts().get(10));
             List<Driver> sortedDrivers = getSortedList(getMap(8), day);
@@ -295,10 +362,19 @@ public class WorkSchedule {
             otherShifts[0] = 5;
             otherShifts[1] = 7;
         }
-        Day previousDay = getPreviousDay(day, 3);
+        Day previousDay;
+        if(freeTime.equals("2,5 dnia")) {
+             previousDay = getPreviousDay(day, 3);
+        } else {
+            previousDay = getPreviousDay(day, 2);
+        }
         if (day.getDate().getMonth() != LocalDate.now().getMonth()) {
-            List<Driver> drivers = verifyDrivers(previousDay.getShifts().get(10));
-            drivers.remove(day.getShifts().get(8));
+            List<Driver> drivers = new ArrayList<>(verifyDrivers(previousDay.getShifts().get(10)));
+            if(day.getShifts().containsKey(8)) {
+                for (Driver driver : day.getShifts().get(8)) {
+                    drivers.remove(driver);
+                }
+            }
             Random random = new Random();
             List<Integer> used = new ArrayList<>();
             int shiftNumber;
@@ -310,9 +386,10 @@ public class WorkSchedule {
                         if ((day.getShifts().get(shiftNumber).size() < checkNumberOfDrivers(day, shiftNumber)) && day.checkAvailability(sortedDrivers.get(i).getNumber(), shiftNumber) && checkFutureAvailability(sortedDrivers.get(i), shiftNumber, day)) {
                             spareDistribution.put(sortedDrivers.get(i).getNumber(), shiftNumber);
                             used.add(shiftNumber);
+                            drivers.remove(sortedDrivers.get(i));
                             break;
                         }
-                        if (i == (sortedDrivers.size() - 1)) {
+                        if (i == (sortedDrivers.size() - 1) && (!used.contains(shiftNumber))) {
                             used.add(shiftNumber);
                         }
                     }
@@ -613,12 +690,19 @@ public class WorkSchedule {
                     checkMap.put(dayIndex, Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
                     dayIndex++;
                 }
-                if (dayIndex < days.size()) {
-                    checkMap.put(dayIndex, Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-                    dayIndex++;
-                }
-                if (dayIndex < days.size()) {
-                    checkMap.put(dayIndex, Arrays.asList(1, 2, 3, 4));
+                if (freeTime.equals("2,5 dnia")) {
+                    if (dayIndex < days.size()) {
+                        checkMap.put(dayIndex, Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+                        dayIndex++;
+                    }
+                    if (dayIndex < days.size()) {
+                        checkMap.put(dayIndex, Arrays.asList(1, 2, 3, 4));
+                    }
+                } else {
+                    if (dayIndex < days.size()) {
+                        checkMap.put(dayIndex, Arrays.asList(1, 2, 3, 4));
+                    }
+
                 }
                 return checkFutureAvailability(driver, checkMap);
         }
@@ -735,9 +819,6 @@ public class WorkSchedule {
     }
 
     private int checkNumberOfDrivers(Day day, int shiftNumber) {
-        if(day.getDate().toString().equals("2019-11-04") && shiftNumber == 1){
-            System.out.println(manager.checkNumberOfDrivers(day, shiftNumber));
-        }
         return manager.checkNumberOfDrivers(day, shiftNumber);
     }
 
@@ -760,6 +841,9 @@ public class WorkSchedule {
     public void generateWorkSchedule() {
         long millis = System.currentTimeMillis();
         getPreviousDays();
+        if (lastDays != null) {
+            updatePreviousDaysShifts();
+        }
         initializeDays();
         updateDriversList();
         verifyMaps();
@@ -877,5 +961,17 @@ public class WorkSchedule {
             }
         }
         return -1;
+    }
+
+    public void setLastDays(List<LastDays> lastDays) {
+        this.lastDays = lastDays;
+    }
+
+    public String getFreeTime() {
+        return freeTime;
+    }
+
+    public void setFreeTime(String freeTime) {
+        this.freeTime = freeTime;
     }
 }

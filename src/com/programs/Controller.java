@@ -284,7 +284,31 @@ public class Controller {
         controller.loadValues();
         Optional<ButtonType> result = dialog.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK){
-            List<LastDays> days = controller.processResult();
+            schedule.setLastDays(controller.processResult());
+        }
+    }
+
+    @FXML
+    private void showShiftTenSettingDialog(){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainBorderPane.getScene().getWindow());
+        dialog.setTitle("Wybierz wolne po zmianie 22-6");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("shiftTenSettingDialog.fxml"));
+        try {
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        } catch (IOException e){
+            System.out.println("Couldn't load the dialog");
+            e.printStackTrace();
+        }
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        ShiftTenController controller = fxmlLoader.getController();
+        controller.loadValues(schedule.getFreeTime());
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            String freeTime = controller.processResult();
+            schedule.setFreeTime(freeTime);
         }
     }
 

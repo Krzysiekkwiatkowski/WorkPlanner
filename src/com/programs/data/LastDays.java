@@ -12,4 +12,12 @@ public class LastDays {
         this.date = date;
         this.shifts = new HashMap<>();
     }
+
+    public Map<String, String> getShifts() {
+        return shifts;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
 }
