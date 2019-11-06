@@ -45,7 +45,7 @@ public class LastDaysController {
     private TextField thirdDayEighth;
 
     @FXML
-    private TextField thirdDayNineth;
+    private TextField thirdDayNinth;
 
     @FXML
     private TextField thirdDayTenth;
@@ -75,7 +75,7 @@ public class LastDaysController {
     private TextField secondDayEighth;
 
     @FXML
-    private TextField secondDayNineth;
+    private TextField secondDayNinth;
 
     @FXML
     private TextField secondDayTenth;
@@ -105,7 +105,7 @@ public class LastDaysController {
     private TextField lastDayEighth;
 
     @FXML
-    private TextField lastDayNineth;
+    private TextField lastDayNinth;
 
     @FXML
     private TextField lastDayTenth;
@@ -123,7 +123,7 @@ public class LastDaysController {
         shiftsThird.add(thirdDaySixth.getText());
         shiftsThird.add(thirdDaySeventh.getText());
         shiftsThird.add(thirdDayEighth.getText());
-        shiftsThird.add(thirdDayNineth.getText());
+        shiftsThird.add(thirdDayNinth.getText());
         shiftsThird.add(thirdDayTenth.getText());
         shiftsSecond.add(secondDayFirst.getText());
         shiftsSecond.add(secondDaySecond.getText());
@@ -133,7 +133,7 @@ public class LastDaysController {
         shiftsSecond.add(secondDaySixth.getText());
         shiftsSecond.add(secondDaySeventh.getText());
         shiftsSecond.add(secondDayEighth.getText());
-        shiftsSecond.add(secondDayNineth.getText());
+        shiftsSecond.add(secondDayNinth.getText());
         shiftsSecond.add(secondDayTenth.getText());
         shiftsLast.add(lastDayFirst.getText());
         shiftsLast.add(lastDaySecond.getText());
@@ -143,7 +143,7 @@ public class LastDaysController {
         shiftsLast.add(lastDaySixth.getText());
         shiftsLast.add(lastDaySeventh.getText());
         shiftsLast.add(lastDayEighth.getText());
-        shiftsLast.add(lastDayNineth.getText());
+        shiftsLast.add(lastDayNinth.getText());
         shiftsLast.add(lastDayTenth.getText());
         LastDays thirdDay = new LastDays(LocalDate.parse(thirdLastDay.getText()));
         LastDays secondDay = new LastDays(LocalDate.parse(secondLastDay.getText()));

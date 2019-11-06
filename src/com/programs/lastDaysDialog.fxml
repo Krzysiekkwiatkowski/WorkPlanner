@@ -29,7 +29,7 @@
                 <TextField fx:id="thirdDaySixth" GridPane.columnIndex="6" prefWidth="100"/>
                 <TextField fx:id="thirdDaySeventh" GridPane.columnIndex="7" prefWidth="100"/>
                 <TextField fx:id="thirdDayEighth" GridPane.columnIndex="8" prefWidth="100"/>
-                <TextField fx:id="thirdDayNineth" GridPane.columnIndex="9" prefWidth="100"/>
+                <TextField fx:id="thirdDayNinth" GridPane.columnIndex="9" prefWidth="100"/>
                 <TextField fx:id="thirdDayTenth" GridPane.columnIndex="10" prefWidth="100"/>
             </HBox>
             <HBox GridPane.rowIndex="3">
@@ -42,7 +42,7 @@
                 <TextField fx:id="secondDaySixth" GridPane.columnIndex="6" prefWidth="100"/>
                 <TextField fx:id="secondDaySeventh" GridPane.columnIndex="7" prefWidth="100"/>
                 <TextField fx:id="secondDayEighth" GridPane.columnIndex="8" prefWidth="100"/>
-                <TextField fx:id="secondDayNineth" GridPane.columnIndex="9" prefWidth="100"/>
+                <TextField fx:id="secondDayNinth" GridPane.columnIndex="9" prefWidth="100"/>
                 <TextField fx:id="secondDayTenth" GridPane.columnIndex="10" prefWidth="100"/>
             </HBox>
             <HBox GridPane.rowIndex="4">
@@ -55,7 +55,7 @@
                 <TextField fx:id="lastDaySixth" GridPane.columnIndex="6" prefWidth="100"/>
                 <TextField fx:id="lastDaySeventh" GridPane.columnIndex="7" prefWidth="100"/>
                 <TextField fx:id="lastDayEighth" GridPane.columnIndex="8" prefWidth="100"/>
-                <TextField fx:id="lastDayNineth" GridPane.columnIndex="9" prefWidth="100"/>
+                <TextField fx:id="lastDayNinth" GridPane.columnIndex="9" prefWidth="100"/>
                 <TextField fx:id="lastDayTenth" GridPane.columnIndex="10" prefWidth="100"/>
             </HBox>
         </GridPane>

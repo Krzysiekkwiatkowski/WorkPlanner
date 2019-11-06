@@ -228,6 +228,10 @@ public class WorkSchedule {
                     day.getShifts().get(Shift.getShift(hours).getNumber()).add(DriverData.getDriver(driverNumber));
                 }
             }
+        } else {
+            if(day.getShifts().get(Shift.getShift(hours).getNumber()) != null){
+                day.getShifts().get(Shift.getShift(hours).getNumber()).clear();
+            }
         }
     }
 
@@ -264,12 +268,6 @@ public class WorkSchedule {
 
     private void manageDay(Day day) {
         tryDistribute(day);
-//        if(day.getDate().toString().equals("2019-12-09") || day.getDate().toString().equals("2019-12-16") || day.getDate().toString().equals("2019-12-23") || day.getDate().toString().equals("2019-12-30")){
-//            for (Integer number : spareDistribution.keySet()) {
-//                System.out.println(number + " ");
-//            }
-//            System.out.println();
-//        }
         manageRequiredShifts(day);
         manageOptionalShifts(day);
         addSpareShifts(day);
