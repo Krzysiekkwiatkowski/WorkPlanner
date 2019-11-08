@@ -15,16 +15,23 @@ import java.util.List;
 
 public class ExcelSaving {
     private final WorkSchedule schedule;
-    private final File file;
-    private final File fileCopy;
+    private File file;
+    private File fileCopy;
+    private String applicationFile;
+    private String userFile;
     private WritableWorkbook excelData;
     private WritableSheet sheet;
     private WritableCellFormat cellFormat = null;
 
     public ExcelSaving(WorkSchedule workSchedule) {
         this.schedule = workSchedule;
-        file = new File("Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls");
-        fileCopy = new File("/home/oem/Desktop/Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls");
+        applicationFile = "Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls";
+        userFile = "/home/oem/Desktop/Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls";
+    }
+
+    protected void createFiles(){
+        file = new File(applicationFile);
+        fileCopy = new File(userFile);
         try {
             excelData = Workbook.createWorkbook(file);
         } catch (IOException e) {

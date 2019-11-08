@@ -343,9 +343,16 @@ public class Controller {
 
     @FXML
     public void clearConditions() {
-        schedule.clearConditions();
-        conditions.clear();
-        conditionList.getItems().clear();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Wyczyścić żądania?");
+        alert.setHeaderText("Czy chcesz usunąć wszystkie żadania?");
+        alert.setContentText("Kliknij OK żeby potwierdzić, Cancel żeby anulować");
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            schedule.clearConditions();
+            conditions.clear();
+            conditionList.getItems().clear();
+        }
     }
 
     @FXML
