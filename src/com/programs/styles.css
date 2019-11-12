@@ -37,3 +37,21 @@
 .list-cell:focused {
     -fx-background-color: darkcyan;
 }
+
+.radio-button {
+    -fx-label-padding: 0px;
+    -fx-border-radius: 15px;
+    -fx-border-width: 2px
+}
+
+.required {
+    -fx-border-color: darkgreen;
+}
+
+.optional {
+    -fx-border-color: royalblue;
+}
+
+.lack {
+    -fx-border-color: firebrick;
+}
