@@ -40,26 +40,29 @@ public class ExcelLoading {
     private void loadData(String fileName) {
         Workbook workbook = null;
         try {
-            workbook = Workbook.getWorkbook(new File(fileName));
-            Sheet sheet = workbook.getSheet(0);
-            String input;
-            for (int j = (monthLong - 1); j < (monthLong + 2); j++) {
-                Day day = previousDays.get(j - monthLong + 1);
-                for (int i = 2; i < 12; i++) {
-                    input = sheet.getCell(i, j).getContents();
-                    if (!input.contains("-")) {
-                        if (input.contains(",")) {
-                            String[] parts = input.split(",");
-                            for (int k = 0; k < parts.length; k++) {
-                                if (day.getShifts().containsKey(i - 1)) {
-                                    schedule.addShift((i - 1), Integer.parseInt(parts[k].trim()), day);
+            File file = new File(fileName);
+            if(file.exists()) {
+                workbook = Workbook.getWorkbook(file);
+                Sheet sheet = workbook.getSheet(0);
+                String input;
+                for (int j = (monthLong - 1); j < (monthLong + 2); j++) {
+                    Day day = previousDays.get(j - monthLong + 1);
+                    for (int i = 2; i < 12; i++) {
+                        input = sheet.getCell(i, j).getContents();
+                        if (!input.contains("-")) {
+                            if (input.contains(",")) {
+                                String[] parts = input.split(",");
+                                for (int k = 0; k < parts.length; k++) {
+                                    if (day.getShifts().containsKey(i - 1)) {
+                                        schedule.addShift((i - 1), Integer.parseInt(parts[k].trim()), day);
+                                    }
                                 }
+                            } else {
+                                if (!day.getShifts().containsKey((i - 1))) {
+                                    day.getShifts().put((i - 1), new ArrayList<>());
+                                }
+                                schedule.addShift((i - 1), Integer.parseInt(input.trim()), day);
                             }
-                        } else {
-                            if (!day.getShifts().containsKey((i - 1))) {
-                                day.getShifts().put((i - 1), new ArrayList<>());
-                            }
-                            schedule.addShift((i - 1), Integer.parseInt(input.trim()), day);
                         }
                     }
                 }

@@ -7,6 +7,9 @@ import jxl.format.Alignment;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
 import jxl.write.*;
+import jxl.write.Label;
+
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,7 +29,7 @@ public class ExcelSaving {
     public ExcelSaving(WorkSchedule workSchedule) {
         this.schedule = workSchedule;
         applicationFile = "Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls";
-        userFile = "/home/oem/Desktop/Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls";
+        userFile = "C:" + System.lineSeparator() + "Users" + System.lineSeparator() + "Admin" + System.lineSeparator() + "Desktop" + System.lineSeparator() + "Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls";
     }
 
     protected void createFiles(){

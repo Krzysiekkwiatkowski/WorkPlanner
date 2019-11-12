@@ -2,7 +2,6 @@ package com.programs.data;
 
 import com.programs.Controller;
 import com.programs.HolidayController;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
@@ -831,6 +830,7 @@ public class WorkSchedule {
             if (conditions.containsKey(driver)) {
                 conditions.get(driver).add(condition);
             } else {
+                conditions.put(driver, new ArrayList<>());
                 conditions.get(driver).add(condition);
             }
         }
@@ -890,15 +890,6 @@ public class WorkSchedule {
             sb.append("Kierowca " + driver.getNumber() + " ma zagrafikowanych " + hour.getHours().get(driver) + " godzin, w tym " + hour.getSaintHours().get(driver) + " w święta\n\n");
         }
         this.controller.getDisplaySchedule().setText(sb.toString());
-    }
-
-    public Day getDay(LocalDate date) {
-        for (Day day : days) {
-            if (day.getDate().toString().equals(date.toString())) {
-                return day;
-            }
-        }
-        return null;
     }
 
     private void saveWorkSchedule() {
