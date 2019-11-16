@@ -19,6 +19,8 @@ public class Controller {
 
     private WorkSchedule schedule;
     private ObservableList<Condition> conditions;
+    private static Dialog<ButtonType> actualDialog;
+    private static SettingController actualController;
 
     @FXML
     private BorderPane mainBorderPane;
@@ -244,26 +246,37 @@ public class Controller {
 
     @FXML
     private void showSettingDialog(){
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.initOwner(mainBorderPane.getScene().getWindow());
-        dialog.setTitle("Aktualne ustawienia grafiku");
+        actualDialog = new Dialog<>();
+        actualDialog.initOwner(mainBorderPane.getScene().getWindow());
+        actualDialog.setTitle("Aktualne ustawienia grafiku");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("settingDialog.fxml"));
         try {
-            dialog.getDialogPane().setContent(fxmlLoader.load());
+            actualDialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e){
             System.out.println("Couldn't load the dialog");
         }
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
         SettingController controller = fxmlLoader.getController();
+        controller.setController(this);
+        actualController = controller;
         controller.loadValues();
-        Optional<ButtonType> result = dialog.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.OK){
-            SettingController settingController = fxmlLoader.getController();
-            Setting setting = settingController.processResult();
-            setting.saveSetting();
-        }
+        actualDialog.show();
+        actualDialog.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> {
+            actualDialog.setResult(ButtonType.CANCEL);
+            actualDialog.close();
+        });
+    }
+
+    protected void okPressed(){
+        Setting setting = actualController.processResult();
+        setting.saveSetting();
+        actualDialog.setResult(ButtonType.OK);
+        actualDialog.close();
+    }
+
+    protected void cancelPressed(){
+        actualDialog.setResult(ButtonType.CANCEL);
+        actualDialog.close();
     }
 
     @FXML
@@ -373,5 +386,9 @@ public class Controller {
 
     public Label getDisplaySchedule() {
         return displaySchedule;
+    }
+
+    protected Controller getController(){
+        return this;
     }
 }

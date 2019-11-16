@@ -5,7 +5,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.RadioButton?>
-<DialogPane stylesheets="@styles.css" fx:controller="com.programs.SettingController" xmlns:fx="http://javafx.com/fxml">
+<?import javafx.scene.control.Button?>
+<DialogPane stylesheets="@styles.css" fx:controller="com.programs.SettingController" xmlns:fx="http://javafx.com/fxml" style="-fx-spacing: 0">
     <fx:define>
         <ToggleGroup fx:id="shiftToggleMon1"/>
     </fx:define>
@@ -218,8 +219,11 @@
     </fx:define>
     <content>
         <GridPane style="-fx-padding: 0">
+            <HBox GridPane.rowIndex="1">
+                <Label text="Poniedziałek" prefWidth="120"/>
+            </HBox>
             <HBox GridPane.rowIndex="0">
-                <Label text="Poniedziałek" GridPane.rowIndex="0" prefWidth="130"/>
+                <Label prefWidth="130"/>
                 <Label text="6-14" prefWidth="90" GridPane.columnIndex="1"/>
                 <Label text="7:30-15:30" prefWidth="120" GridPane.columnIndex="2"/>
                 <Label text="10-14" prefWidth="115" GridPane.columnIndex="3"/>
@@ -290,8 +294,8 @@
                 <RadioButton styleClass="lack" fx:id="rdMonL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleMon9"/>
                 <RadioButton styleClass="lack" fx:id="rdMonL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleMon10"/>
             </HBox>
-            <HBox GridPane.rowIndex="4">
-                <Label text="Wtorek" GridPane.rowIndex="4" prefWidth="120"/>
+            <HBox GridPane.rowIndex="5">
+                <Label text="Wtorek" prefWidth="120"/>
             </HBox>
             <HBox GridPane.rowIndex="5" spacing="15">
                 <Label GridPane.columnIndex="0" prefWidth="90"/>
@@ -352,8 +356,8 @@
                 <RadioButton styleClass="lack" fx:id="rdTueL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleTue9"/>
                 <RadioButton styleClass="lack" fx:id="rdTueL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleTue10"/>
             </HBox>
-            <HBox GridPane.rowIndex="8">
-                <Label text="Środa" GridPane.rowIndex="8" prefWidth="120"/>
+            <HBox GridPane.rowIndex="9">
+                <Label text="Środa" prefWidth="120"/>
             </HBox>
             <HBox GridPane.rowIndex="9" spacing="15">
                 <Label GridPane.columnIndex="0" prefWidth="90"/>
@@ -414,8 +418,8 @@
                 <RadioButton styleClass="lack" fx:id="rdWedL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleWed9"/>
                 <RadioButton styleClass="lack" fx:id="rdWedL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleWed10"/>
             </HBox>
-            <HBox GridPane.rowIndex="12">
-                <Label text="Czwartek" GridPane.rowIndex="12" prefWidth="120"/>
+            <HBox GridPane.rowIndex="13">
+                <Label text="Czwartek" prefWidth="120"/>
             </HBox>
             <HBox GridPane.rowIndex="13" spacing="15">
                 <Label GridPane.columnIndex="0" prefWidth="90"/>
@@ -476,8 +480,8 @@
                 <RadioButton styleClass="lack" fx:id="rdThuL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleThu9"/>
                 <RadioButton styleClass="lack" fx:id="rdThuL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleThu10"/>
             </HBox>
-            <HBox GridPane.rowIndex="16">
-                <Label text="Piątek" GridPane.rowIndex="16" prefWidth="120"/>
+            <HBox GridPane.rowIndex="17">
+                <Label text="Piątek" prefWidth="120"/>
             </HBox>
             <HBox GridPane.rowIndex="17" spacing="15">
                 <Label GridPane.columnIndex="0" prefWidth="90"/>
@@ -538,8 +542,8 @@
                 <RadioButton styleClass="lack" fx:id="rdFriL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleFri9"/>
                 <RadioButton styleClass="lack" fx:id="rdFriL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleFri10"/>
             </HBox>
-            <HBox GridPane.rowIndex="20">
-                <Label text="Sobota" GridPane.rowIndex="20" prefWidth="120"/>
+            <HBox GridPane.rowIndex="21">
+                <Label text="Sobota" prefWidth="120"/>
             </HBox>
             <HBox GridPane.rowIndex="21" spacing="15">
                 <Label GridPane.columnIndex="0" prefWidth="90"/>
@@ -600,8 +604,8 @@
                 <RadioButton styleClass="lack" fx:id="rdSatL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleSat9"/>
                 <RadioButton styleClass="lack" fx:id="rdSatL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleSat10"/>
             </HBox>
-            <HBox GridPane.rowIndex="24">
-                <Label text="Niedziela" GridPane.rowIndex="24" prefWidth="120"/>
+            <HBox GridPane.rowIndex="25">
+                <Label text="Niedziela" prefWidth="120"/>
             </HBox>
             <HBox GridPane.rowIndex="25" spacing="15">
                 <Label GridPane.columnIndex="0" prefWidth="90"/>
@@ -661,6 +665,11 @@
                 <RadioButton styleClass="lack" fx:id="rdSunL8" GridPane.columnIndex="8" toggleGroup="$shiftToggleSun8"/>
                 <RadioButton styleClass="lack" fx:id="rdSunL9" GridPane.columnIndex="9" toggleGroup="$shiftToggleSun9"/>
                 <RadioButton styleClass="lack" fx:id="rdSunL10" GridPane.columnIndex="10" toggleGroup="$shiftToggleSun10"/>
+            </HBox>
+            <HBox GridPane.rowIndex="28" spacing="10" style="-fx-padding: 25">
+                <Label prefWidth="1100"/>
+                <Button text="OK" onAction="#okButtonPressed"/>
+                <Button text="Cancel" onAction="#cancelButtonPressed"/>
             </HBox>
         </GridPane>
     </content>

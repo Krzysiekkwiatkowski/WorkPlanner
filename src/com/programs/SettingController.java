@@ -7,7 +7,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
-
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +14,7 @@ import java.util.Map;
 
 public class SettingController {
     private Setting setting;
+    private Controller controller;
     private List<RadioButton> rdRequiredList;
     private List<RadioButton> rdOptionalList;
     private List<RadioButton> rdLackList;
@@ -1499,5 +1499,19 @@ public class SettingController {
                 sOptionalList.get(number).visibleProperty().setValue(false);
             }
         });
+    }
+
+    @FXML
+    private void okButtonPressed(){
+        controller.okPressed();
+    }
+
+    @FXML
+    private void cancelButtonPressed(){
+        controller.cancelPressed();
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 }

@@ -12,7 +12,10 @@ import jxl.write.Label;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.FileSystem;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -29,7 +32,7 @@ public class ExcelSaving {
     public ExcelSaving(WorkSchedule workSchedule) {
         this.schedule = workSchedule;
         applicationFile = "Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls";
-        userFile = "C:" + System.lineSeparator() + "Users" + System.lineSeparator() + "Admin" + System.lineSeparator() + "Desktop" + System.lineSeparator() + "Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls";
+        userFile = "C:\\Users\\Admin\\Desktop\\Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls";
     }
 
     protected void createFiles(){
@@ -127,7 +130,7 @@ public class ExcelSaving {
             }
             excelData.write();
             excelData.close();
-//            copyFile();
+            copyFile();
         } catch (WriteException | IOException e) {
             System.out.println("Couldn't save the file");
             e.printStackTrace();
@@ -157,7 +160,7 @@ public class ExcelSaving {
 
     private void copyFile(){
         try {
-            Files.copy(file.toPath(), fileCopy.toPath());
+            Files.copy(file.toPath(), fileCopy.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e){
             System.out.println("Couldn't copy work schedule file");
         }
