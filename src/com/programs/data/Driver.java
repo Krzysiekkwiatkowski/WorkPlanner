@@ -47,7 +47,7 @@ public class Driver implements Comparable<Driver> {
 
     @Override
     public String toString() {
-        return this.number + " " + this.firstName + " " + this.lastName + " " + this.phone;
+        return this.number + " " + this.firstName + " " + this.lastName + " " + (this.phone != 0 ? this.phone : "");
     }
 
     @Override

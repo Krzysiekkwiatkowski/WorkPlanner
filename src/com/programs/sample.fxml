@@ -42,7 +42,7 @@
         <ListView fx:id="driversList" prefWidth="275"/>
     </left>
     <center>
-        <Label fx:id="displaySchedule"/>
+        <Label fx:id="displaySchedule" style="-fx-font-size: 75%"/>
     </center>
     <right>
         <ListView fx:id="conditionList"/>

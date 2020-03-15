@@ -2,6 +2,9 @@ package com.programs.data;
 
 import com.programs.Controller;
 import com.programs.HolidayController;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
@@ -837,23 +840,57 @@ public class WorkSchedule {
     }
 
     public void generateWorkSchedule() {
-        long millis = System.currentTimeMillis();
-        getPreviousDays();
-        if (lastDays != null) {
-            updatePreviousDaysShifts();
+        boolean continueGenerating = true;
+        while (continueGenerating) {
+            long millis = System.currentTimeMillis();
+            getPreviousDays();
+            if (lastDays != null) {
+                updatePreviousDaysShifts();
+            }
+            initializeDays();
+            updateDriversList();
+            verifyMaps();
+            setPreviousDaysAvailability();
+            setConditions();
+            generate();
+            showHours();
+            removePreviousDays();
+            removeNextDay();
+            saveWorkSchedule();
+            showDistribution();
+            System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Zatwierdzić grafik?");
+            alert.setHeaderText("Czy chcesz skończyć generowanie kolejnych grafików?");
+            alert.setContentText("Żeby zakończyć generowanie nowych grafików naciśnij OK");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == ButtonType.OK){
+                continueGenerating = false;
+            } else {
+                days = new ArrayList<>();
+                saintDays = new ArrayList<>();
+                excelLoad = new ExcelLoading(this, ("Grafik" + getMonth(date.getMonth().toString()) + ".xls"));
+                hour = new Hour();
+                firstShift = new HashMap<>();
+                secondShift = new HashMap<>();
+                thirdShift = new HashMap<>();
+                fourthShift = new HashMap<>();
+                fifthShift = new HashMap<>();
+                sixthShift = new HashMap<>();
+                seventhShift = new HashMap<>();
+                eighthShift = new HashMap<>();
+                ninthShift = new HashMap<>();
+                tenthShift = new HashMap<>();
+                spareDistribution = new HashMap<>();
+                manager = new ShiftManager();
+                for (Driver driver : hour.getDrivers()) {
+                    for (int i = 1; i < 11; i++) {
+                        initializeMaps(i, driver);
+                    }
+                }
+                this.month = getMonth(date.getMonth().plus(1).toString());
+            }
         }
-        initializeDays();
-        updateDriversList();
-        verifyMaps();
-        setPreviousDaysAvailability();
-        setConditions();
-        generate();
-        showHours();
-        removePreviousDays();
-        removeNextDay();
-        saveWorkSchedule();
-        showDistribution();
-        System.out.println("Time to execute program = " + (System.currentTimeMillis() - millis));
     }
 
     private void setPreviousDaysAvailability() {
