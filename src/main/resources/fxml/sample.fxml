@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Label?>
+<BorderPane fx:id="mainBorderPane" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="my.application.controller.Controller">
+    <top>
+        <VBox>
+            <MenuBar>
+                <Menu id="fx" text="Program">
+                    <MenuItem text="Generuj grafik" onAction="#startGenerating"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Dodaj czerwoną kartkę" onAction="#showHolidayDialog"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Ustawienia grafiku" onAction="#showSettingDialog"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Ustawienia zmiany 22-6" onAction="#showShiftTenSettingDialog"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Uzupełnij dni" onAction="#showLastDaysDialog"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Wyjście" onAction="#exitAction"/>
+                </Menu>
+                <Menu text="Kierowca">
+                    <MenuItem text="Dodaj" onAction="#showNewDriverDialog"/>
+                </Menu>
+                <Menu text="Żądania">
+                    <MenuItem text="Dodaj" onAction="#showNewConditionDialog"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Wyczyść" onAction="#clearConditions"/>
+                </Menu>
+            </MenuBar>
+        </VBox>
+    </top>
+    <left>
+        <ListView fx:id="driversList" prefWidth="275"/>
+    </left>
+    <center>
+        <Label fx:id="displaySchedule" style="-fx-font-size: 75%"/>
+    </center>
+    <right>
+        <ListView fx:id="conditionList"/>
+    </right>
+</BorderPane>
