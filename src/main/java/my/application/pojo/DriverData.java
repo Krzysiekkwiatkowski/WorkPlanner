@@ -5,23 +5,26 @@ import javafx.collections.ObservableList;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class DriverData {
+    private static final String DRIVERS_DATA = "drivers.txt";
+
     private static ObservableList<Driver> drivers = FXCollections.observableArrayList();
-    private static File data = new File("drivers.txt");
+    private static File data = new File(DRIVERS_DATA);
 
     public static ObservableList<Driver> getDrivers() {
         return drivers;
     }
 
-    protected static void loadDrivers() {
+    static void loadDrivers() {
         try {
             Scanner scanner = new Scanner(data);
             String firstName;
             String lastName;
-            int number;
-            int phone;
+            int number = 0;
+            int phone = 0;
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 if (!line.trim().isEmpty()) {
@@ -32,8 +35,6 @@ public class DriverData {
                         number = Integer.parseInt(values[0]);
                         phone = Integer.parseInt(values[3]);
                     } catch (IllegalArgumentException e) {
-                        number = 0;
-                        phone = 0;
                         continue;
                     }
                     Driver driver = new Driver(number, firstName, lastName, phone);
@@ -49,9 +50,7 @@ public class DriverData {
     public static void saveDrivers() {
         try {
             PrintWriter printWriter = new PrintWriter(data);
-            for (Driver driver : drivers) {
-                printWriter.println(driver.getNumber() + " " + driver.getFirstName() + " " + driver.getLastName() + " " + driver.getPhone());
-            }
+            drivers.forEach(d -> printWriter.println(d.getNumber() + " " + d.getFirstName() + " " + d.getLastName() + " " + d.getPhone()));
             printWriter.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -60,10 +59,8 @@ public class DriverData {
     }
 
     public static Driver addDriver(Driver driver) {
-        if (driver != null) {
-            if (!DriverData.drivers.contains(driver)) {
-                drivers.add(driver);
-            }
+        if ((driver != null) && (!DriverData.drivers.contains(driver))) {
+            drivers.add(driver);
         }
         return driver;
     }
@@ -79,30 +76,28 @@ public class DriverData {
     }
 
     public static Driver getDriver(int driverNumber) {
-        for (Driver driver : drivers) {
-            if (driver.getNumber() == driverNumber) {
-                return driver;
-            }
+        Optional<Driver> result = drivers.stream()
+                .filter(d -> d.getNumber() == driverNumber)
+                .findFirst();
+        if(result.isPresent()){
+            return result.get();
         }
         return null;
     }
 
     public static boolean contains(int number) {
-        for (Driver driver : drivers) {
-            if (driver.getNumber() == number) {
-                return true;
-            }
-        }
-        return false;
+        Optional<Driver> result = drivers.stream()
+                .filter(d -> d.getNumber() == number)
+                .findFirst();
+        return result.isPresent();
     }
 
-    public static int getMaxNumber() {
-        int max = 0;
-        for (Driver driver : drivers) {
-            if (driver.getNumber() > max) {
-                max = driver.getNumber();
-            }
+    static int getMaxNumber() {
+        Optional<Driver> driver = drivers.stream()
+                .max(Driver::compareTo);
+        if(driver.isPresent()){
+            return driver.get().getNumber();
         }
-        return max;
+        return 0;
     }
 }

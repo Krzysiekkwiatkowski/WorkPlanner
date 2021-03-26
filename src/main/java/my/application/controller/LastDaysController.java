@@ -110,7 +110,7 @@ public class LastDaysController {
     @FXML
     private TextField lastDayTenth;
 
-    protected List<LastDays> processResult(){
+    List<LastDays> processResult(){
         List<String> shiftsThird = new ArrayList<>();
         List<String> shiftsSecond = new ArrayList<>();
         List<String> shiftsLast = new ArrayList<>();
@@ -161,7 +161,7 @@ public class LastDaysController {
         return days;
     }
 
-    protected void loadValues(){
+    void loadValues(){
         int monthLength = LocalDate.now().lengthOfMonth();
         thirdLastDay.setText(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), monthLength - 2).toString());
         secondLastDay.setText(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), monthLength - 1).toString());

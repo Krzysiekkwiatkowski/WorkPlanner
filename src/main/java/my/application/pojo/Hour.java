@@ -10,7 +10,7 @@ public class Hour {
     private Map<Driver, Integer> saintHours;
     private List<Driver> drivers;
 
-    public Hour() {
+    Hour() {
         this.hours = new HashMap<>();
         this.saintHours = new HashMap<>();
         this.drivers = new ArrayList<>();
@@ -36,7 +36,7 @@ public class Hour {
         }
     }
 
-    public int addHours(int driverNumber, int shiftNumber, boolean saintDay) {
+    int addHours(int driverNumber, int shiftNumber, boolean saintDay) {
         Driver driver = DriverData.getDriver(driverNumber);
         int hoursToAdd;
         if (shiftNumber == 1 || shiftNumber == 2 || shiftNumber == 5 || shiftNumber == 7 || shiftNumber == 8 || shiftNumber == 9 || shiftNumber == 10) {
@@ -85,7 +85,7 @@ public class Hour {
         return hoursToAdd;
     }
 
-    protected int getMaxSaintHours(){
+    int getMaxSaintHours(){
         List<Driver> drivers = DriverData.getDrivers();
         int max = 0;
         for (int i = 0; i < drivers.size(); i++) {
@@ -96,7 +96,7 @@ public class Hour {
         return max;
     }
 
-    protected void initializeHours(Driver driver){
+    void initializeHours(Driver driver){
         hours.put(driver, 0);
         saintHours.put(driver, 0);
         drivers.add(driver);
@@ -106,11 +106,11 @@ public class Hour {
         return hours;
     }
 
-    public Map<Driver, Integer> getSaintHours() {
+    Map<Driver, Integer> getSaintHours() {
         return saintHours;
     }
 
-    public List<Driver> getDrivers() {
+    List<Driver> getDrivers() {
         return drivers;
     }
 }

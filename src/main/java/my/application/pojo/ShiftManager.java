@@ -6,30 +6,30 @@ import java.util.List;
 public class ShiftManager {
     private Setting setting;
 
-    public ShiftManager(){
+    ShiftManager(){
         setting = new Setting();
     }
 
-    public List<Integer> getRequired(Day day) {
+    List<Integer> getRequired(Day day) {
         List<Integer> shifts = new ArrayList<>();
-        for (Shift shift : Shift.getShifts()) {
-            if(setting.getRequiredShifts().get(day.getDate().getDayOfWeek()).get(shift.getHours()) != 0){
-                shifts.add(shift.getNumber());
+        Shift.getShifts().forEach(s -> {
+            if(setting.getRequiredShifts().get(day.getDate().getDayOfWeek()).get(s.getHours()) != 0){
+                shifts.add(s.getNumber());
             }
-        }
+        });
         if(day.isNextDayHoliday()){
             shifts.add(9);
         }
         return sortRequiredList(shifts);
     }
 
-    public List<Integer> getOptional(Day day) {
+    List<Integer> getOptional(Day day) {
         List<Integer> shifts = new ArrayList<>();
-        for (Shift shift : Shift.getShifts()) {
-            if(setting.getOptionalShifts().get(day.getDate().getDayOfWeek()).get(shift.getHours()) != 0){
-                shifts.add(shift.getNumber());
+        Shift.getShifts().forEach( s -> {
+            if(setting.getOptionalShifts().get(day.getDate().getDayOfWeek()).get(s.getHours()) != 0){
+                shifts.add(s.getNumber());
             }
-        }
+        });
         return sortOptionalList(shifts);
     }
 
@@ -79,7 +79,7 @@ public class ShiftManager {
         return null;
     }
 
-    protected int checkNumberOfDrivers(Day day, int shiftNumber){
+    int checkNumberOfDrivers(Day day, int shiftNumber){
         if(setting.getRequiredShifts().get(day.getDate().getDayOfWeek()).get(Shift.getShift(shiftNumber).getHours()) != 0){
             return setting.getRequiredShifts().get(day.getDate().getDayOfWeek()).get(Shift.getShift(shiftNumber).getHours());
         } else if(setting.getOptionalShifts().get(day.getDate().getDayOfWeek()).get(Shift.getShift(shiftNumber).getHours()) != 0){

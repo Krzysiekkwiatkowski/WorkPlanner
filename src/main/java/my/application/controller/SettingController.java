@@ -1434,7 +1434,7 @@ public class SettingController {
         }
     }
 
-    protected void loadValues(){
+    void loadValues(){
         DayOfWeek[] daysOfWeek = DayOfWeek.values();
         Map<DayOfWeek, Map<String, Integer>> requiredShifts = setting.getRequiredShifts();
         Map<DayOfWeek, Map<String, Integer>> optionalShifts = setting.getOptionalShifts();
@@ -1455,7 +1455,7 @@ public class SettingController {
         }
     }
 
-    protected Setting processResult(){
+    Setting processResult(){
         int index = 0;
         for (int i = 1; i < 8; i++) {
             DayOfWeek dayOfWeek = DayOfWeek.of(i);

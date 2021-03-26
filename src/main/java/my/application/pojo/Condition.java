@@ -29,23 +29,21 @@ public class Condition {
         return driverNumber;
     }
 
-    public List<Integer> getShiftsNumbers(){
+    List<Integer> getShiftsNumbers(){
         List<Integer> shiftNumbers = new ArrayList<>();
         if(this.shifts != null){
             if(shifts.size() == 1){
                 shiftNumbers.add(shifts.get(0).getNumber());
                 return shiftNumbers;
             } else {
-                for (Shift shift : shifts) {
-                    shiftNumbers.add(shift.getNumber());
-                }
+                shifts.forEach(s -> shiftNumbers.add(s.getNumber()));
                 return shiftNumbers;
             }
         }
         return null;
     }
 
-    public LocalDate getDate() {
+    LocalDate getDate() {
         return date;
     }
 

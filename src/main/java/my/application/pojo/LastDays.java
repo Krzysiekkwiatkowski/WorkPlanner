@@ -17,7 +17,7 @@ public class LastDays {
         return shifts;
     }
 
-    public LocalDate getDate() {
+    LocalDate getDate() {
         return date;
     }
 }

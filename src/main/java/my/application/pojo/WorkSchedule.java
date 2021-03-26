@@ -41,7 +41,7 @@ public class WorkSchedule {
         this.date = LocalDate.now();
         days = new ArrayList<>();
         saintDays = new ArrayList<>();
-        excelLoad = new ExcelLoading(this, ("Grafik" + getMonth(date.getMonth().toString()) + ".xls"));
+        excelLoad = new ExcelLoading(this, (getMonth(date.getMonth().toString())));
         hour = new Hour();
         firstShift = new HashMap<>();
         secondShift = new HashMap<>();
@@ -55,17 +55,17 @@ public class WorkSchedule {
         tenthShift = new HashMap<>();
         spareDistribution = new HashMap<>();
         manager = new ShiftManager();
-        for (Driver driver : hour.getDrivers()) {
+        hour.getDrivers().forEach(d -> {
             for (int i = 1; i < 11; i++) {
-                initializeMaps(i, driver);
+                initializeMaps(i, d);
             }
-        }
+        });
         this.controller = controller;
         this.month = getMonth(date.getMonth().plus(1).toString());
         conditions = new HashMap<>();
-        for (Driver driver : DriverData.getDrivers()) {
-            conditions.put(driver, new ArrayList<>());
-        }
+        DriverData.getDrivers().forEach(d -> {
+            conditions.put(d, new ArrayList<>());
+        });
         driversToUpdate = new HashMap<>();
     }
 
@@ -239,10 +239,11 @@ public class WorkSchedule {
     }
 
     private Day getDayByDate(LocalDate date) {
-        for (int i = 0; i < days.size(); i++) {
-            if (days.get(i).getDate().toString().equals(date.toString())) {
-                return days.get(i);
-            }
+        Optional<Day> result = days.stream()
+                .filter(d -> d.getDate().toString().equals(date.toString()))
+                .findFirst();
+        if(result.isPresent()){
+            return result.get();
         }
         return null;
     }
@@ -264,9 +265,7 @@ public class WorkSchedule {
     }
 
     public void generate() {
-        for (Day day : days) {
-            manageDay(day);
-        }
+        days.forEach(d -> manageDay(d));
     }
 
     private void manageDay(Day day) {
@@ -278,29 +277,25 @@ public class WorkSchedule {
     }
 
     private void addSpareShifts(Day day) {
-        for (Integer driverNumber : spareDistribution.keySet()) {
-            addShift(spareDistribution.get(driverNumber), driverNumber, day);
-        }
+        spareDistribution.keySet().forEach(k -> addShift(spareDistribution.get(k), k, day));
     }
 
     private void manageRequiredShifts(Day day) {
         List<Integer> shifts = manager.getRequired(day);
-        for (int i = 0; i < shifts.size(); i++) {
-            if (shifts.get(i) != 10) {
-                manageTypicalShift(shifts.get(i), day, verifyDrivers(getSortedList(getMap(shifts.get(i)), day)));
+        shifts.forEach(s -> {
+            if (s != 10) {
+                manageTypicalShift(s, day, verifyDrivers(getSortedList(getMap(s), day)));
             } else {
                 manageShiftTenth(day);
             }
-        }
+        });
     }
 
     private void manageOptionalShifts(Day day) {
         List<Integer> shifts = manager.getOptional(day);
         int max = getMaxDrivers(shifts, day);
         for (int i = 0; i < max; i++) {
-            for (Integer shiftNumber : shifts) {
-                manageOptionalShifts(shiftNumber, day);
-            }
+            shifts.forEach(s -> manageOptionalShifts(s, day));
         }
     }
 
@@ -372,9 +367,7 @@ public class WorkSchedule {
         if (day.getDate().getMonth() != LocalDate.now().getMonth()) {
             List<Driver> drivers = new ArrayList<>(verifyDrivers(previousDay.getShifts().get(10)));
             if(day.getShifts().containsKey(8)) {
-                for (Driver driver : day.getShifts().get(8)) {
-                    drivers.remove(driver);
-                }
+                day.getShifts().get(8).forEach(d -> drivers.remove(d));
             }
             Random random = new Random();
             List<Integer> used = new ArrayList<>();
@@ -407,11 +400,11 @@ public class WorkSchedule {
             return drivers;
         } else {
             List<Driver> actual = new ArrayList<>();
-            for (Driver driver : drivers) {
-                if (DriverData.getDrivers().contains(driver)) {
-                    actual.add(driver);
+            drivers.forEach(d -> {
+                if (DriverData.getDrivers().contains(d)) {
+                    actual.add(d);
                 }
-            }
+            });
             return actual;
         }
     }
@@ -509,13 +502,13 @@ public class WorkSchedule {
     private void showDistribution() {
         List<Driver> drivers = DriverData.getDrivers();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < drivers.size(); i++) {
-            sb.append("Driver " + drivers.get(i).getNumber() + "\t");
+        drivers.forEach(d -> {
+            sb.append("Driver " + d.getNumber() + "\t");
             for (int j = 1; j <= Shift.getShifts().size(); j++) {
-                sb.append(j + " : " + getMap(j).get(drivers.get(i).getNumber()) + "\t");
+                sb.append(j + " : " + getMap(j).get(d.getNumber()) + "\t");
             }
             sb.append("\n");
-        }
+        });
         System.out.println(sb.toString());
     }
 
@@ -922,7 +915,7 @@ public class WorkSchedule {
         this.days.addAll(excelLoad.getPreviousDays());
     }
 
-    public void showHours() {
+    void showHours() {
         StringBuilder sb = new StringBuilder();
         for (Driver driver : DriverData.getDrivers()) {
             sb.append("Kierowca " + driver.getNumber() + " ma zagrafikowanych " + hour.getHours().get(driver) + " godzin, w tym " + hour.getSaintHours().get(driver) + " w święta\n\n");
@@ -971,7 +964,7 @@ public class WorkSchedule {
         }
     }
 
-    public void setConditions() {
+    void setConditions() {
         for (Driver driver : conditions.keySet()) {
             for (Condition condition : conditions.get(driver)) {
                 int index = getIndexByDate(condition.getDate());

@@ -63,7 +63,7 @@ public class ConditionController {
         });
     }
 
-    public Condition processResult() {
+    Condition processResult() {
         String value= comboBox.getValue();
         Shift shift = Shift.getShift(value);
         int driver = driverNumber.getValue();
@@ -82,16 +82,14 @@ public class ConditionController {
         return null;
     }
 
-    public void loadShifts(){
+    void loadShifts(){
         List<String> hours = new ArrayList<>();
         List<Shift> shift = Shift.getShifts();
-        for (int i = 0; i < shift.size(); i++) {
-            hours.add(shift.get(i).getHours());
-        }
+        shift.forEach(s -> hours.add(s.getHours()));
         comboBox.setItems(FXCollections.observableArrayList(hours));
     }
 
-    public ComboBox<String> getComboBox(){
+    ComboBox<String> getComboBox(){
         return comboBox;
     }
 }

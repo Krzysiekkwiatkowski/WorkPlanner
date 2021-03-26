@@ -21,6 +21,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ExcelSaving {
+    static final String WORK_SCHEDULE = "Grafik";
+    static final String FILE_EXTENSION = ".xls";
+
     private final WorkSchedule schedule;
     private File file;
     private File fileCopy;
@@ -32,8 +35,8 @@ public class ExcelSaving {
 
     public ExcelSaving(WorkSchedule workSchedule) {
         this.schedule = workSchedule;
-        applicationFile = "Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls";
-        userFile = "C:\\Users\\Admin\\Desktop\\Grafik" + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + ".xls";
+        applicationFile = WORK_SCHEDULE + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + FILE_EXTENSION;
+        userFile = "/home/oem/Desktop/" + WORK_SCHEDULE + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + FILE_EXTENSION;
     }
 
     public void createFiles(){
@@ -44,7 +47,7 @@ public class ExcelSaving {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        sheet = excelData.createSheet("Grafik", 0);
+        sheet = excelData.createSheet(WORK_SCHEDULE, 0);
     }
 
     public void saveData() {

@@ -99,9 +99,6 @@ public class Setting {
             for (Shift shift : Shift.getShifts()) {
                 switch (shift.getHours()){
                     case "6-14":
-                        if(dayOfWeek[i] == null){
-                            System.out.println("NULLLLLLL");
-                        }
                         requiredShifts.get(dayOfWeek[i]).put(shift.getHours(), 3);
                         optionalShifts.get(dayOfWeek[i]).put(shift.getHours(), 0);
                         break;

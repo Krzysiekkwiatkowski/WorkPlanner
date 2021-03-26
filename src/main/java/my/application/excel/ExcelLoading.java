@@ -28,7 +28,7 @@ public class ExcelLoading {
             Day day = new Day((LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), monthLong - i)), false, false, schedule);
             previousDays.add(day);
         }
-        loadData(fileName);
+        loadData(ExcelSaving.WORK_SCHEDULE + fileName + ExcelSaving.FILE_EXTENSION);
         setAvailability();
     }
 

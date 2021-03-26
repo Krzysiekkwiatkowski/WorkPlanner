@@ -13,7 +13,7 @@ public class HolidayController {
     @FXML
     private DatePicker holidayDate;
 
-    public void processResult() {
+    void processResult() {
         LocalDate date = holidayDate.getValue().minusDays(1);
         holidays.add(date);
     }

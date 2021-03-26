@@ -18,6 +18,9 @@ import java.util.*;
 
 public class Controller {
 
+    private static final String EDIT = "Edytuj";
+    private static final String DELETE = "Usuń";
+
     private WorkSchedule schedule;
     private ObservableList<Condition> conditions;
     private static Dialog<ButtonType> actualDialog;
@@ -44,8 +47,8 @@ public class Controller {
     public void initialize() {
         schedule = new WorkSchedule(this);
         driversContextMenu = new ContextMenu();
-        MenuItem editMenuItem = new MenuItem("Edytuj");
-        MenuItem deleteDriverItem = new MenuItem("Usuń");
+        MenuItem editMenuItem = new MenuItem(EDIT);
+        MenuItem deleteDriverItem = new MenuItem(DELETE);
         deleteDriverItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -94,7 +97,7 @@ public class Controller {
         });
         conditions = FXCollections.observableArrayList();
         conditionsContextMenu = new ContextMenu();
-        MenuItem deleteConditionItem = new MenuItem("Usuń");
+        MenuItem deleteConditionItem = new MenuItem(DELETE);
         deleteConditionItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -268,14 +271,14 @@ public class Controller {
         });
     }
 
-    protected void okPressed(){
+    void okPressed(){
         Setting setting = actualController.processResult();
         setting.saveSetting();
         actualDialog.setResult(ButtonType.OK);
         actualDialog.close();
     }
 
-    protected void cancelPressed(){
+    void cancelPressed(){
         actualDialog.setResult(ButtonType.CANCEL);
         actualDialog.close();
     }

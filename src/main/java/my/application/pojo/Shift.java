@@ -2,6 +2,7 @@ package my.application.pojo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public final class Shift {
 
@@ -32,10 +33,11 @@ public final class Shift {
     }
 
     public static Shift getShift(String shiftSignature){
-        for (Shift shift : shifts) {
-            if(shift.getHours().equals(shiftSignature)){
-                return shift;
-            }
+        Optional<Shift> result = shifts.stream()
+                .filter(s -> s.getHours().equals(shiftSignature))
+                .findFirst();
+        if(result.isPresent()){
+            return result.get();
         }
         return null;
     }
@@ -44,7 +46,7 @@ public final class Shift {
         return shifts;
     }
 
-    public int getNumber() {
+    int getNumber() {
         return number;
     }
 
