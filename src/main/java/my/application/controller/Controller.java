@@ -10,9 +10,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
 import my.application.pojo.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -269,6 +271,20 @@ public class Controller {
             actualDialog.setResult(ButtonType.CANCEL);
             actualDialog.close();
         });
+    }
+
+    @FXML
+    private void showPathDialog(){
+        actualDialog = new Dialog<>();
+        actualDialog.setTitle("Wybierz lokalizację pliku");
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        if(schedule.isValidFilePath()){
+            directoryChooser.setInitialDirectory(new File(schedule.getFilePath()));
+        }
+        File choosedDirectory = directoryChooser.showDialog(mainBorderPane.getScene().getWindow());
+        if(choosedDirectory != null){
+            schedule.setFilePath(choosedDirectory.getAbsolutePath());
+        }
     }
 
     void okPressed(){

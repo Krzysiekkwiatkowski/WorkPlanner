@@ -13,35 +13,44 @@ import my.application.pojo.WorkSchedule;
 import my.application.pojo.Day;
 import my.application.pojo.Driver;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Properties;
 
 public class ExcelSaving {
+    private static final String PATH_PROPERTIES_FILE = "path.properties";
+    private static final String PATH_PROPERTY_NAME = "userFilePath";
     static final String WORK_SCHEDULE = "Grafik";
     static final String FILE_EXTENSION = ".xls";
 
-    private final WorkSchedule schedule;
+
+    private WorkSchedule schedule;
+    private String fileName;
     private File file;
     private File fileCopy;
     private String applicationFile;
-    private String userFile;
     private WritableWorkbook excelData;
     private WritableSheet sheet;
     private WritableCellFormat cellFormat = null;
+    private Properties properties;
 
     public ExcelSaving(WorkSchedule workSchedule) {
         this.schedule = workSchedule;
-        applicationFile = WORK_SCHEDULE + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + FILE_EXTENSION;
-        userFile = "/home/oem/Desktop/" + WORK_SCHEDULE + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + FILE_EXTENSION;
+        fileName = WORK_SCHEDULE + schedule.getMonth(LocalDate.now().getMonth().plus(1).toString()) + FILE_EXTENSION;
+        applicationFile = fileName;
+        this.properties = new Properties();
+        getPropertiesFromXml();
     }
 
     public void createFiles(){
         file = new File(applicationFile);
-        fileCopy = new File(userFile);
+        if(verifyUserFilePath()) {
+            fileCopy = new File(properties.getProperty(PATH_PROPERTY_NAME) + File.separator + fileName);
+        }
         try {
             excelData = Workbook.createWorkbook(file);
         } catch (IOException e) {
@@ -134,7 +143,9 @@ public class ExcelSaving {
             }
             excelData.write();
             excelData.close();
-            copyFile();
+            if(fileCopy != null){
+                copyFile();
+            }
         } catch (WriteException | IOException e) {
             System.out.println("Couldn't save the file");
             e.printStackTrace();
@@ -168,5 +179,45 @@ public class ExcelSaving {
         } catch (IOException e){
             System.out.println("Couldn't copy work schedule file");
         }
+    }
+
+    private boolean verifyUserFilePath(){
+        String path = properties.getProperty(PATH_PROPERTY_NAME);
+        return (path != null) && (!path.equals(""));
+    }
+
+    private void setProperties(String path){
+        properties.setProperty(PATH_PROPERTY_NAME, (((path != null) && (!path.equals(""))) ? path : ""));
+        savePropertiesToXML();
+    }
+
+    private void savePropertiesToXML(){
+        try {
+            properties.storeToXML(new FileOutputStream(PATH_PROPERTIES_FILE), null);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void getPropertiesFromXml(){
+        try {
+            if(Files.exists(Paths.get(PATH_PROPERTIES_FILE))){
+                properties.loadFromXML(new FileInputStream(PATH_PROPERTIES_FILE));
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void setUserFilePath(String path){
+        setProperties(path);
+    }
+
+    public String getUserFilePath(){
+        return properties.getProperty(PATH_PROPERTY_NAME);
+    }
+
+    public boolean isValidPath(){
+        return verifyUserFilePath();
     }
 }

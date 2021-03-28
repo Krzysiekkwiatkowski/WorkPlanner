@@ -124,17 +124,8 @@ public class WorkSchedule {
                 day.setDriverAvailability(driver, availability);
                 break;
             case 3:
-                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-                day.setDriverAvailability(driver, availability);
-                break;
             case 4:
-                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-                day.setDriverAvailability(driver, availability);
-                break;
             case 5:
-                availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-                day.setDriverAvailability(driver, availability);
-                break;
             case 6:
                 availability = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
                 day.setDriverAvailability(driver, availability);
@@ -984,5 +975,17 @@ public class WorkSchedule {
 
     public void setFreeTime(String freeTime) {
         this.freeTime = freeTime;
+    }
+
+    public String getFilePath(){
+        return excel.getUserFilePath();
+    }
+
+    public void setFilePath(String path){
+        excel.setUserFilePath(path);
+    }
+
+    public boolean isValidFilePath(){
+        return excel.isValidPath();
     }
 }

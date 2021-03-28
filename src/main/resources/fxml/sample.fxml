@@ -21,6 +21,8 @@
                     <SeparatorMenuItem/>
                     <MenuItem text="Ustawienia grafiku" onAction="#showSettingDialog"/>
                     <SeparatorMenuItem/>
+                    <MenuItem text="Ustaw lokalizację pliku" onAction="#showPathDialog"/>
+                    <SeparatorMenuItem/>
                     <MenuItem text="Ustawienia zmiany 22-6" onAction="#showShiftTenSettingDialog"/>
                     <SeparatorMenuItem/>
                     <MenuItem text="Uzupełnij dni" onAction="#showLastDaysDialog"/>
