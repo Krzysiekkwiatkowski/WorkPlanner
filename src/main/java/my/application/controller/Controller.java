@@ -12,13 +12,23 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Callback;
+import my.application.helper.LoggingHelper;
 import my.application.pojo.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controller {
+
+    private static final String LOAD_DIALOG_ERROR = "an exception was thrown during loading ";
+    private static final Logger logger = Logger.getLogger(Controller.class.getName());
+
+    static {
+        logger.addHandler(LoggingHelper.getFileHandler());
+    }
 
     private static final String EDIT = "Edytuj";
     private static final String DELETE = "Usuń";
@@ -157,8 +167,7 @@ public class Controller {
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e) {
-            System.out.println("Couldn't load the dialog");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, LOAD_DIALOG_ERROR + "driverDialog", e);
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
@@ -181,8 +190,7 @@ public class Controller {
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e) {
-            System.out.println("Couldn't load the dialog");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, LOAD_DIALOG_ERROR + "driverDialog", e);
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
@@ -207,8 +215,7 @@ public class Controller {
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e) {
-            System.out.println("Couldn't load the dialog");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, LOAD_DIALOG_ERROR + "conditionDialog", e);
         }
         ConditionController controller = fxmlLoader.getController();
         controller.loadShifts();
@@ -223,7 +230,7 @@ public class Controller {
                 conditions.add(condition);
                 conditionList.getItems().add(condition);
             } else {
-                System.out.println("Necessary data was not present");
+                logger.warning("Adding condition failed, necessary data was not present");
             }
         }
     }
@@ -238,8 +245,7 @@ public class Controller {
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e){
-            System.out.println("Couldn't load the dialog");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, LOAD_DIALOG_ERROR + "holidayDialog", e);
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
@@ -260,7 +266,7 @@ public class Controller {
         try {
             actualDialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e){
-            System.out.println("Couldn't load the dialog");
+            logger.log(Level.SEVERE, LOAD_DIALOG_ERROR + "settingDialog", e);
         }
         SettingController controller = fxmlLoader.getController();
         controller.setController(this);
@@ -284,6 +290,8 @@ public class Controller {
         File choosedDirectory = directoryChooser.showDialog(mainBorderPane.getScene().getWindow());
         if(choosedDirectory != null){
             schedule.setFilePath(choosedDirectory.getAbsolutePath());
+        } else {
+            logger.warning("No directory has been choosen");
         }
     }
 
@@ -309,7 +317,7 @@ public class Controller {
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e){
-            System.out.println("Couldn't load the dialog");
+            logger.log(Level.SEVERE, LOAD_DIALOG_ERROR + "lastDaysDialog", e);
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
@@ -331,8 +339,7 @@ public class Controller {
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e){
-            System.out.println("Couldn't load the dialog");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, LOAD_DIALOG_ERROR + "shiftTenSettingDialog", e);
         }
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
@@ -357,6 +364,7 @@ public class Controller {
             driversList.getItems().removeAll(driver);
             sortList(driversList.getItems());
             schedule.addDriverToUpdate(driver, true);
+            logger.info("Deleted driver number: " + driver.getNumber());
         }
     }
 
@@ -371,6 +379,7 @@ public class Controller {
             schedule.getConditions().get(DriverData.getDriver(condition.getDriverNumber())).remove(condition);
             conditions.remove(condition);
             conditionList.getItems().remove(condition);
+            logger.info("Removed condition for driver number: " + condition.getDriverNumber());
         }
     }
 
@@ -390,12 +399,14 @@ public class Controller {
 
     @FXML
     public void exitAction() {
+        logger.info("Closing program ...");
         DriverData.saveDrivers();
         Platform.exit();
     }
 
     @FXML
     public void startGenerating(){
+        logger.info("Generating work schedule ...");
         schedule.generateWorkSchedule();
     }
 

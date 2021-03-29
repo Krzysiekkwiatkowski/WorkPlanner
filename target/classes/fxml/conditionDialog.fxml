@@ -1,0 +1,35 @@
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<DialogPane fx:controller="my.application.controller.ConditionController" xmlns:fx="http://javafx.com/fxml">
+    <fx:define>
+        <ToggleGroup fx:id="shiftToggle"/>
+    </fx:define>
+    <content>
+        <GridPane vgap="10" hgap="10">
+            <Label fx:id="comboBoxDescription" text="Wybierz zmianę:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <ComboBox fx:id="comboBox" GridPane.rowIndex="0" GridPane.columnIndex="1" >
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <Label text="Numer kierowcy:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <Spinner fx:id="driverNumber" GridPane.rowIndex="1" GridPane.columnIndex="1" min="1" max="30" editable="true"/>
+            <Label text="Data:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <DatePicker fx:id="conditionDate" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <Label text="Chcę przyjść" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <RadioButton fx:id="wantedShift" GridPane.rowIndex="3" GridPane.columnIndex="1" toggleGroup="$shiftToggle"/>
+            <Label text="Nie chcę zmiany:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <RadioButton fx:id="unwantedShift" GridPane.rowIndex="4" GridPane.columnIndex="1" toggleGroup="$shiftToggle" selected="true"/>
+            <Label text="Nie mogę cały dzień:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <RadioButton fx:id="unwantedDay" GridPane.rowIndex="5" GridPane.columnIndex="1" toggleGroup="$shiftToggle"/>
+        </GridPane>
+    </content>
+</DialogPane>

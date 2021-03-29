@@ -1,12 +1,24 @@
 package my.application.pojo;
 
+import my.application.helper.LoggingHelper;
+
 import java.io.*;
 import java.time.DayOfWeek;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Setting {
+
+    private static final Logger logger = Logger.getLogger(Setting.class.getName());
+    private static final String SETTINGS_DATA = "setting.txt";
+
+    static {
+        logger.addHandler(LoggingHelper.getFileHandler());
+    }
+
     private File file;
     private static Map<DayOfWeek, Map<String, Integer>> requiredShifts;
     private static Map<DayOfWeek, Map<String, Integer>> optionalShifts;
@@ -14,10 +26,11 @@ public class Setting {
 
     public Setting() {
         boolean loadedFile = true;
-        file = new File("setting.txt");
+        file = new File(SETTINGS_DATA);
         try {
             scanner = new Scanner(file);
         } catch (FileNotFoundException e) {
+            logger.log(Level.SEVERE, "File not found " + SETTINGS_DATA, e);
             loadedFile = false;
             initializeMaps();
             loadDefaultValues();
@@ -58,8 +71,7 @@ public class Setting {
             }
             writer.close();
         } catch (IOException e) {
-            System.out.println("File not found");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "There was a problem saving data to file " + SETTINGS_DATA, e);
         }
     }
 

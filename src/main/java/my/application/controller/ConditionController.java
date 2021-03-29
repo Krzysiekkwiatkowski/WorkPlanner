@@ -1,5 +1,6 @@
 package my.application.controller;
 
+import my.application.helper.LoggingHelper;
 import my.application.pojo.Condition;
 import my.application.pojo.DriverData;
 import my.application.pojo.Shift;
@@ -13,8 +14,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ConditionController {
+
+    private static final Logger logger = Logger.getLogger(ConditionController.class.getName());
+
+    static {
+        logger.addHandler(LoggingHelper.getFileHandler());
+    }
 
     @FXML
     private Label comboBoxDescription;
@@ -71,6 +79,7 @@ public class ConditionController {
         boolean wanted = wantedShift.isSelected();
         boolean unwanted = unwantedShift.isSelected();
         if (DriverData.contains(driver) && date != null) {
+            logger.info("Added condition for driver number: " + driver);
             if (wanted) {
                 return new Condition(Arrays.asList(shift), driver, date, true);
             } else if (unwanted) {

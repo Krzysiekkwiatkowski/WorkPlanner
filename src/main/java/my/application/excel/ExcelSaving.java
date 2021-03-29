@@ -8,6 +8,7 @@ import jxl.format.Border;
 import jxl.format.BorderLineStyle;
 import jxl.write.*;
 import jxl.write.Label;
+import my.application.helper.LoggingHelper;
 import my.application.pojo.Shift;
 import my.application.pojo.WorkSchedule;
 import my.application.pojo.Day;
@@ -20,13 +21,20 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExcelSaving {
+
+    private static final Logger logger = Logger.getLogger(ExcelSaving.class.getName());
     private static final String PATH_PROPERTIES_FILE = "path.properties";
     private static final String PATH_PROPERTY_NAME = "userFilePath";
     static final String WORK_SCHEDULE = "Grafik";
     static final String FILE_EXTENSION = ".xls";
 
+    static {
+        logger.addHandler(LoggingHelper.getFileHandler());
+    }
 
     private WorkSchedule schedule;
     private String fileName;
@@ -50,11 +58,12 @@ public class ExcelSaving {
         file = new File(applicationFile);
         if(verifyUserFilePath()) {
             fileCopy = new File(properties.getProperty(PATH_PROPERTY_NAME) + File.separator + fileName);
+            logger.info("Creating additional file for user");
         }
         try {
             excelData = Workbook.createWorkbook(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error creating excel file: " + applicationFile, e);
         }
         sheet = excelData.createSheet(WORK_SCHEDULE, 0);
     }
@@ -75,8 +84,7 @@ public class ExcelSaving {
             sheet.addCell(month);
             sheet.mergeCells(1, 0, 11, 0);
         } catch (WriteException e){
-            System.out.println("Couldn't save to file");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Could not edit sheet", e);
         }
         for (Shift shift : Shift.getShifts()) {
             addToSheet(generateLabel(column, 1, shift.getHours()));
@@ -120,8 +128,7 @@ public class ExcelSaving {
         try {
             cellFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
         } catch (WriteException e){
-            System.out.println("Couldn't set border");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error with setting borders", e);
         }
         label.setCellFormat(cellFormat);
         return label;
@@ -131,8 +138,7 @@ public class ExcelSaving {
         try {
             this.sheet.addCell(label);
         } catch (WriteException e) {
-            System.out.println("Couldn't write to the file");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Could not write to the sheet", e);
         }
     }
 
@@ -147,8 +153,7 @@ public class ExcelSaving {
                 copyFile();
             }
         } catch (WriteException | IOException e) {
-            System.out.println("Couldn't save the file");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Could not save the sheet", e);
         }
     }
 
@@ -177,7 +182,7 @@ public class ExcelSaving {
         try {
             Files.copy(file.toPath(), fileCopy.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e){
-            System.out.println("Couldn't copy work schedule file");
+            logger.log(Level.SEVERE, "Could not copy work schedule file", e);
         }
     }
 
@@ -195,7 +200,7 @@ public class ExcelSaving {
         try {
             properties.storeToXML(new FileOutputStream(PATH_PROPERTIES_FILE), null);
         } catch (IOException e){
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "There was a problem saving properties to xml file", e);
         }
     }
 
@@ -205,7 +210,7 @@ public class ExcelSaving {
                 properties.loadFromXML(new FileInputStream(PATH_PROPERTIES_FILE));
             }
         } catch (IOException e){
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "There was a problem loading properties from xml file", e);
         }
     }
 

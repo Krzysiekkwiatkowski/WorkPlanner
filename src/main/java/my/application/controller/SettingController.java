@@ -1,5 +1,6 @@
 package my.application.controller;
 
+import my.application.helper.LoggingHelper;
 import my.application.pojo.Setting;
 import my.application.pojo.Shift;
 import javafx.beans.value.ChangeListener;
@@ -12,8 +13,15 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class SettingController {
+    private static final Logger logger = Logger.getLogger(SettingController.class.getName());
+
+    static {
+        logger.addHandler(LoggingHelper.getFileHandler());
+    }
+
     private Setting setting;
     private Controller controller;
     private List<RadioButton> rdRequiredList;
@@ -1505,6 +1513,7 @@ public class SettingController {
     @FXML
     private void okButtonPressed(){
         controller.okPressed();
+        logger.info("Settings updated ...");
     }
 
     @FXML

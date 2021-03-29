@@ -1,0 +1,57 @@
+.list-view {
+    -fx-border-color: black;
+}
+
+.menu-item:focused {
+    -fx-background-color: darkcyan;
+}
+
+.menu-item {
+    -fx-background-color: lightgrey;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+}
+
+.menu {
+    -fx-background-color: lightgrey;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+}
+
+.menu:hover, .menu:showing {
+    -fx-background-color: darkcyan;
+}
+
+.menu-bar {
+    -fx-background-color: grey;
+}
+
+.separator {
+    -fx-background-color: lightgrey;
+}
+
+#mainBorderPane {
+    -fx-background-color: grey;
+}
+
+.list-cell:focused {
+    -fx-background-color: darkcyan;
+}
+
+.radio-button {
+    -fx-label-padding: 0px;
+    -fx-border-radius: 15px;
+    -fx-border-width: 2px
+}
+
+.required {
+    -fx-border-color: darkgreen;
+}
+
+.optional {
+    -fx-border-color: royalblue;
+}
+
+.lack {
+    -fx-border-color: firebrick;
+}

@@ -1,0 +1,10 @@
+mar 29, 2021 12:40:52 PM my.application.Main start
+INFO: Starting program ...
+mar 29, 2021 12:41:23 PM my.application.controller.SettingController okButtonPressed
+INFO: Settings updated ...
+mar 29, 2021 12:41:37 PM my.application.controller.DriverController editDriver
+INFO: Modified driver with a number: 1
+mar 29, 2021 12:41:50 PM my.application.controller.DriverController editDriver
+INFO: Modified driver with a number: 10
+mar 29, 2021 12:42:41 PM my.application.controller.Controller exitAction
+INFO: Closing program ...

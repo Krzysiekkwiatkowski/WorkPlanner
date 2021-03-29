@@ -1,0 +1,63 @@
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<DialogPane fx:controller="my.application.controller.LastDaysController" xmlns:fx="http://javafx.com/fxml">
+    <content>
+        <GridPane vgap="10" hgap="10">
+            <HBox GridPane.rowIndex="0">
+                <Label text="Zmiany:" GridPane.columnIndex="0" prefWidth="100"/>
+                <Label text="6-14" GridPane.columnIndex="1" prefWidth="100"/>
+                <Label text="7:30-15:30" GridPane.columnIndex="2" prefWidth="100"/>
+                <Label text="10-14" GridPane.columnIndex="3" prefWidth="100"/>
+                <Label text="6-22" GridPane.columnIndex="4" prefWidth="100"/>
+                <Label text="14-22" GridPane.columnIndex="5" prefWidth="100"/>
+                <Label text="14-18" GridPane.columnIndex="6" prefWidth="100"/>
+                <Label text="15:30-23:30" GridPane.columnIndex="7" prefWidth="100"/>
+                <Label text="17-1" GridPane.columnIndex="8" prefWidth="100"/>
+                <Label text="18-2" GridPane.columnIndex="9" prefWidth="100"/>
+                <Label text="22-6" GridPane.columnIndex="10" prefWidth="100"/>
+            </HBox>
+            <HBox GridPane.rowIndex="2">
+                <Label fx:id="thirdLastDay" text="" GridPane.rowIndex="1" GridPane.columnIndex="0" prefWidth="100"/>
+                <TextField fx:id="thirdDayFirst" GridPane.columnIndex="1" prefWidth="100"/>
+                <TextField fx:id="thirdDaySecond" GridPane.columnIndex="2" prefWidth="100"/>
+                <TextField fx:id="thirdDayThird" GridPane.columnIndex="3" prefWidth="100"/>
+                <TextField fx:id="thirdDayFourth" GridPane.columnIndex="4" prefWidth="100"/>
+                <TextField fx:id="thirdDayFifth" GridPane.columnIndex="5" prefWidth="100"/>
+                <TextField fx:id="thirdDaySixth" GridPane.columnIndex="6" prefWidth="100"/>
+                <TextField fx:id="thirdDaySeventh" GridPane.columnIndex="7" prefWidth="100"/>
+                <TextField fx:id="thirdDayEighth" GridPane.columnIndex="8" prefWidth="100"/>
+                <TextField fx:id="thirdDayNinth" GridPane.columnIndex="9" prefWidth="100"/>
+                <TextField fx:id="thirdDayTenth" GridPane.columnIndex="10" prefWidth="100"/>
+            </HBox>
+            <HBox GridPane.rowIndex="3">
+                <Label fx:id="secondLastDay" text="" GridPane.rowIndex="2" GridPane.columnIndex="0" prefWidth="100"/>
+                <TextField fx:id="secondDayFirst" GridPane.columnIndex="1" prefWidth="100"/>
+                <TextField fx:id="secondDaySecond" GridPane.columnIndex="2" prefWidth="100"/>
+                <TextField fx:id="secondDayThird" GridPane.columnIndex="3" prefWidth="100"/>
+                <TextField fx:id="secondDayFourth" GridPane.columnIndex="4" prefWidth="100"/>
+                <TextField fx:id="secondDayFifth" GridPane.columnIndex="5" prefWidth="100"/>
+                <TextField fx:id="secondDaySixth" GridPane.columnIndex="6" prefWidth="100"/>
+                <TextField fx:id="secondDaySeventh" GridPane.columnIndex="7" prefWidth="100"/>
+                <TextField fx:id="secondDayEighth" GridPane.columnIndex="8" prefWidth="100"/>
+                <TextField fx:id="secondDayNinth" GridPane.columnIndex="9" prefWidth="100"/>
+                <TextField fx:id="secondDayTenth" GridPane.columnIndex="10" prefWidth="100"/>
+            </HBox>
+            <HBox GridPane.rowIndex="4">
+                <Label fx:id="lastDay" text="" GridPane.rowIndex="3" GridPane.columnIndex="0" prefWidth="100"/>
+                <TextField fx:id="lastDayFirst" GridPane.columnIndex="1" prefWidth="100"/>
+                <TextField fx:id="lastDaySecond" GridPane.columnIndex="2" prefWidth="100"/>
+                <TextField fx:id="lastDayThird" GridPane.columnIndex="3" prefWidth="100"/>
+                <TextField fx:id="lastDayFourth" GridPane.columnIndex="4" prefWidth="100"/>
+                <TextField fx:id="lastDayFifth" GridPane.columnIndex="5" prefWidth="100"/>
+                <TextField fx:id="lastDaySixth" GridPane.columnIndex="6" prefWidth="100"/>
+                <TextField fx:id="lastDaySeventh" GridPane.columnIndex="7" prefWidth="100"/>
+                <TextField fx:id="lastDayEighth" GridPane.columnIndex="8" prefWidth="100"/>
+                <TextField fx:id="lastDayNinth" GridPane.columnIndex="9" prefWidth="100"/>
+                <TextField fx:id="lastDayTenth" GridPane.columnIndex="10" prefWidth="100"/>
+            </HBox>
+        </GridPane>
+    </content>
+</DialogPane>

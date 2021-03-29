@@ -3,6 +3,7 @@ package my.application.excel;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import my.application.helper.LoggingHelper;
 import my.application.pojo.WorkSchedule;
 import my.application.pojo.Day;
 import my.application.pojo.Driver;
@@ -14,8 +15,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExcelLoading {
+
+    private static final Logger logger = Logger.getLogger(ExcelLoading.class.getName());
+
+    static {
+        logger.addHandler(LoggingHelper.getFileHandler());
+    }
+
     private WorkSchedule schedule;
     private List<Day> previousDays;
     private int monthLong;
@@ -72,8 +82,9 @@ public class ExcelLoading {
                     }
                 }
             }
+            logger.info("Loaded data from excel file ...");
         } catch (IOException | BiffException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "There was a problem loading data from file " + fileName, e);
         } finally {
             if (workbook != null) {
                 workbook.close();

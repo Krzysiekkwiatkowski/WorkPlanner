@@ -2,14 +2,24 @@ package my.application.pojo;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import my.application.helper.LoggingHelper;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DriverData {
+
+    private static final Logger logger = Logger.getLogger(DriverData.class.getName());
     private static final String DRIVERS_DATA = "drivers.txt";
+
+    static {
+        logger.addHandler(LoggingHelper.getFileHandler());
+    }
 
     private static ObservableList<Driver> drivers = FXCollections.observableArrayList();
     private static File data = new File(DRIVERS_DATA);
@@ -42,8 +52,7 @@ public class DriverData {
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "File " + DRIVERS_DATA + " not found", e);
         }
     }
 
@@ -53,8 +62,7 @@ public class DriverData {
             drivers.forEach(d -> printWriter.println(d.getNumber() + " " + d.getFirstName() + " " + d.getLastName() + " " + d.getPhone()));
             printWriter.close();
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "There was a problem saving data to file " + DRIVERS_DATA, e);
         }
     }
 
@@ -70,7 +78,7 @@ public class DriverData {
             if (drivers.contains(driver)) {
                 drivers.remove(driver);
             } else {
-                System.out.println("Driver doesn't exist");
+                logger.warning("Driver doesn't exist");
             }
         }
     }
